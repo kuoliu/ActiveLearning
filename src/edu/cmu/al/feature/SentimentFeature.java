@@ -19,5 +19,7 @@ public class SentimentFeature extends Feature {
 		return null;
 	}
 	
-	
+	public int extractFeature(int featureId) {
+		return 0;
+	}
 }
