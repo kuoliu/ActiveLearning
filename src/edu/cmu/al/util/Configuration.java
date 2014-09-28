@@ -7,9 +7,14 @@ public class Configuration {
 
 	/** Configuration for Sql **/
 	private static String sqlDriver = "org.postgresql.Driver";
-	private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
-	private static String sqlUserName = "lk";
-	private static String sqlPassword = "123";
+	private static String sqlUrl = "jdbc:postgresql://contrib-postgres.club.cc.cmu.edu:5432/contrib_zhengxiz";
+	private static String sqlUserName = "zhengxiz";
+	private static String sqlPassword = "zhengxiong";
+	
+	//private static String sqlDriver = "org.postgresql.Driver";
+  //private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
+  //private static String sqlUserName = "lk";
+  //private static String sqlPassword = "123";
 
 	/** Configuration of database tables **/
 	private static String reviewTable = "product_review";

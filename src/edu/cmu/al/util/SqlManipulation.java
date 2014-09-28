@@ -40,7 +40,8 @@ public class SqlManipulation {
 			if (!pstmt.execute())
 				return false;
 		} catch (Exception e) {
-			e.printStackTrace();
+		  System.out.println(e.getMessage());
+			// e.printStackTrace();
 		} finally {
 			try {
 				pstmt.close();
