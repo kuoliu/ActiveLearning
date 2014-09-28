@@ -1,6 +1,7 @@
 package edu.cmu.al.main;
 
 import java.io.*;
+import java.sql.ResultSet;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.FileManipulation;
@@ -14,6 +15,7 @@ public class Preprocess {
 	public static void run() {
 		createTables();
 		file2Db();
+		initFeatureTable();
 	}
 
 	private static void file2Db() {
@@ -26,7 +28,7 @@ public class Preprocess {
 		try {
 			while ((buffer = br.readLine()) != null) {
 				if (buffer.indexOf("product/productId") >= 0) {
-					++ id;
+					++id;
 					String productId = extractUsefulStr(buffer);
 					String title = extractUsefulStr(br.readLine());
 					String price = extractUsefulStr(br.readLine());
@@ -52,6 +54,21 @@ public class Preprocess {
 		}
 	}
 
+	private static void initFeatureTable() {
+		String sql = "select distinct product_id from "
+				+ Configuration.getReviewTable();
+		ResultSet rs = SqlManipulation.query(sql);
+		try {
+			sql = "insert into " + Configuration.getFeatureTable()
+					+ " (product_id) values (?)";
+			while (rs.next()) {
+				SqlManipulation.insert(sql, rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static String extractUsefulStr(String str) {
 		int idx = str.indexOf(":");
 		return str.substring(idx + 1).trim();
@@ -61,7 +78,7 @@ public class Preprocess {
 		String sql = "";
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getReviewTable()
-				+ " (id SERIAL primary key, product_id varchar(256), product_title varchar(256), product_price varchar(256), review_userId varchar(256), review_profileName text, review_helpfulness varchar(256), review_score real, review_time varchar(256), review_summary text, review_text text)";
+				+ " (id SERIAL primary key, product_id varchar(256), product_title text, product_price varchar(256), review_userId varchar(256), review_profileName text, review_helpfulness varchar(256), review_score real, review_time varchar(256), review_summary text, review_text text)";
 		SqlManipulation.createTable(sql);
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
