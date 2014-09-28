@@ -8,4 +8,5 @@ package edu.cmu.al.feature;
  * */
 public abstract class Feature {
 
+	public abstract int extractFeature(int featureId);
 }
