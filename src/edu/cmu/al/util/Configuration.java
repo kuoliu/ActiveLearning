@@ -11,13 +11,17 @@ public class Configuration {
 	private static String sqlUserName = "lk";
 	private static String sqlPassword = "123";
 
+	/** Configuration of database tables **/
+	private static String reviewTable = "product_review";
+	private static String featureTable = "product_feature";
+	
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
 	private static String logPath = "";
 	private static String tmpPath = "";
 
 	/** Configuration about useful paths **/
-	private static String trainDataPath = "/files/Cell_Phones_&_Accessories.txt";
+	private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
 	
 	public static String getSqlDriver() {
 		return sqlDriver;
@@ -81,5 +85,21 @@ public class Configuration {
 
 	public static void setTrainDataPath(String trainDataPath) {
 		Configuration.trainDataPath = trainDataPath;
+	}
+
+	public static String getReviewTable() {
+		return reviewTable;
+	}
+
+	public static void setReviewTable(String reviewTable) {
+		Configuration.reviewTable = reviewTable;
+	}
+
+	public static String getFeatureTable() {
+		return featureTable;
+	}
+
+	public static void setFeatureTable(String featureTable) {
+		Configuration.featureTable = featureTable;
 	}
 }
