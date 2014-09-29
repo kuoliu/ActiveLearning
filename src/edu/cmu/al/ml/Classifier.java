@@ -7,7 +7,7 @@ package edu.cmu.al.ml;
  * @author chenying
  *
  */
-public abstract class Classifier {
+public abstract interface Classifier {
 	/**
 	 * Train labeled data, it will first retrieve labeled training data from the data base, then 
 	 * train the data and build the model
