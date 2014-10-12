@@ -2,6 +2,8 @@ package edu.cmu.al.util;
 
 /**
  * Description: Some configurations for the whole project
+ * 
+ * @author Kuo Liu
  */
 public class Configuration {
 

@@ -4,6 +4,8 @@ import java.io.*;
 
 /**
  * Description: Used to print log or something to file
+ * 
+ * @author Kuo Liu
  */
 public class Printer {
 
@@ -19,6 +21,9 @@ public class Printer {
 		}
 	}
 
+	/**
+	 * Close the resource associated with the printer instance
+	 */
 	public void close() {
 		try {
 			if (this.ps != null)
@@ -30,10 +35,16 @@ public class Printer {
 		}
 	}
 
+	/**
+	 * Print str to the file without a \n
+	 */
 	public void print(String str) {
 		this.ps.print(str);
 	}
 
+	/**
+	 * Print str to the file with a \n
+	 */
 	public void println(String str) {
 		this.ps.println(str);
 	}
