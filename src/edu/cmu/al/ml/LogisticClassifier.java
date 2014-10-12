@@ -4,7 +4,7 @@ import weka.classifiers.functions.Logistic;
 import weka.core.Instances;
 import weka.experiment.InstanceQuery;
 
-public class LogisticClassifier extends Classifier {
+public class LogisticClassifier implements Classifier {
 	private Logistic logistic;
 
 	@Override
