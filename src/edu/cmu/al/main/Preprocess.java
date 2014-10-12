@@ -9,9 +9,15 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Description: Do some proprocess work on the data set
+ * 
+ * @author Kuo Liu
  */
 public class Preprocess {
 
+	/**
+	 * Create tables, parse the data from file format to database records and initiate
+	 * feature table
+	 */
 	public static void run() {
 		createTables();
 		file2Db();
