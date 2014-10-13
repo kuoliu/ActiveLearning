@@ -8,12 +8,12 @@ import edu.cmu.al.util.SqlManipulation;
 /**
  * 
  * For the BasicFeature, we choose two feature which are the number of the
- * people reviews and average score for all the people.
+ * reviews for each product and average score for each product.
  * 
- * @author Kuo Liu, Bo Ma
+ * @author Kuo Liu
  */
 
-public class BasicFeature extends Feature {
+public class BasicFeatureExtractor extends FeatureExtractor {
 
 	private void avgReviewScore(int featureId) {
 		String sql = "select product_id, avg(review_score) from "
@@ -47,9 +47,14 @@ public class BasicFeature extends Feature {
 		}
 	}
 
+	/**
+	 * Extract basic features for each product
+	 */
 	public int extractFeature(int featureId) {
-		numReviews(featureId++);
-		avgReviewScore(featureId++);
+		numReviews(featureId);
+		featureMap.put(featureId ++, "Number of Reviews for a Product");
+		avgReviewScore(featureId);
+		featureMap.put(featureId ++, "Average Review Score for a Product");
 		return featureId;
 	}
 }

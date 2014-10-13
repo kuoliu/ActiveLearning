@@ -1,5 +1,7 @@
 package edu.cmu.al.util;
 
+import java.util.List;
+
 /**
  * Description: Some configurations for the whole project
  */
@@ -14,6 +16,8 @@ public class Configuration {
 	/** Configuration of database tables **/
 	private static String reviewTable = "product_review";
 	private static String featureTable = "product_feature";
+	private static String predictTable = "classifier_predict";
+	private static String notationTable = "notation";
 	
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
@@ -99,7 +103,37 @@ public class Configuration {
 		return featureTable;
 	}
 
+
 	public static void setFeatureTable(String featureTable) {
 		Configuration.featureTable = featureTable;
+	}
+	
+	public static String getPredictTable() {
+		return predictTable;
+	}
+	
+	public static void setPredictTable(String predictTable) {
+		Configuration.predictTable = predictTable;
+	}
+	
+	public static String getNotationTable() {
+		return predictTable;
+	}
+	
+	public static void setNotationTable(String notationTable) {
+		Configuration.notationTable = notationTable;
+	}
+	
+	public static void updatePredictTable(List<Double> predictionValue) {
+		String updateSql = "update " + Configuration.getPredictTable()
+				+ " set predictValue = ? where id=?";
+		try {
+			for (int i = 0; i < predictionValue.size(); i++) {
+				//base 0 or base 1?
+				SqlManipulation.update(updateSql, predictionValue.get(i), i + 1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

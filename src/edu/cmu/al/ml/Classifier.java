@@ -1,5 +1,11 @@
 package edu.cmu.al.ml;
 
+import java.util.HashSet;
+import java.util.List;
+
+import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.SqlManipulation;
+
 /**
  * Classifier is the base class of all classifiers in training process. It is
  * responsible of training labeled data and making prediction on all test data.

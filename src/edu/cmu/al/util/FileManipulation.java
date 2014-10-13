@@ -4,6 +4,8 @@ import java.io.*;
 
 /**
  * Description: pack file manipulation
+ * 
+ * @author Kuo Liu
  */
 public class FileManipulation {
 
@@ -14,6 +16,9 @@ public class FileManipulation {
 	public FileManipulation() {
 	}
 
+	/**
+	 * Get the corresponding buffered reader of a file
+	 */
 	public BufferedReader getBufferedReader(String file, String format) {
 		try {
 			fis = new FileInputStream(file);
@@ -26,6 +31,9 @@ public class FileManipulation {
 		return br;
 	}
 
+	/**
+	 * Close the resource associated with one FileManipulation instance
+	 */
 	public void closeFile() {
 		try {
 			if (br != null)
