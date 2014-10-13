@@ -9,7 +9,7 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Random sampling strategy
- * @author yuanyuan yang
+ * @author yuanyuan
  *
  */
 public class RandomStrategy extends BasicSampling{
@@ -18,20 +18,26 @@ public class RandomStrategy extends BasicSampling{
 	 * Randomly sampling k instances
 	 */
 	@Override
-	public void sampling(int k) {
+	public HashSet<String> sampling(int k) {
 		
-		String sql = "select * from "
-				+ Configuration.getNotationTable();
-		ResultSet rs = SqlManipulation.query(sql);
+		String sql = "select max(id) from "
+				+ Configuration.getReviewTable();
+		ResultSet rs1 = SqlManipulation.query(sql);
 		
-		HashSet<Integer> selected = new HashSet<Integer>(); // result set(line id)
+		
+		sql = "select product_id from " + Configuration.getReviewTable() 
+				+ " where id =?";
+		
+		HashSet<String> selected = new HashSet<String>(); // result set(product id)
 		try {
-			int total = rs.getFetchSize();
+			int total = rs1.getInt(1);
 			Random rnd = new Random();
 			while (k >= 0) {
-				int num = rnd.nextInt(total)+1;
-				if (!selected.contains(num) && !isLabled(num)) {
-					selected.add(num);
+				int rowId = rnd.nextInt(total)+1;
+				ResultSet rs2 = SqlManipulation.query(sql, rowId);
+				String prod_id = rs2.getString(1);
+				if (!selected.contains(prod_id) && !isLabled(prod_id)) {
+					selected.add(prod_id);
 					k--;
 				}
 			}
@@ -39,8 +45,7 @@ public class RandomStrategy extends BasicSampling{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		setNotationTable(selected);
+		return selected;
 		
 	}
 	

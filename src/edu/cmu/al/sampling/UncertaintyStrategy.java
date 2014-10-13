@@ -20,25 +20,25 @@ public class UncertaintyStrategy extends BasicSampling {
 	 * with high positive confidence and at boundary
 	 */
 	@Override
-	public void sampling(int k) {
-		HashSet<Integer> selected = new HashSet<Integer>();
-		HashMap<Integer, Integer> positive = new HashMap<Integer, Integer>();
-		HashMap<Integer, Integer> boundary = new HashMap<Integer, Integer>();
+	public HashSet<String> sampling(int k) {
+		HashSet<String> selected = new HashSet<String>();
+		HashMap<Integer, String> positive = new HashMap<Integer, String>();
+		HashMap<Integer, String> boundary = new HashMap<Integer, String>();
+		
 		String sql = "select * from "
-				+ Configuration.getPredictTable();
+				+ Configuration.getReviewTable();
 		ResultSet rs = SqlManipulation.query(sql);
 		
 		int positiveID = 0;
 		int boundaryID = 0;
 		try {
-			int total = rs.getFetchSize();
-			int line = 1;
-			while (line <= total) {
-				if (!isLabled(line)) {
-					if (get_predict_result(line) >= 0.7) {
-						positive.put(positiveID++, line);
-					} else if (get_predict_result(line) >= 0.4 && get_predict_result(line) <= 0.6){
-						boundary.put(boundaryID++, line);
+			while (rs.next()) {
+				String prod_id = rs.getString(2);
+				if (!isLabled(prod_id)) {
+					if (get_predict_result(prod_id) >= 0.7) {
+						positive.put(positiveID++, prod_id);
+					} else if (get_predict_result(prod_id) >= 0.4 && get_predict_result(prod_id) <= 0.6){
+						boundary.put(boundaryID++, prod_id);
 					}
 				}
 				
@@ -65,7 +65,7 @@ public class UncertaintyStrategy extends BasicSampling {
 			e.printStackTrace();
 		}
 		
-		setNotationTable(selected);
+		return selected;
 
 	}
 	
