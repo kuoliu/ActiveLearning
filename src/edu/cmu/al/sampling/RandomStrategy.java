@@ -7,7 +7,11 @@ import java.util.Random;
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
 
-
+/**
+ * Random sampling strategy
+ * @author yangyuanyuan
+ *
+ */
 public class RandomStrategy extends BasicSampling{
 
 	/**
