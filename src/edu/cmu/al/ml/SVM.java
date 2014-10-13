@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.cmu.al.util.Configuration;
-import weka.classifiers.functions.Logistic;
+import weka.classifiers.functions.LibSVM;
 import weka.core.Instances;
 import weka.experiment.InstanceQuery;
 
-public class LogisticClassifier implements Classifier {
-	private Logistic logistic;
+public class SVM implements Classifier {
+	private LibSVM svm;
 
 	@Override
 	public void train() {
@@ -26,7 +26,7 @@ public class LogisticClassifier implements Classifier {
 			// setting class attribute
 			data.setClassIndex(data.numAttributes() - 1);
 			
-			this.logistic.buildClassifier(data);
+			this.svm.buildClassifier(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class LogisticClassifier implements Classifier {
 			Instances data = query.retrieveInstances();
 			List<Double> predictionValue = new ArrayList<Double>();
 			for (int i = 0; i < data.numInstances(); i++) {
-				double pred = this.logistic.classifyInstance(data.instance(i));
+				double pred = this.svm.classifyInstance(data.instance(i));
 				predictionValue.add(pred);
 			}
 			//write back to database
@@ -58,3 +58,4 @@ public class LogisticClassifier implements Classifier {
 	}
 
 }
+
