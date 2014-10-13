@@ -4,6 +4,8 @@ import java.sql.*;
 
 /**
  * Description: General sql Manipulations
+ * 
+ * @author Kuo Liu
  */
 public class SqlManipulation {
 
@@ -113,6 +115,7 @@ public class SqlManipulation {
 		return rs;
 	}
 	
+	/** basic operation: deletion on table **/
 	public static void delete(String sql, Object... args) {
 		pstmt = null;
 		try {

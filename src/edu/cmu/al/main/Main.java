@@ -1,10 +1,13 @@
 package edu.cmu.al.main;
 
-import edu.cmu.al.feature.BasicFeature;
+import edu.cmu.al.feature.BasicFeatureExtractor;
+import edu.cmu.al.feature.FeatureExtractor;
 
-
-import edu.cmu.al.feature.Feature;
-
+/**
+ * The main class to run main function
+ * 
+ * @author Kuo Liu
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -12,7 +15,7 @@ public class Main {
 		Preprocess.run();
 		
 		int featureId = 1;
-		Feature featureExtractor = new BasicFeature();
+		FeatureExtractor featureExtractor = new BasicFeatureExtractor();
 		featureId = featureExtractor.extractFeature(featureId);
 	}
 }
