@@ -9,7 +9,7 @@ import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
 
 /**
- * The baseline of all sampling methods
+ * Uncertainty sampling strategy
  * @author yuanyuan
  *
  */
