@@ -15,17 +15,18 @@ public class LogisticClassifier implements Classifier {
 	public void train() {
 		try {
 			InstanceQuery query = new InstanceQuery();
-			//load data from databse
+			// load data from databse
 			query.setDatabaseURL(Configuration.getSqlUrl());
 			query.setUsername(Configuration.getSqlUserName());
 			query.setPassword(Configuration.getSqlPassword());
-			String sql = "select * from" + Configuration.getPredictTable();
+			String sql = "select * from" + Configuration.getPredictTable()
+					+ "where label <> \'#\'";
 			query.setQuery(sql);
 			Instances data = query.retrieveInstances();
-			
+
 			// setting class attribute
 			data.setClassIndex(data.numAttributes() - 1);
-			
+
 			this.logistic.buildClassifier(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -40,20 +41,20 @@ public class LogisticClassifier implements Classifier {
 		InstanceQuery query;
 		try {
 			query = new InstanceQuery();
-			query.setQuery("select * from some_table");
+			String sql = "select * from" + Configuration.getPredictTable()
+					+ "where label = \'#\'";
 			Instances data = query.retrieveInstances();
 			List<Double> predictionValue = new ArrayList<Double>();
 			for (int i = 0; i < data.numInstances(); i++) {
 				double pred = this.logistic.classifyInstance(data.instance(i));
 				predictionValue.add(pred);
 			}
-			//write back to database
+			// write back to database
 			Configuration.updatePredictTable(predictionValue);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 	}
 
