@@ -124,7 +124,6 @@ public class Configuration {
 		Configuration.notationTable = notationTable;
 	}
 	
-
 	public static void updatePredictTable(List<Double> predictionValue) {
 		String updateSql = "update " + Configuration.getPredictTable()
 				+ " set predictValue = ? where id=?";
