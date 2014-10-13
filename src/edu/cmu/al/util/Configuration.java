@@ -4,8 +4,6 @@ import java.util.List;
 
 /**
  * Description: Some configurations for the whole project
- * 
- * @author Kuo Liu
  */
 public class Configuration {
 
@@ -105,10 +103,10 @@ public class Configuration {
 		return featureTable;
 	}
 
+
 	public static void setFeatureTable(String featureTable) {
 		Configuration.featureTable = featureTable;
 	}
-	
 	
 	public static String getPredictTable() {
 		return predictTable;
@@ -126,6 +124,7 @@ public class Configuration {
 		Configuration.notationTable = notationTable;
 	}
 	
+
 	public static void updatePredictTable(List<Double> predictionValue) {
 		String updateSql = "update " + Configuration.getPredictTable()
 				+ " set predictValue = ? where id=?";

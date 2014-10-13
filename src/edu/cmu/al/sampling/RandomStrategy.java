@@ -9,7 +9,7 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Random sampling strategy
- * @author yangyuanyuan
+ * @author yuanyuan yang
  *
  */
 public class RandomStrategy extends BasicSampling{
