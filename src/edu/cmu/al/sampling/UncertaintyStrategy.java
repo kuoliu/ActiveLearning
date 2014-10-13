@@ -13,7 +13,7 @@ import edu.cmu.al.util.SqlManipulation;
  * @author yuanyuan
  *
  */
-public class UncertaintySampling extends BasicSampling {
+public class UncertaintyStrategy extends BasicSampling {
 
 	/**
 	 * Based on uncertainty sampling approach randomly selected the instances 
