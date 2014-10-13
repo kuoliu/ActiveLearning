@@ -1,58 +1,72 @@
 package edu.cmu.al.sampling;
 
-import java.util.List;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
+
+import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.SqlManipulation;
 
 /**
  * The baseline of all sampling methods
  * @author yuanyuan
  *
  */
-public class UncertaintySampling extends Sampling {
-	/**
-	 * Determines which observations (rows) are labeled.
-	 * @param instances
-	 * @return list of id of instances to be labeled
-	 */
-	@Override
-	public List<Integer> label(List<String> instances) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	/**
-	 * Extracts the class posterior probabilities for the unlabeled observations.
-	 * @param instance
-	 * @return the posterior for a specific instance
-	 */
-	
-	@Override
-	public Double get_predict_result(String instance) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
-	 * Computes the specified uncertainty for each of the unlabeled observations
-	 * based on the posterior probabilities of class membership.
-	 * @param instance
-	 * @return
-	 */
-	@Override
-	public Double compute_uncertainty(String instance, Double least_confidence,
-			Double margin, Double entropy) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class UncertaintySampling extends BasicSampling {
 
 	/**
-	 * Determines the order of the unlabeled observations by uncertainty measure.
-	 * @param instances
-	 * @param decreasing true for decreasing rank and false for increasing rank
-	 * @return
+	 * Based on uncertainty sampling approach randomly selected the instances 
+	 * with high positive confidence and at boundary
 	 */
 	@Override
-	public List<String> rank_uncertainty(List<String> instances,
-			boolean decreasing) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+	public void sampling(int k) {
+		HashSet<Integer> selected = new HashSet<Integer>();
+		HashMap<Integer, Integer> positive = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> boundary = new HashMap<Integer, Integer>();
+		String sql = "select * from "
+				+ Configuration.getPredictTable();
+		ResultSet rs = SqlManipulation.query(sql);
+		
+		int positiveID = 0;
+		int boundaryID = 0;
+		try {
+			int total = rs.getFetchSize();
+			int line = 1;
+			while (line <= total) {
+				if (!isLabled(line)) {
+					if (get_predict_result(line) >= 0.7) {
+						positive.put(positiveID++, line);
+					} else if (get_predict_result(line) >= 0.4 && get_predict_result(line) <= 0.6){
+						boundary.put(boundaryID++, line);
+					}
+				}
+				
+			}
+			Random rnd = new Random();
+			int insCnt = k;
+			while (insCnt >= k/2) {
+				int i = rnd.nextInt(positiveID);
+				if (!selected.contains(positive.get(i))) {
+					selected.add(positive.get(i));
+				}
+				insCnt--;
+			}
+			
+			while (insCnt >= 0) {
+				int i = rnd.nextInt(boundaryID);
+				if (!selected.contains(boundary.get(i))) {
+					selected.add(boundary.get(i));
+				}
+				insCnt--;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		setNotationTable(selected);
+
+	}
+	
 }
