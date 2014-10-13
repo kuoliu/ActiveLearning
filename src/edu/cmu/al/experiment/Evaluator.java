@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import edu.cmu.al.util.Configuration;
+<<<<<<< HEAD
+=======
+import edu.cmu.al.util.ScoreDefine;
+>>>>>>> 5d31dc96a03b17593ca0bbef066ba6008f5e3187
 import edu.cmu.al.util.SqlManipulation;
 
 public class Evaluator {
@@ -31,6 +35,11 @@ public class Evaluator {
 					incFalsePos(); // b
 				}
 			}
+		try {
+			getTruePos();
+			getTrueNeg();
+			getFalsePos();
+			getFalseNeg();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,6 +71,42 @@ public class Evaluator {
 
 	public void incFalseNeg() {
 		FALSE_NEG++;
+
+	public void getTruePos() throws SQLException {
+		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
+				+ "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score >=" + ScoreDefine.posSocre;
+		ResultSet rs = SqlManipulation.query(sql);
+		while (rs.next()) {
+			TRUE_POS = rs.getInt(1);
+		}
+	}
+
+	public void getTrueNeg() throws SQLException {
+		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
+				+ "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score <" + ScoreDefine.posSocre;
+		ResultSet rs = SqlManipulation.query(sql);
+		while (rs.next()) {
+			TRUE_NEG = rs.getInt(1);
+		}
+	}
+
+	public void getFalsePos() throws SQLException {
+		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
+				+ "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score <" + ScoreDefine.posSocre;
+		ResultSet rs = SqlManipulation.query(sql);
+		while (rs.next()) {
+			FALSE_POS = rs.getInt(1);
+		}
+	}
+
+	public void getFalseNeg() throws SQLException {
+		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
+				+ "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score >=" + ScoreDefine.posSocre;
+		ResultSet rs = SqlManipulation.query(sql);
+		while (rs.next()) {
+			FALSE_NEG = rs.getInt(1);
+		}
+
 	}
 
 	public void clear() {
