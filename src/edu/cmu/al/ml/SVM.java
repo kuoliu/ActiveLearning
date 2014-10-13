@@ -19,7 +19,8 @@ public class SVM implements Classifier {
 			query.setDatabaseURL(Configuration.getSqlUrl());
 			query.setUsername(Configuration.getSqlUserName());
 			query.setPassword(Configuration.getSqlPassword());
-			String sql = "select * from" + Configuration.getPredictTable();
+			String sql = "select * from" + Configuration.getPredictTable()
+					+ "where label <> \'#\'";
 			query.setQuery(sql);
 			Instances data = query.retrieveInstances();
 			
@@ -40,7 +41,7 @@ public class SVM implements Classifier {
 		InstanceQuery query;
 		try {
 			query = new InstanceQuery();
-			query.setQuery("select * from some_table");
+			String sql = "select * from" + Configuration.getPredictTable() + "where label = \'#\'";
 			Instances data = query.retrieveInstances();
 			List<Double> predictionValue = new ArrayList<Double>();
 			for (int i = 0; i < data.numInstances(); i++) {
