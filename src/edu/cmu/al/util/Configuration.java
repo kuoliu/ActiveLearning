@@ -2,8 +2,6 @@ package edu.cmu.al.util;
 
 /**
  * Description: Some configurations for the whole project
- * 
- * @author Kuo Liu
  */
 public class Configuration {
 
@@ -16,6 +14,8 @@ public class Configuration {
 	/** Configuration of database tables **/
 	private static String reviewTable = "product_review";
 	private static String featureTable = "product_feature";
+	private static String predictTable = "classifier_predict";
+	private static String notationTable = "notation";
 	
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
@@ -101,9 +101,25 @@ public class Configuration {
 		return featureTable;
 	}
 
+
 	public static void setFeatureTable(String featureTable) {
 		Configuration.featureTable = featureTable;
 	}
 	
+	public static String getPredictTable() {
+		return predictTable;
+	}
+	
+	public static void setPredictTable(String predictTable) {
+		Configuration.predictTable = predictTable;
+	}
+	
+	public static String getNotationTable() {
+		return predictTable;
+	}
+	
+	public static void setNotationTable(String notationTable) {
+		Configuration.notationTable = notationTable;
+	}
 	
 }
