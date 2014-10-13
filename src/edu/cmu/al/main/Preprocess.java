@@ -87,12 +87,9 @@ public class Preprocess {
 		
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getPredictTable()
-				+ " (id SERIAL primary key, product_id varchar(256), label varchar(256), confidence real)";
+				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
 		SqlManipulation.createTable(sql);
 		
-		sql = "CREATE TABLE IF NOT EXISTS "
-				+ Configuration.getNotationTable()
-				+ " (id SERIAL primary key, product_id varchar(256), notation varchar)";
-		SqlManipulation.createTable(sql);
+		
 	}
 }

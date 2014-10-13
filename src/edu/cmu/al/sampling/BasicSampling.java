@@ -25,13 +25,13 @@ public abstract class BasicSampling {
 	 * Select k instances to mark in next round.
 	 * @param k instances
 	 */
-	public abstract void sampling(int k);
+	public abstract HashSet<String> sampling(int k);
 	
 	
 	/**
 	 * Mark those selected observations in NotationTable.
 	 * @param selected, the set of line id
-	 */
+
 	public void setNotationTable(HashSet<Integer> selected) {
 		String updateSql = "update " + Configuration.getNotationTable()
 				+ " set notation = # where id=?";
@@ -42,22 +42,22 @@ public abstract class BasicSampling {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}	 */
 	
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.
 	 * @param id, line id
 	 * @return the posterior for a specific instance
 	 */
-	public Double get_predict_result(int id) {
+	public Double get_predict_result(String product_id) {
 		String sql = "select confidence from "
 				+ Configuration.getPredictTable() 
-				+ " where id = " + id;
+				+ " where product_id = " + product_id;
 		ResultSet rs = SqlManipulation.query(sql);
 		double confidence = 0.0;
 		try {
 			if (rs.next()) {
-				confidence = rs.getFloat(1);
+				confidence = rs.getDouble(4);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,14 +70,17 @@ public abstract class BasicSampling {
 	 * @param id, line id
 	 * @return true, labeled; false, unlabeled
 	 */
-	public boolean isLabled(int id) {
-		String sql = "select label from "
-				+ Configuration.getPredictTable() 
-				+ " where id = " + id;
+	public boolean isLabled(String prod_id) {
+		String sql = "select islabeled from "
+				+ Configuration.getPredictTable() + "," + Configuration.getReviewTable()
+				+ " where " + Configuration.getPredictTable() + ".product_id = " 
+				+ Configuration.getReviewTable() + ".product_id and "
+				+ Configuration.getPredictTable() + ".product_id = "  + prod_id;
+		
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
 			if (rs.next()) {
-				if(rs.getString(3).equals("#")) {
+				if(rs.getString(3).equals("true")) {
 					return true;
 				} else {
 					return false;
