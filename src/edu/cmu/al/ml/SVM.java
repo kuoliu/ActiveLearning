@@ -54,9 +54,6 @@ public class SVM implements Classifier {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 	}
-
 }
 

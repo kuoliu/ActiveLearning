@@ -55,7 +55,5 @@ public class LogisticClassifier implements Classifier {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
 }
