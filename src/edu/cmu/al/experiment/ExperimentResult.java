@@ -12,9 +12,10 @@ public class ExperimentResult {
 	double[] precisions;
 	double[] recalls;
 	double[] accuracies;
-	String precision = "matlab/precision.txt";
-	String recall = "matlab/recall.txt";
-	String accuracy = "matlab/accuracy.txt";
+	String DIR = "matlab/";
+	String precision = "precision.txt";
+	String recall = "recall.txt";
+	String accuracy = "accuracy.txt";
 
 	public ExperimentResult(int round) {
 		this.round = round;
@@ -34,10 +35,19 @@ public class ExperimentResult {
 			precisions[index] = precision;
 			recalls[index] = recall;
 			accuracies[index] = accuracy;
+			System.out.println(precision + "\t" + recall + "\t" + accuracy);
 			int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
 			// to do number of instance to label
+			// ---------------------------------
 			index++;
 		}
+		plotResult();
+	}
+	
+	public void plotResult(){
+		Plot plot = new Plot();
+		plot.barPlot();
+		plot.linePlot();
 	}
 
 	public void storeResult() throws IOException {
@@ -47,7 +57,7 @@ public class ExperimentResult {
 	}
 
 	public void storePrecision() throws IOException {
-		BufferedWriter out = new BufferedWriter(new FileWriter(precision));
+		BufferedWriter out = new BufferedWriter(new FileWriter(DIR + precision));
 		try {
 			for (int i = 0; i < round; i++) {
 				out.write(i + " " + precisions[i]);
@@ -61,7 +71,7 @@ public class ExperimentResult {
 	}
 
 	public void storeRecall() throws IOException {
-		BufferedWriter out = new BufferedWriter(new FileWriter(recall));
+		BufferedWriter out = new BufferedWriter(new FileWriter(DIR + recall));
 		try {
 			for (int i = 0; i < round; i++) {
 				out.write(i + " " + recalls[i]);
@@ -75,7 +85,7 @@ public class ExperimentResult {
 	}
 
 	public void storeAccuracy() throws IOException {
-		BufferedWriter out = new BufferedWriter(new FileWriter(accuracy));
+		BufferedWriter out = new BufferedWriter(new FileWriter(DIR + accuracy));
 		try {
 			for (int i = 0; i < round; i++) {
 				out.write(i + " " + accuracies[i]);

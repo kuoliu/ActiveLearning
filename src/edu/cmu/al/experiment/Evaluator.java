@@ -21,6 +21,7 @@ public class Evaluator {
 			getTrueNeg();
 			getFalsePos();
 			getFalseNeg();
+			System.out.println(TRUE_POS + "\t" + TRUE_NEG + "\t" + FALSE_POS + "\t" + FALSE_NEG);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

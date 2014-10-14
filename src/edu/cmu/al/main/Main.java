@@ -1,10 +1,9 @@
 package edu.cmu.al.main;
 
-import java.io.IOException;
-
 import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.BasicFeatureExtractor;
 import edu.cmu.al.feature.FeatureExtractor;
+
 
 /**
  * The main class to run main function
@@ -20,20 +19,13 @@ public class Main {
 		int featureId = 1;
 		FeatureExtractor featureExtractor = new BasicFeatureExtractor();
 		featureId = featureExtractor.extractFeature(featureId);
-//		ExperimentResult experiment = new ExperimentResult(round);
-//		experiment.doExperiment();
-//		System.out.println(System.getProperty("user.dir"));
-//		String[] cmd=new String[2];
-//		cmd[0] ="cmd.exe";
-//	    cmd[1]="matlab";
-//	   
-//		try {
-//			Runtime.getRuntime().exec(cmd);
-//			Runtime.getRuntime().exec("cmd /c cmd.exe /c mkdir cc" );
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println("a");
-//			e.printStackTrace();
-//		} 
+		
+		// Please Add the interaction part of user simulation within
+		// doExperiment() function. In this function, I will determine 
+		// how many instances should be labeled according to the precision
+		// score;
+		ExperimentResult experiment = new ExperimentResult(round);
+		experiment.doExperiment();
+ 
 	}
 }
