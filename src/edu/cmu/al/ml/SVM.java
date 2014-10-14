@@ -1,5 +1,6 @@
 package edu.cmu.al.ml;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class SVM implements Classifier {
 	@Override
 	public void test() {
 		// TODO Auto-generated method stub
+
 		InstanceQuery query;
 		try {
 			query = new InstanceQuery();

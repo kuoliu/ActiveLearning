@@ -4,8 +4,11 @@ import java.io.*;
 
 /**
  * Description: Used to print log or something to file
+<<<<<<< HEAD
+=======
  * 
  * @author Kuo Liu
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
  */
 public class Printer {
 
@@ -21,9 +24,12 @@ public class Printer {
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	/**
 	 * Close the resource associated with the printer instance
 	 */
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	public void close() {
 		try {
 			if (this.ps != null)
@@ -35,16 +41,22 @@ public class Printer {
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	/**
 	 * Print str to the file without a \n
 	 */
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	public void print(String str) {
 		this.ps.print(str);
 	}
 
+<<<<<<< HEAD
+=======
 	/**
 	 * Print str to the file with a \n
 	 */
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	public void println(String str) {
 		this.ps.println(str);
 	}
