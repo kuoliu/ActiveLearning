@@ -1,21 +1,6 @@
 package edu.cmu.al.main;
 
-<<<<<<< HEAD
-import edu.cmu.al.feature.BasicFeature;
-import edu.cmu.al.feature.Feature;
 
-public class Main {
-
-	public static void main(String[] args) {
-		
-		Preprocess.run();
-//		PreprocessPNWords.run();
-		
-		int featureId = 1;
-	
-		Feature featureExtractor = new BasicFeature();
-		featureId = featureExtractor.extractFeature(featureId);
-=======
 import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.BasicFeatureExtractor;
 import edu.cmu.al.feature.FeatureExtractor;
@@ -31,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 //		Preprocess.run();
-		
+//		PreprocessPNWords.run();
 //		int featureId = 1;
 //		FeatureExtractor featureExtractor = new BasicFeatureExtractor();
 //		featureId = featureExtractor.extractFeature(featureId);
@@ -43,6 +28,5 @@ public class Main {
 //		ExperimentResult experiment = new ExperimentResult(round);
 //		experiment.doExperiment();
  
->>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	}
 }
