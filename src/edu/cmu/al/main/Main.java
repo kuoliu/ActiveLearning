@@ -7,12 +7,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-//		Preprocess.run();
+		Preprocess.run();
+//		PreprocessPNWords.run();
 		
 		int featureId = 1;
 	
 		Feature featureExtractor = new BasicFeature();
 		featureId = featureExtractor.extractFeature(featureId);
-		
 	}
 }

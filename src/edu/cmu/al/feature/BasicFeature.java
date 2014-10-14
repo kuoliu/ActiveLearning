@@ -46,7 +46,8 @@ public class BasicFeature extends Feature {
 			e.printStackTrace();
 		}
 	}
-
+	 
+	
 	public int extractFeature(int featureId) {
 		numReviews(featureId++);
 		avgReviewScore(featureId++);

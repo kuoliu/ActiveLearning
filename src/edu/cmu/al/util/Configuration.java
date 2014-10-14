@@ -14,6 +14,9 @@ public class Configuration {
 	/** Configuration of database tables **/
 	private static String reviewTable = "product_review";
 	private static String featureTable = "product_feature";
+	private static String positiveWordTable = "positive_word";
+	private static String negativeWordTable = "negative_word";
+	private static String sentimentwordtable ="sentiment_word";
 	
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
@@ -22,6 +25,8 @@ public class Configuration {
 
 	/** Configuration about useful paths **/
 	private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
+	private static String sentimentpositiveDataPath = "./files/positive-words.txt";
+	private static String sentimentnegativeDataPath = "./files/negative-words.txt";
 	
 	public static String getSqlDriver() {
 		return sqlDriver;
@@ -87,6 +92,22 @@ public class Configuration {
 		Configuration.trainDataPath = trainDataPath;
 	}
 
+	public static String getsentimentpositiveDataPath() {
+		return sentimentpositiveDataPath;
+	}
+
+	public static void setsentimentpositiveDataPath(String sentimentpositiveDataPath) {
+		Configuration.sentimentpositiveDataPath = sentimentpositiveDataPath;
+	}
+	
+	public static String getsentimentnegativeDataPath() {
+		return sentimentnegativeDataPath;
+	}
+
+	public static void setsentimentnegativeDataPath(String sentimentnegativeDataPath) {
+		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
+	}
+	
 	public static String getReviewTable() {
 		return reviewTable;
 	}
@@ -102,4 +123,31 @@ public class Configuration {
 	public static void setFeatureTable(String featureTable) {
 		Configuration.featureTable = featureTable;
 	}
+	
+	
+	public static String getPostiveWordTable() {
+		return positiveWordTable;
+	}
+
+	public static void setPositiveWordTable(String positiveWordTable) {
+		Configuration.positiveWordTable = positiveWordTable;
+	}
+	
+	public static String getNegativeWordTable() {
+		return negativeWordTable;
+	}
+
+	public static void setnegativeWordTable(String negativeWordTable) {
+		Configuration.negativeWordTable = negativeWordTable;
+	}
+	
+	public static String getSentimentWordTable() {
+		return sentimentwordtable;
+	}
+
+	public static void setSentimentWordTable(String SentimentWordTable) {
+		Configuration.sentimentwordtable = sentimentwordtable;
+	}
+	
+	
 }

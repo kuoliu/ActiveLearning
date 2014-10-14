@@ -17,7 +17,7 @@ public class Preprocess {
 		file2Db();
 		initFeatureTable();
 	}
-
+	
 	private static void file2Db() {
 		FileManipulation fileManip = new FileManipulation();
 		BufferedReader br = fileManip
