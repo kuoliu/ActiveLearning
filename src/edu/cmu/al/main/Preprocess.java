@@ -17,7 +17,11 @@ public class Preprocess {
 		file2Db();
 		initFeatureTable();
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	private static void file2Db() {
 		FileManipulation fileManip = new FileManipulation();
 		BufferedReader br = fileManip
@@ -84,5 +88,15 @@ public class Preprocess {
 				+ Configuration.getFeatureTable()
 				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real)";
 		SqlManipulation.createTable(sql);
+<<<<<<< HEAD
+=======
+		
+		sql = "CREATE TABLE IF NOT EXISTS "
+				+ Configuration.getPredictTable()
+				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
+		SqlManipulation.createTable(sql);
+		
+		
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	}
 }

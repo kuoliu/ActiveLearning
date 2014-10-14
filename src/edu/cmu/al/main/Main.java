@@ -1,5 +1,6 @@
 package edu.cmu.al.main;
 
+<<<<<<< HEAD
 import edu.cmu.al.feature.BasicFeature;
 import edu.cmu.al.feature.Feature;
 
@@ -14,5 +15,34 @@ public class Main {
 	
 		Feature featureExtractor = new BasicFeature();
 		featureId = featureExtractor.extractFeature(featureId);
+=======
+import edu.cmu.al.experiment.ExperimentResult;
+import edu.cmu.al.feature.BasicFeatureExtractor;
+import edu.cmu.al.feature.FeatureExtractor;
+
+
+/**
+ * The main class to run main function
+ * 
+ * @author Kuo Liu
+ */
+public class Main {
+	public static int round = 100;
+	public static void main(String[] args) {
+		
+		Preprocess.run();
+		
+		int featureId = 1;
+		FeatureExtractor featureExtractor = new BasicFeatureExtractor();
+		featureId = featureExtractor.extractFeature(featureId);
+		
+		// Please Add the interaction part of user simulation within
+		// doExperiment() function. In this function, I will determine 
+		// how many instances should be labeled according to the precision
+		// score;
+		ExperimentResult experiment = new ExperimentResult(round);
+		experiment.doExperiment();
+ 
+>>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
 	}
 }
