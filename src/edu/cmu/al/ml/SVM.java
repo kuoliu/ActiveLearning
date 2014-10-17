@@ -1,17 +1,12 @@
 package edu.cmu.al.ml;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.cmu.al.util.Configuration;
-=======
-import java.util.*;
-
-import edu.cmu.al.util.*;
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 import weka.classifiers.functions.LibSVM;
 import weka.core.Instances;
+import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.Util;
 
 /**
  * Description: The SVM classifier
@@ -19,7 +14,6 @@ import weka.core.Instances;
 public class SVM extends Classifier {
 	private LibSVM svm;
 
-	@Override
 	public void train() {
 		try {
 			String sql = "select * from" + Configuration.getPredictTable()
@@ -30,19 +24,10 @@ public class SVM extends Classifier {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	}
 
 	@Override
 	public void test() {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		InstanceQuery query;
-=======
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 		try {
 			String sql = "select * from" + Configuration.getPredictTable()
 					+ "where label = \'#\'";
@@ -57,9 +42,6 @@ public class SVM extends Classifier {
 			e.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
 }
 
-=======
-}
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
+
