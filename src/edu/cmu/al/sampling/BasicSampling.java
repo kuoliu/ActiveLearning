@@ -3,25 +3,29 @@ package edu.cmu.al.sampling;
 import java.sql.ResultSet;
 import java.util.HashSet;
 
-import edu.cmu.al.util.*;
+import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.SqlManipulation;
+
+
+
 /**
  * Sampling is the base class of all sampling methods. It is responsible for
  * providing some instances for user to label.
- * 
  * @author yuanyuan
- * 
+ *
  */
 public abstract class BasicSampling {
 	ResultSet pool;
-
+	
 	public BasicSampling() {
+
 	}
 
 	/**
 	 * Select k instances to mark in next round.
+	 * @param k instances
 	 */
 	public abstract HashSet<String> sampling(int k);
-<<<<<<< HEAD
 	
 	
 	/**
@@ -40,19 +44,15 @@ public abstract class BasicSampling {
 		}
 	}	 
 	
-=======
-
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.
-	 * 
-	 * @param productId
+	 * @param id, line id
 	 * @return the posterior for a specific instance
 	 */
-	public Double getPredictResult(String productId) {
+	public Double get_predict_result(String product_id) {
 		String sql = "select confidence from "
-				+ Configuration.getPredictTable() + " where product_id = "
-				+ productId;
+				+ Configuration.getPredictTable() 
+				+ " where product_id = " + product_id;
 		ResultSet rs = SqlManipulation.query(sql);
 		double confidence = 0.0;
 		try {
@@ -64,24 +64,23 @@ public abstract class BasicSampling {
 		}
 		return confidence;
 	}
-
+	
 	/**
 	 * Return whether an observation is labeled or not.
-	 * 
-	 * @param productId
+	 * @param id, line id
 	 * @return true, labeled; false, unlabeled
 	 */
-	public boolean isLabled(String productId) {
-		String sql = "select islabeled from " + Configuration.getPredictTable()
-				+ "," + Configuration.getReviewTable() + " where "
-				+ Configuration.getPredictTable() + ".product_id = "
+	public boolean isLabled(String prod_id) {
+		String sql = "select islabeled from "
+				+ Configuration.getPredictTable() + "," + Configuration.getReviewTable()
+				+ " where " + Configuration.getPredictTable() + ".product_id = " 
 				+ Configuration.getReviewTable() + ".product_id and "
-				+ Configuration.getPredictTable() + ".product_id = " + productId;
-
+				+ Configuration.getPredictTable() + ".product_id = "  + prod_id;
+		
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
 			if (rs.next()) {
-				if (rs.getString(3).equals("true")) {
+				if(rs.getString(3).equals("true")) {
 					return true;
 				} else {
 					return false;
@@ -92,4 +91,6 @@ public abstract class BasicSampling {
 		}
 		return true;
 	}
+	
+	
 }
