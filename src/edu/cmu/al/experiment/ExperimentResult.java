@@ -1,13 +1,19 @@
 package edu.cmu.al.experiment;
 
+import edu.cmu.al.util.*;
+
 import edu.cmu.al.util.ScoreDefine;
 
 public class ExperimentResult {
 
-	int round;
-	double[] precisions;
-	double[] recalls;
-	double[] accuracies;
+	private int round;
+	private double[] precisions;
+	private double[] recalls;
+	private double[] accuracies;
+	private String DIR = "matlab/";
+	private String precision = "precision.txt";
+	private String recall = "recall.txt";
+	private String accuracy = "accuracy.txt";
 
 	public ExperimentResult(int round) {
 		this.round = round;
@@ -27,9 +33,49 @@ public class ExperimentResult {
 			precisions[index] = precision;
 			recalls[index] = recall;
 			accuracies[index] = accuracy;
-			int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
+			System.out.println(precision + "\t" + recall + "\t" + accuracy);
+			int numberOfInstanceToLabel = ScoreDefine
+					.getNumberOfInstanceToLabel(precision);
 			// to do number of instance to label
+			// ---------------------------------
 			index++;
 		}
+		plotResult();
+	}
+
+	public void plotResult() {
+		Plot plot = new Plot();
+		plot.barPlot();
+		plot.linePlot();
+	}
+
+	public void storeResult() {
+		storePrecision();
+		storeRecall();
+		storeAccuracy();
+	}
+
+	public void storePrecision() {
+		Printer printer = new Printer(DIR + precision);
+		for (int i = 0; i < round; i++) {
+			printer.println(i + " " + precisions[i]);
+		}
+		printer.close();
+	}
+
+	public void storeRecall() {
+		Printer printer = new Printer(DIR + recall);
+		for (int i = 0; i < round; i++) {
+			printer.println(i + " " + recalls[i]);
+		}
+		printer.close();
+	}
+
+	public void storeAccuracy() {
+		Printer printer = new Printer(DIR + accuracy);
+		for (int i = 0; i < round; i++) {
+			printer.println(i + " " + accuracies[i]);
+		}
+		printer.close();
 	}
 }

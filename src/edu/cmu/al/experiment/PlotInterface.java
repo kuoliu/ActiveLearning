@@ -14,6 +14,7 @@ public interface PlotInterface {
    * @return
    */
   public String dotPlot(int number, int round);
+  public void barPlot();
 
   /**
    * Plot the experiment result as a line chart. The first argument is the number of instances that
@@ -27,4 +28,5 @@ public interface PlotInterface {
    * @return
    */
   public String linePlot(int number, int round);
+  public void linePlot();
 }

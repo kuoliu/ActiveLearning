@@ -1,59 +1,43 @@
-
 package edu.cmu.al.ml;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.*;
 import weka.classifiers.functions.Logistic;
 import weka.core.Instances;
-import weka.experiment.InstanceQuery;
 
-public class LogisticClassifier implements Classifier {
+/**
+ * Description: The logistic regression classifier
+ */
+public class LogisticClassifier extends Classifier {
 	private Logistic logistic;
 
 	@Override
 	public void train() {
 		try {
-			InstanceQuery query = new InstanceQuery();
-			// load data from databse
-			query.setDatabaseURL(Configuration.getSqlUrl());
-			query.setUsername(Configuration.getSqlUserName());
-			query.setPassword(Configuration.getSqlPassword());
 			String sql = "select * from" + Configuration.getPredictTable()
 					+ "where label <> \'#\'";
-			query.setQuery(sql);
-			Instances data = query.retrieveInstances();
-
-			// setting class attribute
+			Instances data = getData(sql);
 			data.setClassIndex(data.numAttributes() - 1);
-
 			this.logistic.buildClassifier(data);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void test() {
-		// TODO Auto-generated method stub
-		InstanceQuery query;
 		try {
-			query = new InstanceQuery();
 			String sql = "select * from" + Configuration.getPredictTable()
 					+ "where label = \'#\'";
-			Instances data = query.retrieveInstances();
+			Instances data = getData(sql);
 			List<Double> predictionValue = new ArrayList<Double>();
 			for (int i = 0; i < data.numInstances(); i++) {
 				double pred = this.logistic.classifyInstance(data.instance(i));
 				predictionValue.add(pred);
 			}
-			// write back to database
-			Configuration.updatePredictTable(predictionValue);
+			Util.updatePredictTable(predictionValue);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

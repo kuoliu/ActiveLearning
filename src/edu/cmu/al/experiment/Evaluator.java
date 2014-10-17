@@ -1,8 +1,5 @@
 package edu.cmu.al.experiment;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import edu.cmu.al.util.Configuration;
 <<<<<<< HEAD
 =======
@@ -19,6 +16,7 @@ public class Evaluator {
 
 	public void evaluateClassification() {
 		clear();
+<<<<<<< HEAD
 		String sql = "select real_label, predict_label from " + Configuration.getFeatureTable();
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
@@ -43,6 +41,13 @@ public class Evaluator {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+=======
+		getTruePos();
+		getTrueNeg();
+		getFalsePos();
+		getFalseNeg();
+		System.out.println(TRUE_POS + "\t" + TRUE_NEG + "\t" + FALSE_POS + "\t" + FALSE_NEG);
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	}
 
 	public double computeAccuracy() {
@@ -57,6 +62,7 @@ public class Evaluator {
 		return (TRUE_POS) / (double) (TRUE_POS + FALSE_NEG);
 	}
 
+<<<<<<< HEAD
 	public void incTruePos() {
 		TRUE_POS++;
 	}
@@ -73,40 +79,38 @@ public class Evaluator {
 		FALSE_NEG++;
 
 	public void getTruePos() throws SQLException {
+=======
+	public void getTruePos() {
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
 				+ "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score >=" + ScoreDefine.posSocre;
-		ResultSet rs = SqlManipulation.query(sql);
-		while (rs.next()) {
-			TRUE_POS = rs.getInt(1);
-		}
+		TRUE_POS = SqlManipulation.queryInt(sql);
 	}
 
-	public void getTrueNeg() throws SQLException {
+	public void getTrueNeg() {
 		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
 				+ "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score <" + ScoreDefine.posSocre;
-		ResultSet rs = SqlManipulation.query(sql);
-		while (rs.next()) {
-			TRUE_NEG = rs.getInt(1);
-		}
+		TRUE_NEG = SqlManipulation.queryInt(sql);
 	}
 
-	public void getFalsePos() throws SQLException {
+	public void getFalsePos() {
 		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
 				+ "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score <" + ScoreDefine.posSocre;
-		ResultSet rs = SqlManipulation.query(sql);
-		while (rs.next()) {
-			FALSE_POS = rs.getInt(1);
-		}
+		FALSE_POS = SqlManipulation.queryInt(sql);
 	}
 
-	public void getFalseNeg() throws SQLException {
+	public void getFalseNeg() {
 		String sql = "select count(*) from " + Configuration.getReviewTable() + " R," + Configuration.getPredictTable() + " P "
 				+ "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score >=" + ScoreDefine.posSocre;
+<<<<<<< HEAD
 		ResultSet rs = SqlManipulation.query(sql);
 		while (rs.next()) {
 			FALSE_NEG = rs.getInt(1);
 		}
 
+=======
+		FALSE_NEG = SqlManipulation.queryInt(sql);
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	}
 
 	public void clear() {

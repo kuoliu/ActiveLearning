@@ -1,59 +1,65 @@
 package edu.cmu.al.ml;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.cmu.al.util.Configuration;
+=======
+import java.util.*;
+
+import edu.cmu.al.util.*;
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 import weka.classifiers.functions.LibSVM;
 import weka.core.Instances;
-import weka.experiment.InstanceQuery;
 
-public class SVM implements Classifier {
+/**
+ * Description: The SVM classifier
+ */
+public class SVM extends Classifier {
 	private LibSVM svm;
 
 	@Override
 	public void train() {
 		try {
-			InstanceQuery query = new InstanceQuery();
-			//load data from databse
-			query.setDatabaseURL(Configuration.getSqlUrl());
-			query.setUsername(Configuration.getSqlUserName());
-			query.setPassword(Configuration.getSqlPassword());
 			String sql = "select * from" + Configuration.getPredictTable()
 					+ "where label <> \'#\'";
-			query.setQuery(sql);
-			Instances data = query.retrieveInstances();
-			
-			// setting class attribute
+			Instances data = getData(sql);
 			data.setClassIndex(data.numAttributes() - 1);
-			
 			this.svm.buildClassifier(data);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	}
 
 	@Override
 	public void test() {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
 		InstanceQuery query;
+=======
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 		try {
-			query = new InstanceQuery();
-			String sql = "select * from" + Configuration.getPredictTable() + "where label = \'#\'";
-			Instances data = query.retrieveInstances();
+			String sql = "select * from" + Configuration.getPredictTable()
+					+ "where label = \'#\'";
+			Instances data = getData(sql);
 			List<Double> predictionValue = new ArrayList<Double>();
 			for (int i = 0; i < data.numInstances(); i++) {
 				double pred = this.svm.classifyInstance(data.instance(i));
 				predictionValue.add(pred);
 			}
-			//write back to database
-			Configuration.updatePredictTable(predictionValue);
+			Util.updatePredictTable(predictionValue);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f

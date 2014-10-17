@@ -1,7 +1,13 @@
 package edu.cmu.al.util;
 
+/**
+ * Description: Some general definition based on the score
+ */
 public class ScoreDefine {
-	// positive instance means the review score is greater or equal to 4;
+	
+	/**
+	 * The threshold for pos/neg instances
+	 */
 	public static int posSocre = 4;      
 	
 	static int numberOfInstanceToLabel = 1000;
@@ -29,5 +35,4 @@ public class ScoreDefine {
 			return numberOfInstanceToLabel/10;
 		}
 	}
-
 }
