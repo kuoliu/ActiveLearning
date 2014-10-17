@@ -9,6 +9,8 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Description: Do some proprocess work on the data set
+ * 
+ * @author Kuo Liu
  */
 public class Preprocess {
 
@@ -84,13 +86,9 @@ public class Preprocess {
 				+ Configuration.getFeatureTable()
 				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real)";
 		SqlManipulation.createTable(sql);
- 
-		
-		sql = "CREATE TABLE IF NOT EXISTS "
+ 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getPredictTable()
 				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
 		SqlManipulation.createTable(sql);
-		
-		
 	}
 }

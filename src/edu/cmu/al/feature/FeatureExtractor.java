@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Description: Abstract class for feature extractor, other feature extractors
  * will extend this class and rewrite the extractFeature function
  * 
- * @author Kuo Liu, Bo Ma
+ * @author Kuo Liu
  * 
  * */
 public abstract class FeatureExtractor {

@@ -4,11 +4,8 @@ import java.io.*;
 
 /**
  * Description: Used to print log or something to file
-<<<<<<< HEAD
-=======
  * 
  * @author Kuo Liu
->>>>>>> 9c8df1751a5e1c886fe2cf0bca30f577ae100058
  */
 public class Printer {
 

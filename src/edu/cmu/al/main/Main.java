@@ -5,7 +5,6 @@ import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.BasicFeatureExtractor;
 import edu.cmu.al.feature.FeatureExtractor;
 
-
 /**
  * The main class to run main function
  * 

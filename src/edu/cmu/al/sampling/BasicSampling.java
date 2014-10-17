@@ -6,8 +6,6 @@ import java.util.HashSet;
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
 
-
-
 /**
  * Sampling is the base class of all sampling methods. It is responsible for
  * providing some instances for user to label.
