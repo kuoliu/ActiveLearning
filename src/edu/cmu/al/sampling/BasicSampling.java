@@ -6,6 +6,8 @@ import java.util.HashSet;
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
 
+
+
 /**
  * Sampling is the base class of all sampling methods. It is responsible for
  * providing some instances for user to label.
@@ -29,18 +31,18 @@ public abstract class BasicSampling {
 	/**
 	 * Mark those selected observations in NotationTable.
 	 * @param selected, the set of line id
-
-	public void setNotationTable(HashSet<Integer> selected) {
+     */
+	public void setNotationTable(HashSet<String> selected) {
 		String updateSql = "update " + Configuration.getNotationTable()
-				+ " set notation = # where id=?";
+				+ " set notation = # where product_id=?";
 		try {
-			for (int line : selected) {
-				SqlManipulation.update(updateSql, line);
+			for (String pid : selected) {
+				SqlManipulation.update(updateSql, pid);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	 */
+	}	 
 	
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.

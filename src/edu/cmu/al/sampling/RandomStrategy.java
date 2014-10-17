@@ -48,4 +48,7 @@ public class RandomStrategy extends BasicSampling{
 		return selected;
 		
 	}
+	
+
+	
 }
