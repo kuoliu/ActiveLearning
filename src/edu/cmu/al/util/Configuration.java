@@ -1,5 +1,7 @@
 package edu.cmu.al.util;
 
+import java.util.List;
+
 /**
  * Description: Some configurations for the whole project
  * 
@@ -21,7 +23,7 @@ public class Configuration {
 	private static String positiveWordTable = "positive_word";
 	private static String negativeWordTable = "negative_word";
 	private static String sentimentwordtable ="sentiment_word";
-	
+
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
 	private static String logPath = "";
@@ -112,7 +114,6 @@ public class Configuration {
 	public static void setFeatureTable(String featureTable) {
 		Configuration.featureTable = featureTable;
 	}
-
 	public static String getPredictTable() {
 		return predictTable;
 	}
@@ -160,7 +161,20 @@ public class Configuration {
 	public static void setsentimentnegativeDataPath(String sentimentnegativeDataPath) {
 		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
 	}
-	
+
+	public static void updatePredictTable(List<Double> predictionValue) {
+		String updateSql = "update " + Configuration.getPredictTable()
+				+ " set predictValue = ? where id=?";
+		try {
+			for (int i = 0; i < predictionValue.size(); i++) {
+				//base 0 or base 1?
+				SqlManipulation.update(updateSql, predictionValue.get(i), i + 1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static String getSentimentpositiveDataPath() {
 		return sentimentpositiveDataPath;
 	}
@@ -177,5 +191,6 @@ public class Configuration {
 	public static void setSentimentnegativeDataPath(
 			String sentimentnegativeDataPath) {
 		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
+
 	}
 }

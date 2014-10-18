@@ -1,10 +1,12 @@
 package edu.cmu.al.ml;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import edu.cmu.al.util.*;
 import weka.classifiers.functions.LibSVM;
 import weka.core.Instances;
+import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.Util;
 
 /**
  * Description: The SVM classifier
@@ -12,7 +14,6 @@ import weka.core.Instances;
 public class SVM extends Classifier {
 	private LibSVM svm;
 
-	@Override
 	public void train() {
 		try {
 			String sql = "select * from" + Configuration.getPredictTable()
@@ -42,3 +43,5 @@ public class SVM extends Classifier {
 		}
 	}
 }
+
+

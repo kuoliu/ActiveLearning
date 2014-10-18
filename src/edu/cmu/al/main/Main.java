@@ -1,6 +1,5 @@
 package edu.cmu.al.main;
 
-
 import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.BasicFeatureExtractor;
 import edu.cmu.al.feature.FeatureExtractor;
@@ -34,4 +33,5 @@ public class Main {
 //		experiment.doExperiment();
  
 	}
+
 }
