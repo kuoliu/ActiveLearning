@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Configuration {
 
+
 	/** Configuration for Sql **/
 	private static String sqlDriver = "org.postgresql.Driver";
 	private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
