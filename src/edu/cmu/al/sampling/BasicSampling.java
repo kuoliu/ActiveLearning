@@ -32,7 +32,7 @@ public abstract class BasicSampling {
 	 * Mark those selected observations in NotationTable.
 	 * @param selected, the set of line id
      */
-	public void setNotationTable(HashSet<String> selected) {
+	public void setPredictTable(HashSet<String> selected) {
 		String updateSql = "update " + Configuration.getPredictTable()
 				+ " set notation = # where product_id=?";
 		try {

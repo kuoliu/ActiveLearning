@@ -78,6 +78,7 @@ public class Preprocess {
 
 	private static void createTables() {
 		String sql = "";
+
 		//drop tables
 		sql = "DROP TABLE IF EXISTS " + Configuration.getReviewTable();
 		SqlManipulation.dropTable(sql);
