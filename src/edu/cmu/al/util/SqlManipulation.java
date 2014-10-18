@@ -114,11 +114,7 @@ public class SqlManipulation {
 		}
 		return rs;
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	/** basic operation: deletion on table **/
 	public static void delete(String sql, Object... args) {
 		pstmt = null;

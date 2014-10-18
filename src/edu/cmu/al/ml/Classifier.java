@@ -1,8 +1,5 @@
 package edu.cmu.al.ml;
-<<<<<<< HEAD
 
-=======
->>>>>>> c32a403f4e921cd78649f88fee78fa53806d32a2
 
 import edu.cmu.al.util.Configuration;
 import weka.core.Instances;
