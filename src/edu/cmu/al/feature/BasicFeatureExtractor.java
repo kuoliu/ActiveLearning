@@ -1,6 +1,8 @@
 package edu.cmu.al.feature;
 
 import java.sql.ResultSet;
+import java.util.HashSet;
+import java.util.StringTokenizer;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
@@ -11,7 +13,7 @@ import edu.cmu.al.util.SqlManipulation;
  * reviews for each product and average score for each product.
  * 
  * @author Kuo Liu
- */
+ */ 
 
 public class BasicFeatureExtractor extends FeatureExtractor {
 
@@ -55,6 +57,9 @@ public class BasicFeatureExtractor extends FeatureExtractor {
 		featureMap.put(featureId ++, "Number of Reviews for a Product");
 		avgReviewScore(featureId);
 		featureMap.put(featureId ++, "Average Review Score for a Product");
+		
+		
+		
 		return featureId;
 	}
 }
