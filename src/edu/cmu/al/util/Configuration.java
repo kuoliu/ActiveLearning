@@ -1,10 +1,7 @@
 package edu.cmu.al.util;
 
-<<<<<<< HEAD
 import java.util.List;
 
-=======
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 /**
  * Description: Some configurations for the whole project
  * 
@@ -22,11 +19,7 @@ public class Configuration {
 	private static String reviewTable = "product_review";
 	private static String featureTable = "product_feature";
 	private static String predictTable = "classifier_predict";
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
 	private static String logPath = "";
@@ -113,13 +106,6 @@ public class Configuration {
 		return featureTable;
 	}
 
-<<<<<<< HEAD
-=======
-	public static void setFeatureTable(String featureTable) {
-		Configuration.featureTable = featureTable;
-	}
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
-
 	public static String getPredictTable() {
 		return predictTable;
 	}
@@ -127,8 +113,6 @@ public class Configuration {
 	public static void setPredictTable(String predictTable) {
 		Configuration.predictTable = predictTable;
 	}
-<<<<<<< HEAD
-	
 	
 	public static void updatePredictTable(List<Double> predictionValue) {
 		String updateSql = "update " + Configuration.getPredictTable()
@@ -141,7 +125,7 @@ public class Configuration {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-=======
+	}
 
 	public static String getSentimentpositiveDataPath() {
 		return sentimentpositiveDataPath;
@@ -159,6 +143,5 @@ public class Configuration {
 	public static void setSentimentnegativeDataPath(
 			String sentimentnegativeDataPath) {
 		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 	}
 }
