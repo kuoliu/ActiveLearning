@@ -52,6 +52,25 @@ public class SqlManipulation {
 		}
 		return true;
 	}
+	
+	/** basic operation: drop table **/
+	public static boolean dropTable(String sql) {
+		pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			if (!pstmt.execute())
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 
 	/** basic operation: insertion into table **/
 	public static boolean insert(String sql, Object... args) {
