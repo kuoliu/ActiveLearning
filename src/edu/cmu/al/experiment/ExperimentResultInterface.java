@@ -61,5 +61,4 @@ public interface ExperimentResultInterface {
    * @return
    */
   public List<Instance> labelAllInstance(List<Instance> list);
-
 }

@@ -10,6 +10,8 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Description: Do some proprocess work on the data set
+ * 
+ * @author Kuo Liu
  */
 public class Preprocess {
 
@@ -95,20 +97,32 @@ public class Preprocess {
 
 	private static void createTables() {
 		String sql = "";
+
+		//drop tables
+		sql = "DROP TABLE IF EXISTS " + Configuration.getReviewTable();
+		SqlManipulation.dropTable(sql);
+		
+		sql = "DROP TABLE IF EXISTS " + Configuration.getFeatureTable();
+		SqlManipulation.dropTable(sql);
+		
+		sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
+		SqlManipulation.dropTable(sql);
+		
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getReviewTable()
 				+ " (id SERIAL primary key, product_id varchar(256), product_title text, product_price varchar(256), review_userId varchar(256), review_profileName text, review_helpfulness varchar(256), review_score real, review_time varchar(256), review_summary text, review_text text)";
 		SqlManipulation.createTable(sql);
+
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
-				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real)";
+				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real,f4 real)";
 		SqlManipulation.createTable(sql);
-		
+
+
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getPredictTable()
 				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
 		SqlManipulation.createTable(sql);
-		
-		
+
 	}
 }

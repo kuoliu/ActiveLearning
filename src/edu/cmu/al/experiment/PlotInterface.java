@@ -24,4 +24,6 @@ public interface PlotInterface {
 	 * @return
 	 */
 	public void linePlot();
+
 }
+

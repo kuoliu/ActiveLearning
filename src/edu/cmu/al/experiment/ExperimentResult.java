@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import edu.cmu.al.util.ScoreDefine;
+import edu.cmu.al.util.*;
 
 public class ExperimentResult {
 

@@ -11,7 +11,6 @@ public class Plot implements PlotInterface {
 		try {
 			MatlabPlot plot = new MatlabPlot();
 			plot.barPlot();
-
 		} catch (MWException e) {
 			e.printStackTrace();
 		}
@@ -19,14 +18,19 @@ public class Plot implements PlotInterface {
 
 	@Override
 	public void linePlot() {
-
 		try {
 			MatlabPlot plot = new MatlabPlot();
 			plot.linePlot();
-
 		} catch (MWException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public String dotPlot(int number, int round){
+		return "";
+	}
+	
+	public String linePlot(int number, int round){
+		return "";
+	}
 }
