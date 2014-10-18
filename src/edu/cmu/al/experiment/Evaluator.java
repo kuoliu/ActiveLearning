@@ -7,7 +7,7 @@ import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.ScoreDefine;
 import edu.cmu.al.util.SqlManipulation;
 
-public class Evaluator {
+public class Evaluator implements EvaluatorInterface {
 
 	private int TRUE_POS;
 	private int TRUE_NEG;
@@ -27,16 +27,25 @@ public class Evaluator {
 		}
 	}
 
+	@Override
 	public double computeAccuracy() {
 		return (TRUE_NEG + TRUE_POS) / (double) (TRUE_NEG + TRUE_POS + FALSE_NEG + FALSE_POS);
 	}
 
+	@Override
 	public double computePrecision() {
 		return (TRUE_POS) / (double) (FALSE_POS + TRUE_POS);
 	}
 
+	@Override
 	public double computeRecall() {
 		return (TRUE_POS) / (double) (TRUE_POS + FALSE_NEG);
+	}
+
+	@Override
+	public double computeFMeasure() {
+		double a = 0.5;
+		return 1 / (a / computePrecision() + (1 - a) / computeRecall());
 	}
 
 	public void getTruePos() throws SQLException {
@@ -81,4 +90,5 @@ public class Evaluator {
 		this.FALSE_NEG = 0;
 		this.FALSE_POS = 0;
 	}
+
 }

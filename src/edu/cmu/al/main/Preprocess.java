@@ -2,6 +2,7 @@ package edu.cmu.al.main;
 
 import java.io.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.FileManipulation;
@@ -16,6 +17,24 @@ public class Preprocess {
 		createTables();
 		file2Db();
 		initFeatureTable();
+		initPredictTable();
+	}
+
+	private static void initPredictTable() {
+		String sql = "select product_id from " + Configuration.getReviewTable();
+		ResultSet rs = SqlManipulation.query(sql);
+		
+		sql = "insert into "
+				+ Configuration.getPredictTable()
+				+ " values(?,?)";
+		try {
+			while (rs.next()) {
+				SqlManipulation.insert(sql, rs.getString(1), false);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private static void file2Db() {
