@@ -78,6 +78,18 @@ public class Preprocess {
 
 	private static void createTables() {
 		String sql = "";
+		sql = "DROP TABLE IF EXISTS " + Configuration.getReviewTable();
+		SqlManipulation.dropTable(sql);
+		
+		sql = "";
+		sql = "DROP TABLE IF EXISTS " + Configuration.getFeatureTable();
+		SqlManipulation.dropTable(sql);
+		
+		sql = "";
+		sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
+		SqlManipulation.dropTable(sql);
+		
+		sql = "";
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getReviewTable()
 				+ " (id SERIAL primary key, product_id varchar(256), product_title text, product_price varchar(256), review_userId varchar(256), review_profileName text, review_helpfulness varchar(256), review_score real, review_time varchar(256), review_summary text, review_text text)";
