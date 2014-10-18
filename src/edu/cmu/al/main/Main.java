@@ -13,13 +13,14 @@ public class Main {
 	public static int round = 100;
 	public static void main(String[] args) {
 		
-		Preprocess.run();
+		System.out.println("Begin preprocess");
+    	Preprocess.run();
+    	System.out.println("finish preprocess");
 		
 		int featureId = 1;
 		FeatureExtractor featureExtractor = new BasicFeatureExtractor();
 		featureId = featureExtractor.extractFeature(featureId);
-
-//		Preprocess.run();
+		
 //		PreprocessPNWords.run();
 //		int featureId = 1;
 //		FeatureExtractor featureExtractor = new BasicFeatureExtractor();

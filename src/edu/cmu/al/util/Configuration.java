@@ -1,10 +1,7 @@
 package edu.cmu.al.util;
 
-<<<<<<< HEAD
 import java.util.List;
 
-=======
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
 /**
  * Description: Some configurations for the whole project
  * 
@@ -12,153 +9,155 @@ import java.util.List;
  */
 public class Configuration {
 
-	/** Configuration for Sql **/
-	private static String sqlDriver = "org.postgresql.Driver";
-	private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
-	private static String sqlUserName = "lk";
-	private static String sqlPassword = "123";
+  /** Configuration for Sql **/
+  private static String sqlDriver = "org.postgresql.Driver";
 
-	/** Configuration of database tables **/
-	private static String reviewTable = "product_review";
-	private static String featureTable = "product_feature";
-	private static String predictTable = "classifier_predict";
-<<<<<<< HEAD
-	
-=======
+  private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
 
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
-	/** Configuration about file **/
-	private static String fileFormat = "utf-8";
-	private static String logPath = "";
-	private static String tmpPath = "";
+  private static String sqlUserName = "houcy";
 
-	/** Configuration about useful paths **/
-	private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
-	private static String sentimentpositiveDataPath = "./files/positive-words.txt";
-	private static String sentimentnegativeDataPath = "./files/negative-words.txt";
+  private static String sqlPassword = "123456";
 
-	public static String getSqlDriver() {
-		return sqlDriver;
-	}
+  /** Configuration of database tables **/
+  private static String reviewTable = "product_review";
 
-	public static void setSqlDriver(String sqlDriver) {
-		Configuration.sqlDriver = sqlDriver;
-	}
+  private static String featureTable = "product_feature";
 
-	public static String getSqlUrl() {
-		return sqlUrl;
-	}
+  private static String predictTable = "classifier_predict";
 
-	public static void setSqlUrl(String sqlUrl) {
-		Configuration.sqlUrl = sqlUrl;
-	}
+  /** Configuration about file **/
+  private static String fileFormat = "utf-8";
 
-	public static String getSqlUserName() {
-		return sqlUserName;
-	}
+  private static String logPath = "";
 
-	public static void setSqlUserName(String sqlUserName) {
-		Configuration.sqlUserName = sqlUserName;
-	}
+  private static String tmpPath = "";
 
-	public static String getSqlPassword() {
-		return sqlPassword;
-	}
+  /** Configuration about useful paths **/
+  private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
 
-	public static void setSqlPassword(String sqlPassword) {
-		Configuration.sqlPassword = sqlPassword;
-	}
+  private static String sentimentpositiveDataPath = "./files/positive-words.txt";
 
-	public static String getFileFormat() {
-		return fileFormat;
-	}
+  private static String sentimentnegativeDataPath = "./files/negative-words.txt";
 
-	public static void setFileFormat(String fileFormat) {
-		Configuration.fileFormat = fileFormat;
-	}
+  public static String getSqlDriver() {
+    return sqlDriver;
+  }
 
-	public static String getLogPath() {
-		return logPath;
-	}
+  public static void setSqlDriver(String sqlDriver) {
+    Configuration.sqlDriver = sqlDriver;
+  }
 
-	public static void setLogPath(String logPath) {
-		Configuration.logPath = logPath;
-	}
+  public static String getSqlUrl() {
+    return sqlUrl;
+  }
 
-	public static String getTmpPath() {
-		return tmpPath;
-	}
+  public static void setSqlUrl(String sqlUrl) {
+    Configuration.sqlUrl = sqlUrl;
+  }
 
-	public static void setTmpPath(String tmpPath) {
-		Configuration.tmpPath = tmpPath;
-	}
+  public static String getSqlUserName() {
+    return sqlUserName;
+  }
 
-	public static String getTrainDataPath() {
-		return trainDataPath;
-	}
+  public static void setSqlUserName(String sqlUserName) {
+    Configuration.sqlUserName = sqlUserName;
+  }
 
-	public static void setTrainDataPath(String trainDataPath) {
-		Configuration.trainDataPath = trainDataPath;
-	}
+  public static String getSqlPassword() {
+    return sqlPassword;
+  }
 
-	public static String getReviewTable() {
-		return reviewTable;
-	}
+  public static void setSqlPassword(String sqlPassword) {
+    Configuration.sqlPassword = sqlPassword;
+  }
 
-	public static void setReviewTable(String reviewTable) {
-		Configuration.reviewTable = reviewTable;
-	}
+  public static String getFileFormat() {
+    return fileFormat;
+  }
 
-	public static String getFeatureTable() {
-		return featureTable;
-	}
+  public static void setFileFormat(String fileFormat) {
+    Configuration.fileFormat = fileFormat;
+  }
 
-<<<<<<< HEAD
-=======
-	public static void setFeatureTable(String featureTable) {
-		Configuration.featureTable = featureTable;
-	}
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
+  public static String getLogPath() {
+    return logPath;
+  }
 
-	public static String getPredictTable() {
-		return predictTable;
-	}
+  public static void setLogPath(String logPath) {
+    Configuration.logPath = logPath;
+  }
 
-	public static void setPredictTable(String predictTable) {
-		Configuration.predictTable = predictTable;
-	}
-<<<<<<< HEAD
-	
-	
-	public static void updatePredictTable(List<Double> predictionValue) {
-		String updateSql = "update " + Configuration.getPredictTable()
-				+ " set predictValue = ? where id=?";
-		try {
-			for (int i = 0; i < predictionValue.size(); i++) {
-				//base 0 or base 1?
-				SqlManipulation.update(updateSql, predictionValue.get(i), i + 1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-=======
+  public static String getTmpPath() {
+    return tmpPath;
+  }
 
-	public static String getSentimentpositiveDataPath() {
-		return sentimentpositiveDataPath;
-	}
+  public static void setTmpPath(String tmpPath) {
+    Configuration.tmpPath = tmpPath;
+  }
 
-	public static void setSentimentpositiveDataPath(
-			String sentimentpositiveDataPath) {
-		Configuration.sentimentpositiveDataPath = sentimentpositiveDataPath;
-	}
+  public static String getTrainDataPath() {
+    return trainDataPath;
+  }
 
-	public static String getSentimentnegativeDataPath() {
-		return sentimentnegativeDataPath;
-	}
+  public static void setTrainDataPath(String trainDataPath) {
+    Configuration.trainDataPath = trainDataPath;
+  }
 
-	public static void setSentimentnegativeDataPath(
-			String sentimentnegativeDataPath) {
-		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
->>>>>>> 8327d5b2156ac1eb7b8822233ef80a44b326bb7f
-	}
+  public static String getReviewTable() {
+    return reviewTable;
+  }
+
+  public static void setReviewTable(String reviewTable) {
+    Configuration.reviewTable = reviewTable;
+  }
+
+  public static String getFeatureTable() {
+    return featureTable;
+  }
+
+  public static void setFeatureTable(String featureTable) {
+    Configuration.featureTable = featureTable;
+  }
+
+  public static String getPredictTable() {
+    return predictTable;
+  }
+
+  public static void setPredictTable(String predictTable) {
+    Configuration.predictTable = predictTable;
+  }
+
+  public static void updatePredictTable(List<Double> predictionValue) {
+    String updateSql = "update " + Configuration.getPredictTable()
+            + " set predictValue = ? where id=?";
+    try {
+      for (int i = 0; i < predictionValue.size(); i++) {
+        // base 0 or base 1?
+        SqlManipulation.update(updateSql, predictionValue.get(i), i + 1);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static String getSentimentpositiveDataPath() {
+    return sentimentpositiveDataPath;
+  }
+
+  public static void setSentimentpositiveDataPath(String sentimentpositiveDataPath) {
+    Configuration.sentimentpositiveDataPath = sentimentpositiveDataPath;
+  }
+
+  public static String getSentimentnegativeDataPath() {
+    return sentimentnegativeDataPath;
+  }
+
+  public static void setSentimentnegativeDataPath(String sentimentnegativeDataPath) {
+    Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
+  }
+
+  public static String getNotationTable() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }
