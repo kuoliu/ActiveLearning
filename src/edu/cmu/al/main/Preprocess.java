@@ -8,7 +8,7 @@ import edu.cmu.al.util.FileManipulation;
 import edu.cmu.al.util.SqlManipulation;
 
 /**
- * Description: Do some proprocess work on the data set
+ * Description: Do some preprocess work on the data set
  * 
  * @author Kuo Liu
  */
@@ -18,6 +18,7 @@ public class Preprocess {
 		createTables();
 		file2Db();
 		initFeatureTable();
+		initPredictTable();
 	}
 
 	private static void file2Db() {
@@ -71,6 +72,22 @@ public class Preprocess {
 		}
 	}
 
+	
+	private static void initPredictTable() {
+		String sql = "select distinct product_id from "
+				+ Configuration.getReviewTable();
+		ResultSet rs = SqlManipulation.query(sql);
+		try {
+			sql = "insert into " + Configuration.getPredictTable()
+					+ " (product_id, islabeled) values (?, false)";
+			while (rs.next()) {
+				SqlManipulation.insert(sql, rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static String extractUsefulStr(String str) {
 		int idx = str.indexOf(":");
 		return str.substring(idx + 1).trim();
@@ -105,13 +122,6 @@ public class Preprocess {
 				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
 		SqlManipulation.createTable(sql);
 
-		
-		
-
- 		sql = "CREATE TABLE IF NOT EXISTS "
-				+ Configuration.getPredictTable()
-				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
-		SqlManipulation.createTable(sql);
 
 	}
 }
