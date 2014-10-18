@@ -1,25 +1,30 @@
 package edu.cmu.al.experiment;
 
-import edu.cmu.al.util.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import edu.cmu.al.util.ScoreDefine;
+import edu.cmu.al.util.*;
 
 public class ExperimentResult {
 
-	private int round;
-	private double[] precisions;
-	private double[] recalls;
-	private double[] accuracies;
-	private String DIR = "matlab/";
-	private String precision = "precision.txt";
-	private String recall = "recall.txt";
-	private String accuracy = "accuracy.txt";
+	int round;
+	double[] precisions;
+	double[] recalls;
+	double[] accuracies;
+	double[] fMeasures;
+	String DIR = "matlab/";
+	String precision = "precision.txt";
+	String recall = "recall.txt";
+	String accuracy = "accuracy.txt";
+	String fMeasure = "fMeasure.txt";
 
 	public ExperimentResult(int round) {
 		this.round = round;
 		this.precisions = new double[round];
 		this.recalls = new double[round];
 		this.accuracies = new double[round];
+		this.fMeasures = new double[round];
 	}
 
 	public void doExperiment() {
@@ -30,16 +35,18 @@ public class ExperimentResult {
 			double precision = evaluator.computePrecision();
 			double accuracy = evaluator.computeAccuracy();
 			double recall = evaluator.computeRecall();
+			double fMeasure = evaluator.computeFMeasure();
 			precisions[index] = precision;
 			recalls[index] = recall;
 			accuracies[index] = accuracy;
-			System.out.println(precision + "\t" + recall + "\t" + accuracy);
-			int numberOfInstanceToLabel = ScoreDefine
-					.getNumberOfInstanceToLabel(precision);
+			fMeasures[index] = fMeasure;
+			System.out.println(precision + "\t" + recall + "\t" + accuracy + "\t" + fMeasure);
+			int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
 			// to do number of instance to label
 			// ---------------------------------
 			index++;
 		}
+		// storeResult();
 		plotResult();
 	}
 
@@ -50,32 +57,28 @@ public class ExperimentResult {
 	}
 
 	public void storeResult() {
-		storePrecision();
-		storeRecall();
-		storeAccuracy();
+		try {
+			storeInFile(DIR + precision, precisions);
+			storeInFile(DIR + recall, recalls);
+			storeInFile(DIR + accuracy, accuracies);
+			storeInFile(DIR + fMeasure, fMeasures);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void storePrecision() {
-		Printer printer = new Printer(DIR + precision);
-		for (int i = 0; i < round; i++) {
-			printer.println(i + " " + precisions[i]);
-		}
-		printer.close();
-	}
+	public void storeInFile(String fileName, double[] array) throws IOException {
+		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+		try {
+			for (int i = 0; i < round; i++) {
+				out.write(i + " " + array[i]);
+				out.newLine();
+			}
+			out.close();
 
-	public void storeRecall() {
-		Printer printer = new Printer(DIR + recall);
-		for (int i = 0; i < round; i++) {
-			printer.println(i + " " + recalls[i]);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		printer.close();
-	}
-
-	public void storeAccuracy() {
-		Printer printer = new Printer(DIR + accuracy);
-		for (int i = 0; i < round; i++) {
-			printer.println(i + " " + accuracies[i]);
-		}
-		printer.close();
 	}
 }

@@ -2,6 +2,7 @@ package edu.cmu.al.main;
 
 import java.io.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.FileManipulation;
@@ -19,7 +20,9 @@ public class Preprocess {
 		file2Db();
 		initFeatureTable();
 		initPredictTable();
+
 	}
+
 
 	private static void file2Db() {
 		FileManipulation fileManip = new FileManipulation();
@@ -121,7 +124,6 @@ public class Preprocess {
 				+ Configuration.getPredictTable()
 				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
 		SqlManipulation.createTable(sql);
-
 
 	}
 }
