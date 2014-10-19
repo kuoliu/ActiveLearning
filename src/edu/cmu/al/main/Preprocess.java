@@ -8,7 +8,7 @@ import edu.cmu.al.util.FileManipulation;
 import edu.cmu.al.util.SqlManipulation;
 
 /**
- * Description: Do some proprocess work on the data set
+ * Description: Do some preprocess work on the data set
  * 
  * @author Kuo Liu
  */
@@ -18,7 +18,9 @@ public class Preprocess {
 		createTables();
 		file2Db();
 		initFeatureTable();
+		initPredictTable();
 	}
+
 
 	private static void file2Db() {
 		FileManipulation fileManip = new FileManipulation();
@@ -71,6 +73,22 @@ public class Preprocess {
 		}
 	}
 
+	
+	private static void initPredictTable() {
+		String sql = "select distinct product_id from "
+				+ Configuration.getReviewTable();
+		ResultSet rs = SqlManipulation.query(sql);
+		try {
+			sql = "insert into " + Configuration.getPredictTable()
+					+ " (product_id, islabeled) values (?, 0)";
+			while (rs.next()) {
+				SqlManipulation.insert(sql, rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static String extractUsefulStr(String str) {
 		int idx = str.indexOf(":");
 		return str.substring(idx + 1).trim();
@@ -96,22 +114,13 @@ public class Preprocess {
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
-				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real,f4 real)";
+				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real,f4 real,f5 real,f6 real,f7 real,f8 real)";
 		SqlManipulation.createTable(sql);
 
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getPredictTable()
-				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
+				+ " (product_id varchar(256) primary key, islabeled int, user_label real, confidence real, predict_result real)";
 		SqlManipulation.createTable(sql);
-
-		
-		
-
- 		sql = "CREATE TABLE IF NOT EXISTS "
-				+ Configuration.getPredictTable()
-				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
-		SqlManipulation.createTable(sql);
-
 	}
 }

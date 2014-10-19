@@ -1,137 +1,143 @@
 package edu.cmu.al.feature;
 
-import java.sql.ResultSet;
-import java.util.HashSet;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.sql.*;
 
-import edu.cmu.al.util.Configuration;
-import edu.cmu.al.util.SqlManipulation;
+import edu.cmu.al.util.*;
 
 /**
  * Extract sentiment dictionary based features including the ratio of positive
  * words and the ratio of negative words
+ * 
  */
 public class SentimentFeatureExtractor extends FeatureExtractor {
 
+	private static HashSet<String> positiveWords = null;
+	private static HashSet<String> negativeWords = null;
 
-	HashSet<String> positiveWord = new HashSet<String>();
-	HashSet<String> negativeWord = new HashSet<String>();
-
-	private void readPNwords() {
-		String sql = "select * from " + Configuration.getSentimentWordTable();
-		ResultSet rs = SqlManipulation.query(sql);
-		try {
-			while (rs.next()) {
-
-				if (rs.getString(3).equals("positive"))
-					positiveWord.add(rs.getString(1));
-				else {
-					negativeWord.add(rs.getString(1));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	static {
+		positiveWords = Util.loadFileToHashSet(Configuration
+				.getSentimentPositiveDicPath());
+		negativeWords = Util.loadFileToHashSet(Configuration
+				.getSentimentNegativeDicPath());
 	}
 
-	private void numSentimentText(int featureId) {
-		
-		String sql = "select product_id,  review_text  from " +
-				Configuration.getReviewTable() + " order by product_id";
-		ResultSet rs = SqlManipulation.query(sql);
-		int positiveNum = 0;
-		int negativeNum = 0;
-		String updateSql = "update " + Configuration.getFeatureTable()
-				+ " set f" + featureId + "=? where product_id=?";
-		
-		
-		try {
-			int i = 0;
-			String text = "";
-			String productId = "";
-			while (rs.next()) {
-				if(productId=="" || productId==rs.getString(1))
-				{
-					productId = rs.getString(1);
-					text = text + rs.getString(2); 
-				}
-				else {
-				
-					StringTokenizer st = new StringTokenizer(text);
-					while (st.hasMoreTokens()) {
-						String word = st.nextToken();
-						if (positiveWord.contains(word))
-							positiveNum++;
-						if(negativeWord.contains(word))
-							negativeNum++;
-					}
-					
-					double ratio = (double) (positiveNum+1) / (double) (1+negativeNum);
-					SqlManipulation.update(updateSql, ratio, productId);
-					text = rs.getString(2); 
-					productId= rs.getString(1);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-		private void numSentimentSummary(int featureId) {
-		
-		String sql = "select product_id,  review_summary  from " +
-				Configuration.getReviewTable() + " order by product_id";
-		ResultSet rs = SqlManipulation.query(sql);
-		int positiveNum = 0;
-		int negativeNum = 0;
-		String updateSql = "update " + Configuration.getFeatureTable()
-				+ " set f" + featureId + "=? where product_id=?";
-		
-		
-		try {
-			int i = 0;
-			String text = "";
-			String productId = "";
-			while (rs.next()) {
-				if(productId=="" || productId==rs.getString(1))
-				{
-					productId = rs.getString(1);
-					text = text + rs.getString(2); 
-				}
-				else {
-				
-					StringTokenizer st = new StringTokenizer(text);
-					while (st.hasMoreTokens()) {
-						String word = st.nextToken();
-						if (positiveWord.contains(word))
-							positiveNum++;
-						if(negativeWord.contains(word))
-							negativeNum++;
-					}
-					
-					double ratio = (double) (positiveNum+1) / (double) (1+negativeNum);
-					SqlManipulation.update(updateSql, ratio, productId);
-					text = rs.getString(2); 
-					productId= rs.getString(1);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-
-	/**
-	 * Extract basic features for each product
-	 */
 	public int extractFeature(int featureId) {
-		readPNwords();
-		numSentimentText(featureId);
-		featureMap.put(featureId ++, "Number of sentiment positive and negative for a Product for text");
-		
-		numSentimentSummary(featureId);
-		featureMap.put(featureId ++, "Number of sentiment positive and negative for a Product for summary");
+
+		HashMap<String, ReviewScore> map = new HashMap<String, ReviewScore>();
+		String sql = "select product_id, review_summary, review_text from product_review";
+		ResultSet rs = SqlManipulation.query(sql);
+		try {
+			while (rs.next()) {
+				String productId = rs.getString(1);
+				String summary = rs.getString(2);
+				String review = rs.getString(3);
+				if (map.containsKey(productId)) {
+					map.get(productId).run(summary, review, positiveWords,
+							negativeWords);
+				} else {
+					ReviewScore reviewScore = new ReviewScore();
+					reviewScore.run(summary, review, positiveWords,
+							negativeWords);
+					map.put(productId, reviewScore);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		for (String productId : map.keySet()) {
+			ReviewScore reviewScore = map.get(productId);
+
+			String updateSql = "update " + Configuration.getFeatureTable()
+					+ " set f" + featureId + "=? where product_id=?";
+			SqlManipulation.update(updateSql,
+					reviewScore.getPositiveRatioSummary(), productId);
+
+			updateSql = "update " + Configuration.getFeatureTable()
+					+ " set f" + (featureId + 1) + "=? where product_id=?";
+			SqlManipulation.update(updateSql,
+					reviewScore.getNegativeRatioSummary(), productId);
+
+			updateSql = "update " + Configuration.getFeatureTable()
+					+ " set f" + (featureId + 2) + "=? where product_id=?";
+			SqlManipulation.update(updateSql,
+					reviewScore.getPositiveRatioText(), productId);
+
+			updateSql = "update " + Configuration.getFeatureTable()
+					+ " set f" + (featureId + 3) + "=? where product_id=?";
+			SqlManipulation.update(updateSql,
+					reviewScore.getNegativeRatioText(), productId);
+
+			updateSql = "update " + Configuration.getFeatureTable()
+					+ " set f" + (featureId + 4) + "=? where product_id=?";
+			SqlManipulation.update(updateSql,
+					reviewScore.getPosNegRatioSummary(), productId);
+
+			updateSql = "update " + Configuration.getFeatureTable()
+					+ " set f" + (featureId + 5) + "=? where product_id=?";
+			SqlManipulation.update(updateSql, reviewScore.getPosNegRatioText(),
+					productId);
+		}
+		linkFeatureidToFeature(featureId++, "positive word ratio for summary");
+		linkFeatureidToFeature(featureId++, "negative word ratio for summary");
+		linkFeatureidToFeature(featureId++, "positive word ratio for text");
+		linkFeatureidToFeature(featureId++, "negative word ratio for text");
+		linkFeatureidToFeature(featureId++, "postive/negative for summary");
+		linkFeatureidToFeature(featureId++, "positive/negative for text");
 		return featureId;
+	}
+}
+
+class ReviewScore {
+	private int positiveCntSummary;
+	private int negativeCntSummary;
+	private int positiveCntText;
+	private int negativeCntText;
+	private int cntSummary;
+	private int cntText;
+
+	public void run(String summary, String review, HashSet<String> posDic,
+			HashSet<String> negDic) {
+		String[] summaryWords = summary.split("\\s+");
+		String[] reviewWords = review.split("\\s+");
+		for (String word : summaryWords) {
+			if (posDic.contains(word))
+				++positiveCntSummary;
+			if (negDic.contains(word))
+				++negativeCntSummary;
+			++cntSummary;
+		}
+		for (String word : reviewWords) {
+			if (posDic.contains(word))
+				++positiveCntText;
+			if (negDic.contains(word))
+				++negativeCntText;
+			++cntText;
+		}
+	}
+
+	public float getPositiveRatioSummary() {
+		return (float) positiveCntSummary / (float) cntSummary;
+	}
+
+	public float getNegativeRatioSummary() {
+		return (float) negativeCntSummary / (float) cntSummary;
+	}
+
+	public float getPositiveRatioText() {
+		return (float) positiveCntText / (float) cntText;
+	}
+
+	public float getNegativeRatioText() {
+		return (float) negativeCntText / (float) cntText;
+	}
+
+	public float getPosNegRatioSummary() {
+		return (float) (positiveCntSummary + 1) / (float) (negativeCntSummary + 1);
+	}
+
+	public float getPosNegRatioText() {
+		return (float) (positiveCntText + 1) / (float) (negativeCntText + 1);
 	}
 }

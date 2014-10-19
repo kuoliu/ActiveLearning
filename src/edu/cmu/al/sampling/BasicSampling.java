@@ -11,7 +11,7 @@ import edu.cmu.al.util.SqlManipulation;
 /**
  * Sampling is the base class of all sampling methods. It is responsible for
  * providing some instances for user to label.
- * @author yuanyuan
+ * @author Yuanyuan Yang
  *
  */
 public abstract class BasicSampling {
@@ -30,11 +30,11 @@ public abstract class BasicSampling {
 	
 	/**
 	 * Mark those selected observations in NotationTable.
-	 * @param selected, the set of line id
+	 * @param selected
      */
 	public void setPredictTable(HashSet<String> selected) {
 		String updateSql = "update " + Configuration.getPredictTable()
-				+ " set notation = # where product_id=?";
+				+ " set islabeled = 1 where product_id = ?";
 		try {
 			for (String pid : selected) {
 				SqlManipulation.update(updateSql, pid);
@@ -46,13 +46,13 @@ public abstract class BasicSampling {
 	
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.
-	 * @param id, line id
+	 * @param product_id
 	 * @return the posterior for a specific instance
 	 */
 	public Double get_predict_result(String product_id) {
 		String sql = "select confidence from "
 				+ Configuration.getPredictTable() 
-				+ " where product_id = " + product_id;
+				+ " where product_id = '" + product_id + "'";
 		ResultSet rs = SqlManipulation.query(sql);
 		double confidence = 0.0;
 		try {
@@ -67,20 +67,17 @@ public abstract class BasicSampling {
 	
 	/**
 	 * Return whether an observation is labeled or not.
-	 * @param id, line id
+	 * @param prod_id
 	 * @return true, labeled; false, unlabeled
 	 */
 	public boolean isLabled(String prod_id) {
 		String sql = "select islabeled from "
-				+ Configuration.getPredictTable() + "," + Configuration.getReviewTable()
-				+ " where " + Configuration.getPredictTable() + ".product_id = " 
-				+ Configuration.getReviewTable() + ".product_id and "
-				+ Configuration.getPredictTable() + ".product_id = "  + prod_id;
+				+ Configuration.getPredictTable() + " where product_id = '"  + prod_id + "'";
 		
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
 			if (rs.next()) {
-				if(rs.getString(3).equals("true")) {
+				if(rs.getInt(1) == 1) {
 					return true;
 				} else {
 					return false;

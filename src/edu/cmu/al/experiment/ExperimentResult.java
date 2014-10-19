@@ -1,25 +1,35 @@
 package edu.cmu.al.experiment;
 
-import edu.cmu.al.util.*;
+import java.util.HashSet;
 
-import edu.cmu.al.util.ScoreDefine;
+import edu.cmu.al.ml.Classifier;
+import edu.cmu.al.ml.LogisticClassifier;
+import edu.cmu.al.sampling.BasicSampling;
+import edu.cmu.al.sampling.RandomStrategy;
+import edu.cmu.al.sampling.UncertaintyStrategy;
+import edu.cmu.al.simulation.BasicLabelingSimulation;
+import edu.cmu.al.simulation.LabelingSimulation;
+import edu.cmu.al.util.*;
 
 public class ExperimentResult {
 
-	private int round;
-	private double[] precisions;
-	private double[] recalls;
-	private double[] accuracies;
-	private String DIR = "matlab/";
-	private String precision = "precision.txt";
-	private String recall = "recall.txt";
-	private String accuracy = "accuracy.txt";
+	int round;
+	double[] precisions;
+	double[] recalls;
+	double[] accuracies;
+	double[] fMeasures;
+	String DIR = "matlab/";
+	String precision = "precision.txt";
+	String recall = "recall.txt";
+	String accuracy = "accuracy.txt";
+	String fMeasure = "fMeasure.txt";
 
 	public ExperimentResult(int round) {
 		this.round = round;
 		this.precisions = new double[round];
 		this.recalls = new double[round];
 		this.accuracies = new double[round];
+		this.fMeasures = new double[round];
 	}
 
 	public void doExperiment() {
@@ -30,16 +40,33 @@ public class ExperimentResult {
 			double precision = evaluator.computePrecision();
 			double accuracy = evaluator.computeAccuracy();
 			double recall = evaluator.computeRecall();
+			double fMeasure = evaluator.computeFMeasure();
 			precisions[index] = precision;
 			recalls[index] = recall;
 			accuracies[index] = accuracy;
-			System.out.println(precision + "\t" + recall + "\t" + accuracy);
+			fMeasures[index] = fMeasure;
+			System.out.println(precision + "\t" + recall + "\t" + accuracy
+					+ "\t" + fMeasure);
 			int numberOfInstanceToLabel = ScoreDefine
 					.getNumberOfInstanceToLabel(precision);
+
+			LabelingSimulation simulation = new BasicLabelingSimulation();
 			// to do number of instance to label
-			// ---------------------------------
+			BasicSampling randomsample = new RandomStrategy();
+			BasicSampling uncsample = new UncertaintyStrategy();
+
+			HashSet<String> productIds = randomsample
+					.sampling(numberOfInstanceToLabel);
+
+			// label all the instances in productIds
+			simulation.labelProductId(productIds);
+
+			Classifier classifier = new LogisticClassifier();
+			classifier.train();
+			classifier.test();
 			index++;
 		}
+		// storeResult();
 		plotResult();
 	}
 
@@ -50,31 +77,16 @@ public class ExperimentResult {
 	}
 
 	public void storeResult() {
-		storePrecision();
-		storeRecall();
-		storeAccuracy();
+		storeInFile(DIR + precision, precisions);
+		storeInFile(DIR + recall, recalls);
+		storeInFile(DIR + accuracy, accuracies);
+		storeInFile(DIR + fMeasure, fMeasures);
 	}
 
-	public void storePrecision() {
-		Printer printer = new Printer(DIR + precision);
+	public void storeInFile(String fileName, double[] array) {
+		Printer printer = new Printer(fileName);
 		for (int i = 0; i < round; i++) {
-			printer.println(i + " " + precisions[i]);
-		}
-		printer.close();
-	}
-
-	public void storeRecall() {
-		Printer printer = new Printer(DIR + recall);
-		for (int i = 0; i < round; i++) {
-			printer.println(i + " " + recalls[i]);
-		}
-		printer.close();
-	}
-
-	public void storeAccuracy() {
-		Printer printer = new Printer(DIR + accuracy);
-		for (int i = 0; i < round; i++) {
-			printer.println(i + " " + accuracies[i]);
+			printer.println(i + " " + array[i]);
 		}
 		printer.close();
 	}
