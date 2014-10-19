@@ -86,32 +86,25 @@ public class Preprocess {
 		sql = "DROP TABLE IF EXISTS " + Configuration.getFeatureTable();
 		SqlManipulation.dropTable(sql);
 		
-		sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
-		SqlManipulation.dropTable(sql);
+		/*sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
+		SqlManipulation.dropTable(sql);*/
 		
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getReviewTable()
-				+ " (id SERIAL primary key, product_id varchar(256), product_title text, product_price varchar(256), review_userId varchar(256), review_profileName text, review_helpfulness varchar(256), review_score real, review_time varchar(256), review_summary text, review_text text)";
+				+ " (id SERIAL primary key, product_id VARCHAR(256), product_title TEXT, product_price VARCHAR(256), review_userId varchar(256), review_profileName text, review_helpfulness varchar(256), review_score real, review_time varchar(256), review_summary text, review_text text)";
 		SqlManipulation.createTable(sql);
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
-				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real,f4 real)";
+				+ " (product_id VARCHAR(256) primary key, f1 REAL, f2 REAL, f3 REAL, f4 REAL)";
 		SqlManipulation.createTable(sql);
 
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getPredictTable()
-				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
+				+ " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, confidence REAL, predict_result REAL)";
 		SqlManipulation.createTable(sql);
 
-		
-		
-
- 		sql = "CREATE TABLE IF NOT EXISTS "
-				+ Configuration.getPredictTable()
-				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
-		SqlManipulation.createTable(sql);
 
 	}
 }

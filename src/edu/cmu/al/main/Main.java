@@ -4,6 +4,8 @@ import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.BasicFeatureExtractor;
 import edu.cmu.al.feature.FeatureExtractor;
 import edu.cmu.al.feature.SentimentFeatureExtractor;
+import edu.cmu.al.ml.LogisticClassifier;
+import edu.cmu.al.ml.Regression;
 
 /**
  * The main class to run main function
@@ -14,8 +16,8 @@ public class Main {
 	public static int round = 100;
 	public static void main(String[] args) {
 		
-//		Preprocess.run();
-//		PreprocessPNWords.run();
+		/*Preprocess.run();
+		PreprocessPNWords.run();
 		System.out.println("1");
 		int featureId = 1;
 
@@ -23,7 +25,11 @@ public class Main {
 		featureId = featureExtractor.extractFeature(featureId);
 		
 		featureExtractor = new SentimentFeatureExtractor();
-		featureId = featureExtractor.extractFeature(featureId);
+		featureId = featureExtractor.extractFeature(featureId);*/
+		
+		Regression lc = new Regression();
+		lc.train();
+		lc.test();
 //		
 //		// Please Add the interaction part of user simulation within
 //		// doExperiment() function. In this function, I will determine 

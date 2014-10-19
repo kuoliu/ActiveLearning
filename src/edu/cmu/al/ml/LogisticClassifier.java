@@ -15,8 +15,11 @@ public class LogisticClassifier extends Classifier {
 	@Override
 	public void train() {
 		try {
-			String sql = "select * from" + Configuration.getPredictTable()
-					+ "where label <> \'#\'";
+			String sql = "select f3, f2 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 1";
+			/*String sql = "select " + Configuration.getPredictTable() + ".f2 from + Configuration.getFeatureTable() + " , " 
+					 + Configuration.getPredictTable() + " where " + Configuration.getFeatureTable() + ".product_id = "
+					+ Configuration.getPredictTable() + ".product_id and " 
+					+ Configuration.getPredictTable() + ".islabeled = true";*/
 			Instances data = getData(sql);
 			data.setClassIndex(data.numAttributes() - 1);
 			this.logistic.buildClassifier(data);
@@ -28,8 +31,10 @@ public class LogisticClassifier extends Classifier {
 	@Override
 	public void test() {
 		try {
-			String sql = "select * from" + Configuration.getPredictTable()
-					+ "where label = \'#\'";
+			String sql = "select * from" + Configuration.getFeatureTable() + " , " 
+					 + Configuration.getPredictTable() + " where " + Configuration.getFeatureTable() + ".product_id = "
+					+ Configuration.getPredictTable() + ".product_id and " 
+					+ Configuration.getPredictTable() + ".islabeled = false";
 			Instances data = getData(sql);
 			List<Double> predictionValue = new ArrayList<Double>();
 			for (int i = 0; i < data.numInstances(); i++) {
