@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.ScoreDefine;
 import edu.cmu.al.util.SqlManipulation;
 
 /**
@@ -24,9 +25,12 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 		} // end if
 
 		for (String pId : productIds) {
-			String sql = "select avg(review_score) from "
-					+ Configuration.getReviewTable() + " where product_id=?";
+			String sql = "select f2 from "
+					+ Configuration.getFeatureTable() + " where product_id=?";
 
+			/* String sql = "select avg(review_score) from "
+		          + Configuration.getReviewTable() + " where product_id=?"; */
+			
 			ResultSet rs = SqlManipulation.query(sql, pId);
 			String updateSql = "update "
 					+ Configuration.getPredictTable()
@@ -34,7 +38,11 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
 			try {
 				rs.next();
-				SqlManipulation.update(updateSql, rs.getDouble(1),
+				double label = Math.round(rs.getDouble(1)) >= ScoreDefine.posSocre ? 1.0 : 0.0;
+		
+				// System.out.println("avg score: " + rs.getDouble(1) + "\tlabel: " + label);
+				
+				SqlManipulation.update(updateSql, label,
 						(int) 1, pId);
 			} catch (Exception e) {
 				e.printStackTrace();
