@@ -11,6 +11,7 @@ import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.sampling.UncertaintyStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
+import edu.cmu.al.simulation.LabelingSimulation;
 import edu.cmu.al.util.*;
 
 public class ExperimentResult {
@@ -50,13 +51,16 @@ public class ExperimentResult {
 			System.out.println(precision + "\t" + recall + "\t" + accuracy + "\t" + fMeasure);
 			int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
 			
-			BasicLabelingSimulation simulation = new BasicLabelingSimulation();
+			LabelingSimulation simulation = new BasicLabelingSimulation();
 			// to do number of instance to label
 			BasicSampling randomsample = new RandomStrategy();
 			BasicSampling uncsample = new UncertaintyStrategy();
 			
 			HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel);
-			simulation.label(productIds);
+			
+			// label all the instances in productIds
+			simulation.labelProductId(productIds);
+			
 			Classifier classifier = new LogisticClassifier();
 			classifier.train();
 			classifier.test();

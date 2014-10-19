@@ -23,12 +23,10 @@ public class BasicLabelingSimulation implements LabelingSimulation {
       String sql = "select avg(review_score) from " + Configuration.getReviewTable()
               + " where product_id=?";
       
-      System.out.println(sql);
-      
       ResultSet rs = SqlManipulation.query(sql, pId);
-
       String updateSql = "update " + Configuration.getPredictTable()
               + " set (user_label, islabeled) = (?, ?) where product_id=?";
+      
       try {
         rs.next();
         SqlManipulation.update(updateSql, Math.round(rs.getFloat(1)), true, pId);
@@ -48,13 +46,15 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     Set<String> productIds = new HashSet<String>();
 
     try {
+      
       while (rs.next()) {
         productIds.add(rs.getString(1));
       }
-
-      labelProductId(productIds);
+      
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    
+    labelProductId(productIds);
   }
 }
