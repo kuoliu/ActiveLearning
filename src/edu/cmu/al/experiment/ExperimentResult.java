@@ -61,10 +61,10 @@ public class ExperimentResult {
 			// label all the instances in productIds
 			simulation.labelProductId(productIds);
 
-			/*Regression lc = new Regression();
+			Regression lc = new Regression();
 			lc.train();
 			lc.test();
-			index++;*/
+			index++;
 		}
 		// storeResult();
 		plotResult();
