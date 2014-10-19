@@ -1,10 +1,5 @@
 package edu.cmu.al.simulation;
 
-import java.util.Random;
-
-import edu.cmu.al.experiment.ExperimentResult;
-import edu.cmu.al.main.Preprocess;
-
 public class testSimulation {
   public static int round = 100;
 
