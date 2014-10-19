@@ -23,7 +23,7 @@ public class Preprocess {
 	}
 
 	private static void initPredictTable() {
-		String sql = "select product_id from " + Configuration.getReviewTable();
+		String sql = "select distinct product_id from " + Configuration.getReviewTable();
 		ResultSet rs = SqlManipulation.query(sql);
 		
 		sql = "insert into "
