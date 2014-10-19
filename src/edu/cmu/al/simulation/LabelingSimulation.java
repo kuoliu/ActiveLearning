@@ -1,9 +1,8 @@
 package edu.cmu.al.simulation;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import edu.cmu.al.instance.Instance;
 
 /**
  * @author Shuo Zheng, Zhengxiong Zhang
@@ -14,7 +13,11 @@ import edu.cmu.al.instance.Instance;
  */
 public interface LabelingSimulation {
 
-  public void labelProductId(Set<String> productIds);
+  public void labelProductId(Collection<String> productIds);
   
   public void labelAll();
+  
+  public List<String> randomLabelByNum(int n);
+  
+  public List<String> randomLabelByRatio(float ratio);
 }
