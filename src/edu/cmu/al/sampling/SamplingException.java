@@ -6,6 +6,8 @@ package edu.cmu.al.sampling;
  */
 public class SamplingException extends Exception{
 	
+	private static final long serialVersionUID = -8935853021890344193L;
+
 	//Parameterless Constructor
     public SamplingException() {}
 

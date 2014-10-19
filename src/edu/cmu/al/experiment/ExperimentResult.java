@@ -1,8 +1,5 @@
 package edu.cmu.al.experiment;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashSet;
 
 import edu.cmu.al.ml.Classifier;
@@ -11,6 +8,7 @@ import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.sampling.UncertaintyStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
+import edu.cmu.al.simulation.LabelingSimulation;
 import edu.cmu.al.util.*;
 
 public class ExperimentResult {
@@ -47,16 +45,22 @@ public class ExperimentResult {
 			recalls[index] = recall;
 			accuracies[index] = accuracy;
 			fMeasures[index] = fMeasure;
-			System.out.println(precision + "\t" + recall + "\t" + accuracy + "\t" + fMeasure);
-			int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
-			
-			BasicLabelingSimulation simulation = new BasicLabelingSimulation();
+			System.out.println(precision + "\t" + recall + "\t" + accuracy
+					+ "\t" + fMeasure);
+			int numberOfInstanceToLabel = ScoreDefine
+					.getNumberOfInstanceToLabel(precision);
+
+			LabelingSimulation simulation = new BasicLabelingSimulation();
 			// to do number of instance to label
 			BasicSampling randomsample = new RandomStrategy();
 			BasicSampling uncsample = new UncertaintyStrategy();
-			
-			HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel);
-			simulation.label(productIds);
+
+			HashSet<String> productIds = randomsample
+					.sampling(numberOfInstanceToLabel);
+
+			// label all the instances in productIds
+			simulation.labelProductId(productIds);
+
 			Classifier classifier = new LogisticClassifier();
 			classifier.train();
 			classifier.test();
@@ -73,28 +77,17 @@ public class ExperimentResult {
 	}
 
 	public void storeResult() {
-		try {
-			storeInFile(DIR + precision, precisions);
-			storeInFile(DIR + recall, recalls);
-			storeInFile(DIR + accuracy, accuracies);
-			storeInFile(DIR + fMeasure, fMeasures);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		storeInFile(DIR + precision, precisions);
+		storeInFile(DIR + recall, recalls);
+		storeInFile(DIR + accuracy, accuracies);
+		storeInFile(DIR + fMeasure, fMeasures);
 	}
 
-	public void storeInFile(String fileName, double[] array) throws IOException {
-		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-		try {
-			for (int i = 0; i < round; i++) {
-				out.write(i + " " + array[i]);
-				out.newLine();
-			}
-			out.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
+	public void storeInFile(String fileName, double[] array) {
+		Printer printer = new Printer(fileName);
+		for (int i = 0; i < round; i++) {
+			printer.println(i + " " + array[i]);
 		}
+		printer.close();
 	}
 }
