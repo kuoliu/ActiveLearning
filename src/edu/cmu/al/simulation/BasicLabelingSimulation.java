@@ -45,7 +45,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
   // label all the instances
   @Override
   public void labelAll() {
-    Set<String> productIds = getProductSet();
+    List<String> productIds = getProductList();
     labelProductId(productIds);
   }
 
@@ -79,21 +79,15 @@ public class BasicLabelingSimulation implements LabelingSimulation {
   }
 
   // get all instances in the database
-  private Set<String> getProductSet() {
-    String sql = "select product_id from " + Configuration.getPredictTable();
-    ResultSet rs = SqlManipulation.query(sql);
-
-    Set<String> productIds = new HashSet<String>();
-    try {
-      while (rs.next()) {
-        productIds.add(rs.getString(1));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return productIds;
-  }
+  /*
+   * private Set<String> getProductSet() { String sql = "select product_id from " +
+   * Configuration.getPredictTable(); ResultSet rs = SqlManipulation.query(sql);
+   * 
+   * Set<String> productIds = new HashSet<String>(); try { while (rs.next()) {
+   * productIds.add(rs.getString(1)); } } catch (SQLException e) { e.printStackTrace(); }
+   * 
+   * return productIds; }
+   */
 
   // get all instances in the database
   private List<String> getProductList() {
