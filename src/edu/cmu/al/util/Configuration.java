@@ -12,8 +12,8 @@ public class Configuration {
 	/** Configuration for Sql **/
 	private static String sqlDriver = "org.postgresql.Driver";
 	private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
-	private static String sqlUserName = "lk";
-	private static String sqlPassword = "123";
+	private static String sqlUserName = "yyy";
+	private static String sqlPassword = "1204";
 
 
 	/** Configuration of database tables **/

@@ -29,18 +29,16 @@ public class Main {
 	    FeatureExtractor featureExtractor = new BasicFeatureExtractor();
 	    featureId = featureExtractor.extractFeature(featureId);
 		
-		featureExtractor = new SentimentFeatureExtractor();
-		featureId = featureExtractor.extractFeature(featureId);
+//		featureExtractor = new SentimentFeatureExtractor();
+//		featureId = featureExtractor.extractFeature(featureId);
 		
-		ExperimentResult experiment = new ExperimentResult(round);
-		experiment.doExperiment();
+/*		ExperimentResult experiment = new ExperimentResult(round);
+		experiment.doExperiment();*/
 		
 	    BasicSampling randomsample = new RandomStrategy();
 	    BasicSampling uncsample = new UncertaintyStrategy();
 	    
-	    for (int i = 0; i < 10; i++) {
-	    	HashSet<String> productIds = randomsample.sampling(5);
-	    }
+	
     
 	    // Preprocess.run();
 	    // PreprocessPNWords.run();

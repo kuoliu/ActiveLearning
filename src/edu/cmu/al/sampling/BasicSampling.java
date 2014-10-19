@@ -34,7 +34,7 @@ public abstract class BasicSampling {
      */
 	public void setPredictTable(HashSet<String> selected) {
 		String updateSql = "update " + Configuration.getPredictTable()
-				+ " set islabeled = true where product_id = ?";
+				+ " set islabeled = 1 where product_id = ?";
 		try {
 			for (String pid : selected) {
 				SqlManipulation.update(updateSql, pid);
@@ -77,7 +77,7 @@ public abstract class BasicSampling {
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
 			if (rs.next()) {
-				if(rs.getBoolean(1)) {
+				if(rs.getInt(1) == 1) {
 					return true;
 				} else {
 					return false;

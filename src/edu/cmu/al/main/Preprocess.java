@@ -82,7 +82,7 @@ public class Preprocess {
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
 			sql = "insert into " + Configuration.getPredictTable()
-					+ " (product_id, islabeled) values (?, false)";
+					+ " (product_id, islabeled) values (?, 0)";
 			while (rs.next()) {
 				SqlManipulation.insert(sql, rs.getString(1));
 			}
@@ -122,7 +122,7 @@ public class Preprocess {
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getPredictTable()
-				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
+				+ " (product_id varchar(256) primary key, islabeled int, user_label real, confidence real, predict_result real)";
 		SqlManipulation.createTable(sql);
 
 	}
