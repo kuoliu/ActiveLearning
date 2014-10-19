@@ -1,11 +1,12 @@
 package edu.cmu.al.simulation;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import edu.cmu.al.util.Configuration;
-import edu.cmu.al.util.ScoreDefine;
 import edu.cmu.al.util.SqlManipulation;
 
 /**
@@ -15,31 +16,45 @@ import edu.cmu.al.util.SqlManipulation;
 public class BasicLabelingSimulation implements LabelingSimulation {
 
   @Override
-  public void label(Set<String> productIds) {
+  public void labelProductId(Set<String> productIds) {
 
-    Iterator<String> pIdIter = productIds.iterator();
+    for (String pId : productIds) {
 
-    while (pIdIter.hasNext()) {
-      String productId = pIdIter.next();
-      String sql = "select review_score from " + Configuration.getReviewTable() + " where product_id=?";
+      String sql = "select avg(review_score) from " + Configuration.getReviewTable()
+              + " where product_id=?";
+      
+      System.out.println(sql);
+      
+      ResultSet rs = SqlManipulation.query(sql, pId);
 
-      ResultSet rs = SqlManipulation.query(sql, productId);
       String updateSql = "update " + Configuration.getPredictTable()
-              + " set user_label=? where product_id=?";
-
+              + " set (user_label, islabeled) = (?, ?) where product_id=?";
       try {
         rs.next();
-        float score = rs.getFloat(1);
-        int label = 0;
-        if (score >= ScoreDefine.posSocre){
-        	label = 1;
-        }
-        SqlManipulation.update(updateSql, label, productId);
+        SqlManipulation.update(updateSql, Math.round(rs.getFloat(1)), true, pId);
       } catch (Exception e) {
         e.printStackTrace();
       }
 
     }
 
+  }
+
+  @Override
+  public void labelAll() {
+    String sql = "select product_id from " + Configuration.getPredictTable();
+    ResultSet rs = SqlManipulation.query(sql);
+
+    Set<String> productIds = new HashSet<String>();
+
+    try {
+      while (rs.next()) {
+        productIds.add(rs.getString(1));
+      }
+
+      labelProductId(productIds);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }

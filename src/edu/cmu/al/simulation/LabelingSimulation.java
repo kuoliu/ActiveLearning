@@ -14,6 +14,7 @@ import edu.cmu.al.instance.Instance;
  */
 public interface LabelingSimulation {
 
-  public void label(Set<String> productIds);
+  public void labelProductId(Set<String> productIds);
   
+  public void labelAll();
 }
