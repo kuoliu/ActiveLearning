@@ -1,5 +1,13 @@
 package edu.cmu.al.sampling;
 
-public class QBCstrategy {
+import java.util.HashSet;
+
+public class QBCstrategy extends BasicSampling{
+
+	@Override
+	public HashSet<String> sampling(int k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
