@@ -2,7 +2,6 @@ package edu.cmu.al.simulation;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Shuo Zheng, Zhengxiong Zhang
@@ -20,5 +19,5 @@ public interface LabelingSimulation {
 
 	public List<String> randomLabelByNum(int n);
 
-	public List<String> randomLabelByRatio(float ratio);
+	public List<String> randomLabelByRatio(double ratio);
 }

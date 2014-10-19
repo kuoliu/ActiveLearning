@@ -4,10 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
@@ -36,8 +34,8 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
 			try {
 				rs.next();
-				SqlManipulation.update(updateSql, Math.round(rs.getFloat(1)),
-						true, pId);
+				SqlManipulation.update(updateSql, rs.getDouble(1),
+						(int) 1, pId);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -68,7 +66,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
 	// random label ration of intances
 	@Override
-	public List<String> randomLabelByRatio(float ratio) {
+	public List<String> randomLabelByRatio(double ratio) {
 		if (ratio < 0 || ratio > 1) {
 			return null;
 		}
@@ -76,7 +74,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 		List<String> productIds = getProductList();
 		shuffle(productIds);
 		List<String> newPIds = productIds.subList(0,
-				Math.round(ratio * productIds.size()));
+				(int) Math.round(ratio * productIds.size()));
 		labelProductId(newPIds);
 		return newPIds;
 	}
