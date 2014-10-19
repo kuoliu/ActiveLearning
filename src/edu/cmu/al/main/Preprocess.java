@@ -2,7 +2,6 @@ package edu.cmu.al.main;
 
 import java.io.*;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.FileManipulation;
@@ -115,7 +114,7 @@ public class Preprocess {
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
-				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real,f4 real)";
+				+ " (product_id varchar(256) primary key, f1 real, f2 real, f3 real,f4 real,f5 real,f6 real,f7 real,f8 real)";
 		SqlManipulation.createTable(sql);
 
 
@@ -123,6 +122,5 @@ public class Preprocess {
 				+ Configuration.getPredictTable()
 				+ " (product_id varchar(256) primary key, islabeled boolean, user_label int, confidence real, predict_result int)";
 		SqlManipulation.createTable(sql);
-
 	}
 }

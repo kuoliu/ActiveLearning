@@ -25,12 +25,4 @@ public class Plot implements PlotInterface {
 			e.printStackTrace();
 		}
 	}
-	
-	public String dotPlot(int number, int round){
-		return "";
-	}
-	
-	public String linePlot(int number, int round){
-		return "";
-	}
 }
