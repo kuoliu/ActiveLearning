@@ -3,7 +3,14 @@ package edu.cmu.al.experiment;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 
+import edu.cmu.al.ml.Classifier;
+import edu.cmu.al.ml.LogisticClassifier;
+import edu.cmu.al.sampling.BasicSampling;
+import edu.cmu.al.sampling.RandomStrategy;
+import edu.cmu.al.sampling.UncertaintyStrategy;
+import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.util.*;
 
 public class ExperimentResult {
@@ -42,8 +49,17 @@ public class ExperimentResult {
 			fMeasures[index] = fMeasure;
 			System.out.println(precision + "\t" + recall + "\t" + accuracy + "\t" + fMeasure);
 			int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
+			
+			BasicLabelingSimulation simulation = new BasicLabelingSimulation();
 			// to do number of instance to label
-			// ---------------------------------
+			BasicSampling randomsample = new RandomStrategy();
+			BasicSampling uncsample = new UncertaintyStrategy();
+			
+			HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel);
+			simulation.label(productIds);
+			Classifier classifier = new LogisticClassifier();
+			classifier.train();
+			classifier.test();
 			index++;
 		}
 		// storeResult();

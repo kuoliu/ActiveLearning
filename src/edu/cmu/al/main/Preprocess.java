@@ -9,7 +9,7 @@ import edu.cmu.al.util.FileManipulation;
 import edu.cmu.al.util.SqlManipulation;
 
 /**
- * Description: Do some proprocess work on the data set
+ * Description: Do some preprocess work on the data set
  * 
  * @author Kuo Liu
  */
@@ -22,22 +22,6 @@ public class Preprocess {
 		initPredictTable();
 	}
 
-	private static void initPredictTable() {
-		String sql = "select distinct product_id from " + Configuration.getReviewTable();
-		ResultSet rs = SqlManipulation.query(sql);
-		
-		sql = "insert into "
-				+ Configuration.getPredictTable()
-				+ " values(?,?)";
-		try {
-			while (rs.next()) {
-				SqlManipulation.insert(sql, rs.getString(1), false);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
 	private static void file2Db() {
 		FileManipulation fileManip = new FileManipulation();
@@ -90,6 +74,22 @@ public class Preprocess {
 		}
 	}
 
+	
+	private static void initPredictTable() {
+		String sql = "select distinct product_id from "
+				+ Configuration.getReviewTable();
+		ResultSet rs = SqlManipulation.query(sql);
+		try {
+			sql = "insert into " + Configuration.getPredictTable()
+					+ " (product_id, islabeled) values (?, false)";
+			while (rs.next()) {
+				SqlManipulation.insert(sql, rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static String extractUsefulStr(String str) {
 		int idx = str.indexOf(":");
 		return str.substring(idx + 1).trim();

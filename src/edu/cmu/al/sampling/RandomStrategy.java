@@ -20,31 +20,45 @@ public class RandomStrategy extends BasicSampling{
 	@Override
 	public HashSet<String> sampling(int k) {
 		
-		String sql = "select max(id) from "
+		String sql1 = "select count(*) from "
 				+ Configuration.getReviewTable();
-		ResultSet rs1 = SqlManipulation.query(sql);
 		
 		
-		sql = "select product_id from " + Configuration.getReviewTable() 
-				+ " where id =?";
+		
+		String sql2 = "select product_id from " + Configuration.getReviewTable() 
+				+ " limit 1 offset ?";
 		
 		HashSet<String> selected = new HashSet<String>(); // result set(product id)
 		try {
-			int total = rs1.getInt(1);
+			ResultSet rs1 = SqlManipulation.query(sql1);
+			int total = 0;
+			if (rs1.next()) {
+				total = rs1.getInt(1);
+			}
 			Random rnd = new Random();
-			while (k >= 0) {
-				int rowId = rnd.nextInt(total)+1;
-				ResultSet rs2 = SqlManipulation.query(sql, rowId);
-				String prod_id = rs2.getString(1);
-				if (!selected.contains(prod_id) && !isLabled(prod_id)) {
-					selected.add(prod_id);
-					k--;
+			while (k > 0) {
+				int rowId = rnd.nextInt(total);
+				ResultSet rs2 = SqlManipulation.query(sql2, rowId);
+				if (rs2.next()) {
+					String prod_id = rs2.getString(1);
+					if (!selected.contains(prod_id) && !isLabled(prod_id)) {
+						selected.add(prod_id);
+						k--;
+					}/* else {
+						if (selected.contains(prod_id)) {
+							System.out.println(prod_id + " contains in this round");
+						} else {
+							System.out.println(prod_id + " labeled");
+						}
+					}*/
 				}
+				
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setPredictTable(selected);
 		return selected;
 		
 	}
