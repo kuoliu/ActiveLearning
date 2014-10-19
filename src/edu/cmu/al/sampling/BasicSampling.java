@@ -11,7 +11,7 @@ import edu.cmu.al.util.SqlManipulation;
 /**
  * Sampling is the base class of all sampling methods. It is responsible for
  * providing some instances for user to label.
- * @author yuanyuan
+ * @author Yuanyuan Yang
  *
  */
 public abstract class BasicSampling {
@@ -30,7 +30,7 @@ public abstract class BasicSampling {
 	
 	/**
 	 * Mark those selected observations in NotationTable.
-	 * @param selected, the set of product id
+	 * @param selected
      */
 	public void setPredictTable(HashSet<String> selected) {
 		String updateSql = "update " + Configuration.getPredictTable()
@@ -46,7 +46,7 @@ public abstract class BasicSampling {
 	
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.
-	 * @param id, line id
+	 * @param product_id
 	 * @return the posterior for a specific instance
 	 */
 	public Double get_predict_result(String product_id) {

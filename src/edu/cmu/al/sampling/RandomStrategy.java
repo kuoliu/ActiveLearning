@@ -9,26 +9,25 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Random sampling strategy
- * @author yuanyuan
- *
+ * 
+ * @author Yuanyuan Yang
+ * 
  */
-public class RandomStrategy extends BasicSampling{
+public class RandomStrategy extends BasicSampling {
 
 	/**
 	 * Randomly sampling k instances
 	 */
 	@Override
 	public HashSet<String> sampling(int k) {
-		
-		String sql1 = "select count(*) from "
-				+ Configuration.getReviewTable();
-		
-		
-		
-		String sql2 = "select product_id from " + Configuration.getReviewTable() 
-				+ " limit 1 offset ?";
-		
-		HashSet<String> selected = new HashSet<String>(); // result set(product id)
+
+		String sql1 = "select count(*) from " + Configuration.getReviewTable();
+
+		String sql2 = "select product_id from "
+				+ Configuration.getReviewTable() + " limit 1 offset ?";
+
+		HashSet<String> selected = new HashSet<String>(); // result set(product
+															// id)
 		try {
 			ResultSet rs1 = SqlManipulation.query(sql1);
 			int total = 0;
@@ -44,25 +43,19 @@ public class RandomStrategy extends BasicSampling{
 					if (!selected.contains(prod_id) && !isLabled(prod_id)) {
 						selected.add(prod_id);
 						k--;
-					}/* else {
-						if (selected.contains(prod_id)) {
-							System.out.println(prod_id + " contains in this round");
-						} else {
-							System.out.println(prod_id + " labeled");
-						}
-					}*/
+					}/*
+					 * else { if (selected.contains(prod_id)) {
+					 * System.out.println(prod_id + " contains in this round");
+					 * } else { System.out.println(prod_id + " labeled"); } }
+					 */
 				}
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		setPredictTable(selected);
 		return selected;
-		
 	}
-	
-
-	
 }

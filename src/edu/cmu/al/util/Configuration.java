@@ -1,7 +1,5 @@
 package edu.cmu.al.util;
 
-import java.util.List;
-
 /**
  * Description: Some configurations for the whole project
  * 
@@ -12,17 +10,13 @@ public class Configuration {
 	/** Configuration for Sql **/
 	private static String sqlDriver = "org.postgresql.Driver";
 	private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
-	private static String sqlUserName = "yyy";
-	private static String sqlPassword = "1204";
-
+	private static String sqlUserName = "lk";
+	private static String sqlPassword = "123";
 
 	/** Configuration of database tables **/
 	private static String reviewTable = "product_review";
 	private static String featureTable = "product_feature";
 	private static String predictTable = "classifier_predict";
-	private static String positiveWordTable = "positive_word";
-	private static String negativeWordTable = "negative_word";
-	private static String sentimentwordtable ="sentiment_word";
 
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
@@ -31,10 +25,9 @@ public class Configuration {
 
 	/** Configuration about useful paths **/
 	private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
-	private static String sentimentpositiveDataPath = "./files/positive-words.txt";
-	private static String sentimentnegativeDataPath = "./files/negative-words.txt";
-	
-	
+	private static String sentimentPositiveDicPath = "./files/positive-words.txt";
+	private static String sentimentNegativeDicPath = "./files/negative-words.txt";
+
 	public static String getSqlDriver() {
 		return sqlDriver;
 	}
@@ -114,6 +107,7 @@ public class Configuration {
 	public static void setFeatureTable(String featureTable) {
 		Configuration.featureTable = featureTable;
 	}
+
 	public static String getPredictTable() {
 		return predictTable;
 	}
@@ -121,76 +115,22 @@ public class Configuration {
 	public static void setPredictTable(String predictTable) {
 		Configuration.predictTable = predictTable;
 	}
-	
-	public static String getPostiveWordTable() {
-		return positiveWordTable;
+
+	public static String getSentimentPositiveDicPath() {
+		return sentimentPositiveDicPath;
 	}
 
-	public static void setPositiveWordTable(String positiveWordTable) {
-		Configuration.positiveWordTable = positiveWordTable;
-	}
-	
-	public static String getNegativeWordTable() {
-		return negativeWordTable;
+	public static void setSentimentPositiveDicPath(
+			String sentimentPositiveDicPath) {
+		Configuration.sentimentPositiveDicPath = sentimentPositiveDicPath;
 	}
 
-	public static void setnegativeWordTable(String negativeWordTable) {
-		Configuration.negativeWordTable = negativeWordTable;
-	}
-	
-	public static String getSentimentWordTable() {
-		return sentimentwordtable;
+	public static String getSentimentNegativeDicPath() {
+		return sentimentNegativeDicPath;
 	}
 
-	public static void setSentimentWordTable(String SentimentWordTable) {
-		Configuration.sentimentwordtable = sentimentwordtable;
-	}
-	
-	public static String getsentimentpositiveDataPath() {
-		return sentimentpositiveDataPath;
-	}
-
-	public static void setsentimentpositiveDataPath(String sentimentpositiveDataPath) {
-		Configuration.sentimentpositiveDataPath = sentimentpositiveDataPath;
-	}
-	
-	public static String getsentimentnegativeDataPath() {
-		return sentimentnegativeDataPath;
-	}
-
-	public static void setsentimentnegativeDataPath(String sentimentnegativeDataPath) {
-		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
-	}
-
-	public static void updatePredictTable(List<Double> predictionValue) {
-		String updateSql = "update " + Configuration.getPredictTable()
-				+ " set predictValue = ? where id=?";
-		try {
-			for (int i = 0; i < predictionValue.size(); i++) {
-				//base 0 or base 1?
-				SqlManipulation.update(updateSql, predictionValue.get(i), i + 1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static String getSentimentpositiveDataPath() {
-		return sentimentpositiveDataPath;
-	}
-
-	public static void setSentimentpositiveDataPath(
-			String sentimentpositiveDataPath) {
-		Configuration.sentimentpositiveDataPath = sentimentpositiveDataPath;
-	}
-
-	public static String getSentimentnegativeDataPath() {
-		return sentimentnegativeDataPath;
-	}
-
-	public static void setSentimentnegativeDataPath(
-			String sentimentnegativeDataPath) {
-		Configuration.sentimentnegativeDataPath = sentimentnegativeDataPath;
-
+	public static void setSentimentNegativeDicPath(
+			String sentimentNegativeDicPath) {
+		Configuration.sentimentNegativeDicPath = sentimentNegativeDicPath;
 	}
 }
