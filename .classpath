@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/weka.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/MatlabPlot.jar"/>
+	<classpathentry kind="lib" path="/Users/mabodx/Desktop/school/capstones/ActiveLearning/lib/stanford-corenlp-3.4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
