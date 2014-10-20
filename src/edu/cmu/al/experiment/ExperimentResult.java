@@ -45,8 +45,8 @@ public class ExperimentResult {
 			recalls[index] = recall;
 			accuracies[index] = accuracy;
 			fMeasures[index] = fMeasure;
-			System.out.println(precision + "\t" + recall + "\t" + accuracy
-					+ "\t" + fMeasure);
+//			System.out.println(precision + "\t" + recall + "\t" + accuracy
+//					+ "\t" + fMeasure);
 			int numberOfInstanceToLabel = ScoreDefine
 					.getNumberOfInstanceToLabel(precision);
 
@@ -66,7 +66,7 @@ public class ExperimentResult {
 			lc.test();
 			index++;
 		}
-		// storeResult();
+		 storeResult();
 		plotResult();
 	}
 

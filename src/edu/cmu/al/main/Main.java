@@ -10,7 +10,7 @@ import edu.cmu.al.feature.SentimentFeatureExtractor;
  * 
  */
 public class Main {
-	public static int round = 100;
+	public static int round = 10;
 
 	public static void main(String[] args) {
 		System.out.println("DB initializing...");

@@ -17,7 +17,7 @@ public class Evaluator implements EvaluatorInterface {
 		getTrueNeg();
 		getFalsePos();
 		getFalseNeg();
-		System.out.println(TRUE_POS + "\t" + TRUE_NEG + "\t" + FALSE_POS + "\t" + FALSE_NEG);
+//		System.out.println(TRUE_POS + "\t" + TRUE_NEG + "\t" + FALSE_POS + "\t" + FALSE_NEG);
 
 	}
 

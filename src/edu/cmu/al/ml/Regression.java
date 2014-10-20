@@ -81,7 +81,7 @@ public class Regression extends Classifier {
 			List<PredictResult> result = new ArrayList<PredictResult>();
 			for (int i = 0; i < newData.numInstances(); i++) {
 				double pred = this.lr.classifyInstance(newData.instance(i));
-				double predClass = pred > 4.0 ? 1.0 : 0.0;
+				double predClass = pred >= 4.0 ? 1.0 : 0.0;
 				PredictResult pp = new PredictResult(data
 						.instance(i).stringValue(0), pred, predClass);
 				result.add(pp);
