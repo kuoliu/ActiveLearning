@@ -26,7 +26,7 @@ public class Regression extends Classifier {
 
 			//String sql = "select classifier_predict.product_id, f3, f2 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 1";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f1, f3, f4, f5, f6, f7, f8, f2 from "
+					+ ".product_id, f3, f4, f5, f6, f7, f8, f2 from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
@@ -34,13 +34,13 @@ public class Regression extends Classifier {
 					+ Configuration.getPredictTable() + ".islabeled = 1";
 			Instances data = getData(sql);
 			//check whether the training data is load correctly
-			System.out.println("First Training data:" + data.instance(0));
+			//System.out.println("First Training data:" + data.instance(0));
 			Instances newData;
 
 			// add the filter to filter the text attribute
 			Remove remove = new Remove();
 			int[] textAttr = new int[1];
-			textAttr[0] = 1;
+			textAttr[0] = 0;
 			remove.setAttributeIndicesArray(textAttr);
 			remove.setInvertSelection(false);
 			remove.setInputFormat(data);
@@ -60,7 +60,7 @@ public class Regression extends Classifier {
 		try {
 			//String sql = "select f1 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 0";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f1, f3, f4, f5, f6, f7, f8, f2 from "
+					+ ".product_id, f3, f4, f5, f6, f7, f8, f2 from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
@@ -71,7 +71,7 @@ public class Regression extends Classifier {
 			
 			Remove remove = new Remove();
 			int[] textAttr = new int[1];
-			textAttr[0] = 1;
+			textAttr[0] = 0;
 			remove.setAttributeIndicesArray(textAttr);
 			remove.setInvertSelection(false);
 			remove.setInputFormat(data);
