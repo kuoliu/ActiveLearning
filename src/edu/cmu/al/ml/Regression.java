@@ -33,7 +33,8 @@ public class Regression extends Classifier {
 					+ Configuration.getPredictTable() + ".product_id and "
 					+ Configuration.getPredictTable() + ".islabeled = 1";
 			Instances data = getData(sql);
-			System.out.println(data.instance(0));
+			//check whether the training data is load correctly
+			System.out.println("First Training data:" + data.instance(0));
 			Instances newData;
 
 			// add the filter to filter the text attribute
@@ -78,7 +79,6 @@ public class Regression extends Classifier {
 			newData.setClassIndex(newData.numAttributes() - 1);
 			
 			List<PredictResult> result = new ArrayList<PredictResult>();
-			System.out.println(newData.numInstances());
 			for (int i = 0; i < newData.numInstances(); i++) {
 				double pred = this.lr.classifyInstance(newData.instance(i));
 				double predClass = pred > 4.0 ? 1.0 : 0.0;
