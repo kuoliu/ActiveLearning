@@ -1,7 +1,7 @@
 package edu.cmu.al.sampling;
 /**
  * SamplingException is the exception related with the sampling process
- * @author yuanyuan
+ * @author Yuanyuan Yang
  *
  */
 public class SamplingException extends Exception{

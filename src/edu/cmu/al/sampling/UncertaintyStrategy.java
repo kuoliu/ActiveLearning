@@ -11,7 +11,7 @@ import edu.cmu.al.util.SqlManipulation;
 /**
  * Uncertainty sampling strategy
  * 
- * @author yuanyuan
+ * @author Yuanyuan Yang
  * 
  */
 public class UncertaintyStrategy extends BasicSampling {

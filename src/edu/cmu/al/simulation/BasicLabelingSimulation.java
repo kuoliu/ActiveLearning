@@ -4,10 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.ScoreDefine;
@@ -27,9 +25,12 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 		} // end if
 
 		for (String pId : productIds) {
-			String sql = "select avg(review_score) from "
-					+ Configuration.getReviewTable() + " where product_id=?";
+			String sql = "select f2 from "
+					+ Configuration.getFeatureTable() + " where product_id=?";
 
+			/* String sql = "select avg(review_score) from "
+		          + Configuration.getReviewTable() + " where product_id=?"; */
+			
 			ResultSet rs = SqlManipulation.query(sql, pId);
 			String updateSql = "update "
 					+ Configuration.getPredictTable()
@@ -37,13 +38,12 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
 			try {
 				rs.next();
-				float score = rs.getFloat(1);
-				int label = 0;
-				if (score >= ScoreDefine.posSocre){
-					label = 1;
-				}
-				SqlManipulation.update(updateSql, label,
-						true, pId);
+//				double label = Math.round(rs.getDouble(1)) >= ScoreDefine.posSocre ? 1.0 : 0.0;
+		
+				// System.out.println("avg score: " + rs.getDouble(1) + "\tlabel: " + label);
+				
+				SqlManipulation.update(updateSql, Math.round(rs.getDouble(1)),
+						(int) 1, pId);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -74,7 +74,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
 	// random label ration of intances
 	@Override
-	public List<String> randomLabelByRatio(float ratio) {
+	public List<String> randomLabelByRatio(double ratio) {
 		if (ratio < 0 || ratio > 1) {
 			return null;
 		}
@@ -82,7 +82,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 		List<String> productIds = getProductList();
 		shuffle(productIds);
 		List<String> newPIds = productIds.subList(0,
-				Math.round(ratio * productIds.size()));
+				(int) Math.round(ratio * productIds.size()));
 		labelProductId(newPIds);
 		return newPIds;
 	}

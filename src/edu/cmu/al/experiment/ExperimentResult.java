@@ -2,14 +2,14 @@ package edu.cmu.al.experiment;
 
 import java.util.HashSet;
 
-import edu.cmu.al.ml.Classifier;
-import edu.cmu.al.ml.LogisticClassifier;
+import edu.cmu.al.ml.Regression;
 import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.sampling.UncertaintyStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.simulation.LabelingSimulation;
-import edu.cmu.al.util.*;
+import edu.cmu.al.util.Printer;
+import edu.cmu.al.util.ScoreDefine;
 
 public class ExperimentResult {
 
@@ -61,9 +61,9 @@ public class ExperimentResult {
 			// label all the instances in productIds
 			simulation.labelProductId(productIds);
 
-			Classifier classifier = new LogisticClassifier();
-			classifier.train();
-			classifier.test();
+			Regression lc = new Regression();
+			lc.train();
+			lc.test();
 			index++;
 		}
 		// storeResult();
