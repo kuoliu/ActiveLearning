@@ -1,7 +1,6 @@
 package edu.cmu.al.simulation;
 
 import java.util.Random;
-
 import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.main.Preprocess;
 
