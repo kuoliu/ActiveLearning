@@ -11,7 +11,7 @@ import edu.cmu.al.ml.Regression;
  * 
  */
 public class Main {
-	public static int round = 30;
+	public static int round = 10;
 
 	public static void main(String[] args) {
 		System.out.println("DB initializing...");

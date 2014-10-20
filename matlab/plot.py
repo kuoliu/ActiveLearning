@@ -3,27 +3,19 @@ import pylab as pl
 
 def main():
     file1 = parseData("matlab/precision.txt")
-    pre_x = file1[0]
-    pre_y = file1[1]
-    pl.plot(pre_x, pre_y, label='precision')
+    pl.plot(file1[0], file1[1], label='precision')
     pl.legend()
     
-    file1 = parseData("matlab/accuracy.txt")
-    pre_x = file1[0]
-    pre_y = file1[1]
-    pl.plot(pre_x, pre_y, label='accuracy')
+    file2 = parseData("matlab/accuracy.txt")
+    pl.plot(file2[0], file2[1], label='accuracy')
     pl.legend()
     
-    file1 = parseData("matlab/recall.txt")
-    pre_x = file1[0]
-    pre_y = file1[1]
-    pl.plot(pre_x, pre_y, label='recall')
+    file3 = parseData("matlab/recall.txt")
+    pl.plot(file3[0], file3[1], label='recall')
     pl.legend()
     
-    file1 = parseData("matlab/fMeasure.txt")
-    pre_x = file1[0]
-    pre_y = file1[1]
-    pl.plot(pre_x, pre_y, label='fMeasure')
+    file4 = parseData("matlab/fMeasure.txt")
+    pl.plot(file4[0], file4[1], label='fMeasure')
     pl.legend()
     
     pl.savefig("matlab/result.png")
