@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 import edu.cmu.al.experiment.ExperimentResult;
+import edu.cmu.al.experiment.Plot;
+import edu.cmu.al.experiment.PyPlot;
 import edu.cmu.al.main.Preprocess;
 
 public class testSimulation {
@@ -17,11 +19,15 @@ public class testSimulation {
      * 
      * simulation.labelAll();
      */
+    
+    Plot p = new PyPlot();
+    // python python/PylabPlotTool.py test OnlyTest accuracy.txt accuracy precision.txt precision
+    p.linePlot("t", "small", "accuracy.txt", "l1", "precision.txt", "l2");
 
-    Process p = Runtime.getRuntime().exec("python matlab/plot.py");
+/*    Process p = Runtime.getRuntime().exec("python matlab/plot.py");
     BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-    System.out.println(in.readLine());
+    System.out.println(in.readLine());*/
 
     /*
      * System.out.println("DB initializing..."); Preprocess.run(); System.out.println("Finished");

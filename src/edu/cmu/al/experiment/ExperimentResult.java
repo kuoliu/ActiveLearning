@@ -86,7 +86,7 @@ public class ExperimentResult {
   }
 
   public void plotResult() {
-    Plot plot = new Plot();
+    Plot plot = new MatPlot();
     plot.barPlot();
     plot.linePlot();
   }
