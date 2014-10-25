@@ -59,10 +59,13 @@ public class ExperimentResult {
       // + "\t" + fMeasure);
       int numberOfInstanceToLabel = ScoreDefine.getNumberOfInstanceToLabel(precision);
 
+      System.out.println(numberOfInstanceToLabel);
+      
       LabelingSimulation simulation = new BasicLabelingSimulation();
       // to do number of instance to label
       BasicSampling randomsample = new RandomStrategy();
-      BasicSampling uncsample = new UncertaintyStrategy();
+      
+      // BasicSampling uncsample = new UncertaintyStrategy();
 
       HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel);
 

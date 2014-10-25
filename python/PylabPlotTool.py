@@ -127,8 +127,8 @@ if __name__ == '__main__' :
 #     }
     
     for i in range(len(fileNames)) :
-        data = tool.parseData('output/' + fileNames[i])
-        lineConf = {'X' : data[0], 'Y' : data[1], 'label' : fileLabels[i]}
+        X, Y = tool.parseData('output/' + fileNames[i])
+        lineConf = {'X' : X, 'Y' : Y, 'label' : fileLabels[i]}
         tool.addline(lineConf)
         
     tool.plot()
