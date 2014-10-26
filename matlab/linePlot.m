@@ -3,6 +3,11 @@ B = load('matlab\recall.txt');
 C = load('matlab\accuracy.txt');
 D = load('matlab\fMeasure.txt');
 
+% A = load('precision.txt');
+% B = load('recall.txt');
+% C = load('accuracy.txt');
+% D = load('fMeasure.txt');
+
 figure(1)
 plot(A(:,1),A(:,2), 'b');
 hold on;

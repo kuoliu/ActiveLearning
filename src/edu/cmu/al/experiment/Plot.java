@@ -1,28 +1,29 @@
 package edu.cmu.al.experiment;
 
-import com.mathworks.toolbox.javabuilder.*;
+public interface Plot {
 
-import MatlabPlot.*;
+	/**
+	 * Plot the experiment result as a bar chart. The first argument is the
+	 * number of instances that labeled in each round, and the second argument
+	 * is the total round of training. So for each figure, the x-axis is the
+	 * round number and the y-axis is the accuracy, precision, recall, fMeasure
+	 * in that round.
+	 * 
+	 * @return
+	 */
+	public void barPlot();
 
-public class Plot implements PlotInterface {
-
-	@Override
-	public void barPlot() {
-		try {
-			MatlabPlot plot = new MatlabPlot();
-			plot.barPlot();
-		} catch (MWException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void linePlot() {
-		try {
-			MatlabPlot plot = new MatlabPlot();
-			plot.linePlot();
-		} catch (MWException e) {
-			e.printStackTrace();
-		}
-	}
+	/**
+	 * Plot the experiment result as a line chart. The first argument is the
+	 * number of instances that labeled in each round, and the second argument
+	 * is the total round of training. So for each figure, the x-axis is the
+	 * round number and the y-axis is the accuracy, precision, recall, fMeasure
+	 * in that round.
+	 * 
+	 * 
+	 * @return
+	 */
+	public void linePlot();
+	
+	public void linePlot(String outputFileName, String title, String... files);
 }

@@ -13,6 +13,14 @@ import edu.cmu.al.ml.PredictResult;
  * @author Kuo Liu
  */
 public class Util {
+  
+  public static final String DIR = "output/";
+
+  public static final String accuracy = "accuracy.txt";
+
+  public static final String testSamplingAccuracy = "testSamplingAccuracy.txt";
+
+  public static final String testModelAccuracy = "testModelAccuracy.txt";
 
 	public static void updatePredictTable(List<PredictResult> predictionValue) {
 		String updateSql = "update "
