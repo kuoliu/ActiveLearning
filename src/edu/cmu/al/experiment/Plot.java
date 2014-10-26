@@ -1,15 +1,15 @@
 package edu.cmu.al.experiment;
 
-import com.mathworks.toolbox.javabuilder.*;
+import MatlabPlot.MatlabPlot;
 
-import MatlabPlot.*;
+import com.mathworks.toolbox.javabuilder.*;
 
 public class Plot implements PlotInterface {
 
 	@Override
 	public void barPlot() {
 		try {
-			MatlabPlot plot = new MatlabPlot();
+      MatlabPlot plot = new MatlabPlot();
 			plot.barPlot();
 		} catch (MWException e) {
 			e.printStackTrace();

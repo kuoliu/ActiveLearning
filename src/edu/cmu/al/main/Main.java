@@ -1,27 +1,24 @@
 package edu.cmu.al.main;
 
-import java.util.HashSet;
-
 import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.BasicFeatureExtractor;
 import edu.cmu.al.feature.FeatureExtractor;
-import edu.cmu.al.sampling.BasicSampling;
-import edu.cmu.al.sampling.RandomStrategy;
-import edu.cmu.al.sampling.UncertaintyStrategy;
 import edu.cmu.al.feature.SentimentFeatureExtractor;
+import edu.cmu.al.ml.Regression;
 
 /**
  * The main class to run main function
  * 
  */
 public class Main {
-	public static int round = 100;
+	public static int round = 30;
 
 	public static void main(String[] args) {
 
 //		System.out.println("DB initializing...");
 //		Preprocess.run();
-//		System.out.println("Finished");
+//		
+		System.out.println("Finished");
 		int featureId = 1;
 		FeatureExtractor featureExtractor = new BasicFeatureExtractor();
 		featureId = featureExtractor.extractFeature(featureId);
@@ -29,8 +26,10 @@ public class Main {
 		featureExtractor = new SentimentFeatureExtractor();
 		featureId = featureExtractor.extractFeature(featureId);
 
-		// ExperimentResult experiment = new ExperimentResult(round);
-		// experiment.doExperiment();
+		System.out.println("Experiment");
+		ExperimentResult experiment = new ExperimentResult(round);
+		experiment.doExperiment();
 
+		System.out.println("Experiment finish");
 	}
 }
