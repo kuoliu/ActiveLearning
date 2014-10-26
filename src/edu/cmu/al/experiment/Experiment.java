@@ -6,10 +6,10 @@ import edu.cmu.al.simulation.LabelingSimulation;
 
 public interface Experiment {
 
-	public void doExperiment();
+	public void doExperimentWithAllData(String outputFileName);
 
 	public void doExperiment(BasicSampling sampling, Classifier classifier,
-			LabelingSimulation labeling);
+			LabelingSimulation labeling, String outputFileName);
 
 	public void doExperiment(int i, BasicSampling sampling,
 			Classifier classifier, LabelingSimulation labeling);
