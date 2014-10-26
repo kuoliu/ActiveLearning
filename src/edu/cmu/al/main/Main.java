@@ -2,7 +2,6 @@ package edu.cmu.al.main;
 
 import edu.cmu.al.experiment.BasicExperiment;
 import edu.cmu.al.experiment.Experiment;
-import edu.cmu.al.experiment.ExperimentResult;
 import edu.cmu.al.feature.FeaturePipeline;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.ml.Regression;
@@ -10,7 +9,6 @@ import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.simulation.LabelingSimulation;
-import edu.cmu.al.util.Util;
 
 /**
  * The main class to run main function
