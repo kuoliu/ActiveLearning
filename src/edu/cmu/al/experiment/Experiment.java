@@ -22,7 +22,7 @@ public interface Experiment {
 
   public void plotResult(String outputFileName, String title, String... files);
 
-  public void storeInFile(String outputFileName, double[] array);
+  public void storeInFile(String outputFileName, double[] cost, double[] accuracy);
 
   public void storeInFile();
 

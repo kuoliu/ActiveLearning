@@ -1,6 +1,8 @@
 package edu.cmu.al.experiment;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import edu.cmu.al.main.Preprocess;
 import edu.cmu.al.ml.Classifier;
@@ -18,9 +20,15 @@ public class BasicExperiment implements Experiment {
 
   double[] accuracies;
 
+  double[] accuraciesCost;
+
   double[] testSamplingAccuracies;
 
+  double[] testSamplingAccuraciesCost;
+
   double[] testModelAccuracies;
+
+  double[] testModelAccuraciesCost;
 
   String DIR = Util.DIR; // "output/";
 
@@ -33,6 +41,8 @@ public class BasicExperiment implements Experiment {
   Evaluator evaluator;
 
   double ratio = 0;
+  
+  List<String> allProductIds = new ArrayList<String>();
 
   public BasicExperiment(int round, double ratio) {
     this.round = round;
@@ -40,6 +50,9 @@ public class BasicExperiment implements Experiment {
     this.accuracies = new double[round];
     this.testSamplingAccuracies = new double[round];
     this.testModelAccuracies = new double[round];
+    this.accuraciesCost = new double[round];
+    this.testSamplingAccuraciesCost = new double[round];
+    this.testModelAccuraciesCost = new double[round];
     this.evaluator = new Evaluator();
   }
 
@@ -57,6 +70,8 @@ public class BasicExperiment implements Experiment {
             + "Unlabeled: " + labeling.getUnlabeledNumber());
 
     HashSet<String> productIds = sampling.sampling(numberOfInstanceToLabel);
+    allProductIds.addAll(productIds);
+    
     labeling.labelProductId(productIds);
 
     classifier.train();
@@ -65,6 +80,12 @@ public class BasicExperiment implements Experiment {
     evaluator.clear();
     evaluator.evaluateClassification();
     accuracies[i] = evaluator.computeAccuracy();
+
+    if (i == 0) {
+      accuraciesCost[i] = numberOfInstanceToLabel;
+    } else {
+      accuraciesCost[i] = accuraciesCost[i - 1] + numberOfInstanceToLabel;
+    }
   }
 
   @Override
@@ -89,6 +110,12 @@ public class BasicExperiment implements Experiment {
     evaluator.clear();
     evaluator.evaluateClassification();
     testSamplingAccuracies[i] = evaluator.computeAccuracy();
+    
+    if (i == 0) {
+      testSamplingAccuraciesCost[i] = numberOfInstanceToLabel;
+    } else {
+      testSamplingAccuraciesCost[i] = testSamplingAccuraciesCost[i - 1] + numberOfInstanceToLabel;
+    }
   }
 
   @Override
@@ -102,13 +129,13 @@ public class BasicExperiment implements Experiment {
     // labeling.labelAll();
 
     // /////////////////////////////////////////////////////////
-    int numberOfInstanceToLabel = (int) Math.floor(labeling.getAllNumber() * ratio);
+    int numberOfInstanceToLabel = allProductIds.size();
 
     // print
     System.out.println("ToLabel: " + numberOfInstanceToLabel + "\t" + "Unlabeled: "
             + labeling.getUnlabeledNumber());
 
-    labeling.randomLabelByNum(numberOfInstanceToLabel);
+    labeling.labelProductId(allProductIds);
     // //////////////////////////////////////////////////////////////
 
     classifier.train();
@@ -118,6 +145,7 @@ public class BasicExperiment implements Experiment {
     evaluator.evaluateClassification();
     for (int i = 0; i < this.round; i++) {
       testModelAccuracies[i] = evaluator.computeAccuracy();
+      testModelAccuraciesCost[i] = numberOfInstanceToLabel * (i + 1) / round;
     }
   }
 
@@ -134,10 +162,10 @@ public class BasicExperiment implements Experiment {
   }
 
   @Override
-  public void storeInFile(String outputFileName, double[] array) {
+  public void storeInFile(String outputFileName, double[] cost, double[] accuracy) {
     Printer printer = new Printer(outputFileName);
     for (int i = 0; i < round; i++) {
-      printer.println(i + " " + array[i]);
+      printer.println(cost[i] + " " + accuracy[i]);
     }
     printer.close();
   }
@@ -145,20 +173,32 @@ public class BasicExperiment implements Experiment {
   public double[] getTestSamplingAccuracies() {
     return testSamplingAccuracies;
   }
+  
+  public double[] getTestSamplingAccuraciesCost() {
+    return testSamplingAccuraciesCost;
+  }
 
   public double[] getTestModelAccuracies() {
     return testModelAccuracies;
+  }
+  
+  public double[] getTestModelAccuraciesCost() {
+    return testModelAccuraciesCost;
   }
 
   public double[] getAccuracies() {
     return accuracies;
   }
+  
+  public double[] getAccuraciesCost() {
+    return accuraciesCost;
+  }
 
   @Override
   public void storeInFile() {
-    storeInFile(DIR + accuracy, getAccuracies());
-    storeInFile(DIR + testModelAccuracy, getTestModelAccuracies());
-    storeInFile(DIR + testsamplingAccuracy, getTestSamplingAccuracies());
+    storeInFile(DIR + accuracy, getAccuraciesCost(), getAccuracies());
+    storeInFile(DIR + testModelAccuracy, getTestModelAccuraciesCost(), getTestModelAccuracies());
+    storeInFile(DIR + testsamplingAccuracy, getTestSamplingAccuraciesCost(), getTestSamplingAccuracies());
 
   }
 
