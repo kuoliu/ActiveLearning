@@ -121,7 +121,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
     try {
       while (rs.next()) {
-        productIds.add(rs.getString(1));
+        productIds.add(rs.getString(1).trim());
       }
     } catch (SQLException e) {
       e.printStackTrace();

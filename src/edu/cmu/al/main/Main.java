@@ -2,6 +2,7 @@ package edu.cmu.al.main;
 
 import edu.cmu.al.experiment.BasicExperiment;
 import edu.cmu.al.experiment.Experiment;
+import edu.cmu.al.experiment.TableExperiment;
 import edu.cmu.al.feature.FeaturePipeline;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.ml.Regression;
@@ -15,25 +16,26 @@ import edu.cmu.al.simulation.LabelingSimulation;
  * 
  */
 public class Main {
-  public static int round = 20;
+  public static int round = 10;
 
   public static void main(String[] args) {
-    System.out.println("DB initializing...");
-    Preprocess.run();
-    System.out.println("Finished");
-    FeaturePipeline.produceFeatures();
 
-    System.out.println("Experiment");
+    /*
+     * System.out.println("DB initializing..."); Preprocess.run(); System.out.println("Finished");
+     * FeaturePipeline.produceFeatures();
+     * 
+     * System.out.println("Experiment");
+     */
 
     // train 0.5 * total number of instances in the predict table...
     // too many ---> too slow
-    Experiment experiment = new BasicExperiment(round, 0.5);
+    Experiment experiment = new TableExperiment(round, 0.5, 0);
 
     BasicSampling randomsample = new RandomStrategy();
     Classifier lr = new Regression();
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
-    experiment.doExperiment(randomsample, lr, labeling, "Round_20_Rate_0.5");
+    experiment.doExperiment(randomsample, lr, labeling, "Round_10_Rate_0.5");
 
     // experiment.doExperimentWithAllData("all_data");
 

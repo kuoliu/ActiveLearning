@@ -10,7 +10,9 @@ import edu.cmu.al.ml.Regression;
 import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.simulation.LabelingSimulation;
+import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.Printer;
+import edu.cmu.al.util.SqlManipulation;
 import edu.cmu.al.util.Util;
 
 public class BasicExperiment implements Experiment {
@@ -156,9 +158,9 @@ public class BasicExperiment implements Experiment {
             + labeling.getUnlabeledNumber());
 
     // labeling.labelAll();
-    
+
     labeling.randomLabelByNum(labeling.getUnlabeledNumber() - 1);
-    
+
     System.out.println("Train...");
     classifier.train();
     classifier.test();
@@ -233,11 +235,11 @@ public class BasicExperiment implements Experiment {
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
     testAllData(lr, labeling);
-    Preprocess.clearPredictTable();
-    
+    clearPredictTable();
+
     storeInFile(DIR + testModelAccuracy, getTestModelAccuraciesCost(), getTestModelAccuracies());
 
-    plotResult(outputFileName, "All Data", Util.testModelAccuracy, "All Data Labeled");
+    plotResult(outputFileName, "AllData", Util.testModelAccuracy, "AllData");
 
     /*
      * BasicSampling randomsample = new RandomStrategy(); Classifier lr = new Regression();
@@ -254,19 +256,31 @@ public class BasicExperiment implements Experiment {
     for (int i = 0; i < round; i++) {
       doExperiment(i, sampling, classifier, labeling);
     }
-    Preprocess.clearPredictTable();
+    clearPredictTable();
 
     for (int i = 0; i < round; i++) {
       testSampling(i, classifier, labeling);
     }
-    Preprocess.clearPredictTable();
+    clearPredictTable();
 
     testModel(classifier, labeling);
-    Preprocess.clearPredictTable();
+    clearPredictTable();
 
     storeInFile();
     plotResult(outputFileName, "Accuracy", Util.accuracy, "Accuracy", Util.testSamplingAccuracy,
             "RamdomLabel", Util.testModelAccuracy, "LabelAll");
+  }
+
+  private static void clearPredictTable() {
+    String sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
+    SqlManipulation.dropTable(sql);
+
+    sql = "CREATE TABLE IF NOT EXISTS "
+            + Configuration.getPredictTable()
+            + " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, confidence REAL, predict_result REAL)";
+    SqlManipulation.createTable(sql);
+
+    Preprocess.initPredictTable();
   }
 
 }

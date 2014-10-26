@@ -17,6 +17,7 @@ public class Configuration {
 	private static String reviewTable = "product_review";
 	private static String featureTable = "product_feature";
 	private static String predictTable = "classifier_predict";
+	private static String resultTable = "classifier_result";
 
 	/** Configuration about file **/
 	private static String fileFormat = "utf-8";
@@ -111,6 +112,10 @@ public class Configuration {
 	public static String getPredictTable() {
 		return predictTable;
 	}
+	
+	public static String getResultTable() {
+    return resultTable;
+  }
 
 	public static void setPredictTable(String predictTable) {
 		Configuration.predictTable = predictTable;
