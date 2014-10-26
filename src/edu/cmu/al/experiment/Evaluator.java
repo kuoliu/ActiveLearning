@@ -47,33 +47,33 @@ public class Evaluator implements EvaluatorInterface {
 
   public void getTruePos() {
 
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
+    String sql = "select count(*) from " + Configuration.getFeatureTable() + " R,"
             + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score >="
+            + "where R.product_id = P.product_id and P.predict_result = 1 and R.f2 >="
             + ScoreDefine.posSocre;
     TRUE_POS = SqlManipulation.queryInt(sql);
   }
 
   public void getTrueNeg() {
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
+    String sql = "select count(*) from " + Configuration.getFeatureTable() + " R,"
             + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score <"
+            + "where R.product_id = P.product_id and P.predict_result = 0 and R.f2 <"
             + ScoreDefine.posSocre;
     TRUE_NEG = SqlManipulation.queryInt(sql);
   }
 
   public void getFalsePos() {
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
+    String sql = "select count(*) from " + Configuration.getFeatureTable() + " R,"
             + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score <"
+            + "where R.product_id = P.product_id and P.predict_result = 1 and R.f2 <"
             + ScoreDefine.posSocre;
     FALSE_POS = SqlManipulation.queryInt(sql);
   }
 
   public void getFalseNeg() {
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
+    String sql = "select count(*) from " + Configuration.getFeatureTable() + " R,"
             + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score >="
+            + "where R.product_id = P.product_id and P.predict_result = 0 and R.f2 >="
             + ScoreDefine.posSocre;
     FALSE_NEG = SqlManipulation.queryInt(sql);
   }
