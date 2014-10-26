@@ -31,12 +31,13 @@ public class LogisticClassifier extends Classifier {
 		try {
 			//String sql = "select classifier_predict.product_id, f3, f2 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 1";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f4, f7, f10 CASE WHEN f2 < " + ScoreDefine.posSocre + " THEN false ELSE true END as class from "
+					+ ".product_id, f1, f3, f5, CASE WHEN f2 < " + ScoreDefine.posSocre + " THEN false ELSE true END as class from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
 					+ Configuration.getPredictTable() + ".product_id and "
 					+ Configuration.getPredictTable() + ".islabeled = 1";
+			System.out.println(sql);
 			Instances data = getData(sql);
 			//check whether the training data is load correctly
 			//System.out.println("First Training data:" + data.instance(0));
@@ -73,7 +74,7 @@ public class LogisticClassifier extends Classifier {
 		try {
 			//String sql = "select f1 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 0";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f4, f7, f10, CASE WHEN f2 < " + ScoreDefine.posSocre + " THEN false ELSE true END as class from "
+					+ ".product_id, f1, f3, f5, CASE WHEN f2 < " + ScoreDefine.posSocre + " THEN false ELSE true END as class from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
