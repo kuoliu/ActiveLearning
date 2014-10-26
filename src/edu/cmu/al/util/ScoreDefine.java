@@ -8,6 +8,7 @@ public class ScoreDefine {
 	/**
 	 * The threshold for pos/neg instances
 	 */
+	
 	public static int posSocre = 3;      
 	
 	static int numberOfInstanceToLabel = 1000;
