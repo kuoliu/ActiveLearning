@@ -99,7 +99,6 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     String sql = "select COUNT(product_id) from " + Configuration.getPredictTable()
             + " where islabeled=0";
     ResultSet rs = SqlManipulation.query(sql);
-
     int result = 0;
 
     try {
@@ -135,7 +134,6 @@ public class BasicLabelingSimulation implements LabelingSimulation {
   public int getAllNumber() {
     String sql = "select COUNT(product_id) from " + Configuration.getPredictTable();
     ResultSet rs = SqlManipulation.query(sql);
-
     int result = 0;
 
     try {

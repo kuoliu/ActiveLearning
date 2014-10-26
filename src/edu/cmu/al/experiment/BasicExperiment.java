@@ -8,7 +8,6 @@ import edu.cmu.al.main.Preprocess;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.ml.Regression;
 import edu.cmu.al.sampling.BasicSampling;
-import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.simulation.LabelingSimulation;
 import edu.cmu.al.util.Printer;
@@ -41,7 +40,7 @@ public class BasicExperiment implements Experiment {
   Evaluator evaluator;
 
   double ratio = 0;
-  
+
   List<String> allProductIds = new ArrayList<String>();
 
   public BasicExperiment(int round, double ratio) {
@@ -72,7 +71,7 @@ public class BasicExperiment implements Experiment {
 
     HashSet<String> productIds = sampling.sampling(numberOfInstanceToLabel);
     allProductIds.addAll(productIds);
-    
+
     labeling.labelProductId(productIds);
 
     classifier.train();
@@ -110,7 +109,7 @@ public class BasicExperiment implements Experiment {
     evaluator.clear();
     evaluator.evaluateClassification();
     testSamplingAccuracies[i] = evaluator.computeAccuracy();
-    
+
     if (i == 0) {
       testSamplingAccuraciesCost[i] = numberOfInstanceToLabel;
     } else {
@@ -147,6 +146,32 @@ public class BasicExperiment implements Experiment {
     }
   }
 
+  private void testAllData(Classifier classifier, LabelingSimulation labeling) {
+    // print
+    // System.out.println("ToLabel: " + labeling.getUnlabeledNumber() + "\t" + "Unlabeled: "
+    // + labeling.getUnlabeledNumber());
+
+    // print
+    System.out.println("ToLabel: " + (labeling.getUnlabeledNumber() - 1) + "\t" + "Unlabeled: "
+            + labeling.getUnlabeledNumber());
+
+    // labeling.labelAll();
+    
+    labeling.randomLabelByNum(labeling.getUnlabeledNumber() - 1);
+    
+    System.out.println("Train...");
+    classifier.train();
+    classifier.test();
+    System.out.println("Test...");
+
+    evaluator.clear();
+    evaluator.evaluateClassification();
+    for (int i = 0; i < this.round; i++) {
+      testModelAccuracies[i] = evaluator.computeAccuracy();
+      testModelAccuraciesCost[i] = labeling.getAllNumber() * (i + 1) / round;
+    }
+  }
+
   @Override
   public void plotResult() {
     return;
@@ -171,7 +196,7 @@ public class BasicExperiment implements Experiment {
   public double[] getTestSamplingAccuracies() {
     return testSamplingAccuracies;
   }
-  
+
   public double[] getTestSamplingAccuraciesCost() {
     return testSamplingAccuraciesCost;
   }
@@ -179,7 +204,7 @@ public class BasicExperiment implements Experiment {
   public double[] getTestModelAccuracies() {
     return testModelAccuracies;
   }
-  
+
   public double[] getTestModelAccuraciesCost() {
     return testModelAccuraciesCost;
   }
@@ -187,7 +212,7 @@ public class BasicExperiment implements Experiment {
   public double[] getAccuracies() {
     return accuracies;
   }
-  
+
   public double[] getAccuraciesCost() {
     return accuraciesCost;
   }
@@ -196,22 +221,35 @@ public class BasicExperiment implements Experiment {
   public void storeInFile() {
     storeInFile(DIR + accuracy, getAccuraciesCost(), getAccuracies());
     storeInFile(DIR + testModelAccuracy, getTestModelAccuraciesCost(), getTestModelAccuracies());
-    storeInFile(DIR + testsamplingAccuracy, getTestSamplingAccuraciesCost(), getTestSamplingAccuracies());
+    storeInFile(DIR + testsamplingAccuracy, getTestSamplingAccuraciesCost(),
+            getTestSamplingAccuracies());
 
   }
 
   @Override
-  public void doExperiment() {
-    BasicSampling randomsample = new RandomStrategy();
+  public void doExperimentWithAllData(String outputFileName) {
+
     Classifier lr = new Regression();
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
-    doExperiment(randomsample, lr, labeling);
+    testAllData(lr, labeling);
+    Preprocess.clearPredictTable();
+    
+    storeInFile(DIR + testModelAccuracy, getTestModelAccuraciesCost(), getTestModelAccuracies());
+
+    plotResult(outputFileName, "All Data", Util.testModelAccuracy, "All Data Labeled");
+
+    /*
+     * BasicSampling randomsample = new RandomStrategy(); Classifier lr = new Regression();
+     * LabelingSimulation labeling = new BasicLabelingSimulation();
+     * 
+     * doExperiment(randomsample, lr, labeling, "result");
+     */
   }
 
   @Override
   public void doExperiment(BasicSampling sampling, Classifier classifier,
-          LabelingSimulation labeling) {
+          LabelingSimulation labeling, String outputFileName) {
 
     for (int i = 0; i < round; i++) {
       doExperiment(i, sampling, classifier, labeling);
@@ -224,9 +262,11 @@ public class BasicExperiment implements Experiment {
     Preprocess.clearPredictTable();
 
     testModel(classifier, labeling);
+    Preprocess.clearPredictTable();
 
     storeInFile();
-    plotResult("result", "Accuracy", Util.accuracy, "Accuracy", Util.testSamplingAccuracy,
+    plotResult(outputFileName, "Accuracy", Util.accuracy, "Accuracy", Util.testSamplingAccuracy,
             "RamdomLabel", Util.testModelAccuracy, "LabelAll");
   }
+
 }

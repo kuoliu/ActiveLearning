@@ -64,9 +64,9 @@ class PlotTool :
             id, conf = self.lineList[i]
             if conf.get('color', None) == None:
                 conf['color'] = colors[i]
-                conf['markerfacecolor'] = colors[i]
-            if conf.get('marker', None) == None:
-                conf['marker'] = markers[i]
+#                 conf['markerfacecolor'] = colors[i]
+#             if conf.get('marker', None) == None:
+#                 conf['marker'] = markers[i]
             X, Y, marker, color, markerfacecolor, label, linewidth, linestyle = self.__parselineConf(conf)
             pylab.plot(X, Y, marker=marker, color=color, markerfacecolor=markerfacecolor, label=label, linewidth=linewidth, linestyle=linestyle)
         pylab.legend(loc=self.legend_loc)

@@ -15,7 +15,7 @@ import edu.cmu.al.simulation.LabelingSimulation;
  * 
  */
 public class Main {
-  public static int round = 10;
+  public static int round = 20;
 
   public static void main(String[] args) {
     System.out.println("DB initializing...");
@@ -33,7 +33,9 @@ public class Main {
     Classifier lr = new Regression();
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
-    experiment.doExperiment(randomsample, lr, labeling);
+    experiment.doExperiment(randomsample, lr, labeling, "Round_20_Rate_0.5");
+
+    // experiment.doExperimentWithAllData("all_data");
 
     /*
      * System.out.println("Experient"); ExperimentResult experiment = new ExperimentResult(round);
