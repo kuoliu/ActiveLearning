@@ -65,8 +65,9 @@ public class ExperimentResult {
 			lc.train();
 			lc.test();
 			index++;
+			System.out.println("Round " + index + "Finished!");
 		}
-		 storeResult();
+		storeResult();
 		plotResult();
 	}
 
