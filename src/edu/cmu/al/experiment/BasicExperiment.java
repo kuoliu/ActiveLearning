@@ -61,6 +61,7 @@ public class BasicExperiment implements Experiment {
           LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
+      return;
     }
 
     int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
@@ -89,12 +90,11 @@ public class BasicExperiment implements Experiment {
   }
 
   @Override
-  public void testSampling(int i, Classifier classifier) {
+  public void testSampling(int i, Classifier classifier, LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
+      return;
     }
-
-    LabelingSimulation labeling = new BasicLabelingSimulation();
 
     int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
 
@@ -119,9 +119,7 @@ public class BasicExperiment implements Experiment {
   }
 
   @Override
-  public void testModel(Classifier classifier) {
-    LabelingSimulation labeling = new BasicLabelingSimulation();
-
+  public void testModel(Classifier classifier, LabelingSimulation labeling) {
     // print
     // System.out.println("ToLabel: " + labeling.getUnlabeledNumber() + "\t" + "Unlabeled: "
     // + labeling.getUnlabeledNumber());
@@ -221,11 +219,11 @@ public class BasicExperiment implements Experiment {
     Preprocess.clearPredictTable();
 
     for (int i = 0; i < round; i++) {
-      testSampling(i, classifier);
+      testSampling(i, classifier, labeling);
     }
     Preprocess.clearPredictTable();
 
-    testModel(classifier);
+    testModel(classifier, labeling);
 
     storeInFile();
     plotResult("result", "Accuracy", Util.accuracy, "Accuracy", Util.testSamplingAccuracy,
