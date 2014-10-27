@@ -14,24 +14,18 @@ import edu.cmu.al.util.SqlManipulation;
 
 public class TableExperiment implements Experiment {
 
-  int round;
-
-  double ratio;
-
   int result_id;
 
   Evaluator evaluator;
 
-  public TableExperiment(int round, double ratio) {
+  public TableExperiment() {
     clearPredictTable();
     clearResultTable();
-    this.round = round;
-    this.ratio = ratio;
     this.evaluator = new Evaluator();
     this.result_id = 0;
   }
 
-  private void doExperiment(int i, BasicSampling sampling, Classifier classifier,
+  private void doExperiment(int i, int round, double ratio, BasicSampling sampling, Classifier classifier,
           LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
@@ -91,11 +85,11 @@ public class TableExperiment implements Experiment {
   }
 
   @Override
-  public void doExperiment(BasicSampling sampling, Classifier classifier,
+  public void doExperiment(int round, double ratio, BasicSampling sampling, Classifier classifier,
           LabelingSimulation labeling, String outputFileName) {
 
     for (int i = 0; i < round; i++) {
-      doExperiment(i, sampling, classifier, labeling);
+      doExperiment(i, round, ratio, sampling, classifier, labeling);
     }
     clearPredictTable();
     WriteInFile(result_id, outputFileName);

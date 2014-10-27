@@ -6,7 +6,7 @@ import edu.cmu.al.simulation.LabelingSimulation;
 
 public interface Experiment {
 
-  public void doExperiment(BasicSampling sampling, Classifier classifier,
+  public void doExperiment(int round, double ratio, BasicSampling sampling, Classifier classifier,
           LabelingSimulation labeling, String outputFileName);
 
   public void plotResult(String outputFileName, String title, String... files);

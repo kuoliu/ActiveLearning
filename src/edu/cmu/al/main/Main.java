@@ -18,6 +18,8 @@ import edu.cmu.al.simulation.LabelingSimulation;
  */
 public class Main {
   public static int round = 10;
+  
+  public static double ratio = 0.5;
 
   public static void main(String[] args) {
 
@@ -38,10 +40,10 @@ public class Main {
 
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
-    Experiment experiment = new TableExperiment(round, 0.5);
-    experiment.doExperiment(sampling, classifier1, labeling, "regression.txt");
-    experiment.doExperiment(sampling, classifier2, labeling, "svm.txt");
-    experiment.doExperiment(sampling, classifier3, labeling, "logistic.txt");
+    Experiment experiment = new TableExperiment();
+    experiment.doExperiment(round, ratio, sampling, classifier1, labeling, "regression.txt");
+    experiment.doExperiment(round, ratio, sampling, classifier2, labeling, "svm.txt");
+    experiment.doExperiment(round, ratio, sampling, classifier3, labeling, "logistic.txt");
 
     experiment.plotResult("ThreeClassifiersUpdate", "ThreeClassifiers", "regression.txt", "LiR",
             "svm.txt", "SVM", "logistic.txt", "LR");
