@@ -9,7 +9,7 @@ import edu.cmu.al.util.SqlManipulation;
 
 /**
  * Description: Do some preprocess work on the data set
- * 
+ *
  * @author Kuo Liu
  */
 public class Preprocess {

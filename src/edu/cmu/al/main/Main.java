@@ -14,10 +14,10 @@ import edu.cmu.al.simulation.LabelingSimulation;
 
 /**
  * The main class to run main function
- * 
+ *
  */
 public class Main {
-  public static int round = 10;
+  public static int round = 30;
 
   public static void main(String[] args) {
     /*
@@ -29,7 +29,6 @@ public class Main {
 
     // train 0.5 * total number of instances in the predict table...
     // too many ---> too slow
-    Experiment experiment = new TableExperiment(round, 0.23);
 
     BasicSampling sampling = new RandomStrategy();
     Classifier classifier1 = new Regression();
@@ -38,6 +37,8 @@ public class Main {
 
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
+    
+    Experiment experiment = new TableExperiment(round, 0.5);
     experiment.doExperiment(sampling, classifier1, labeling, "regression.txt");
     experiment.doExperiment(sampling, classifier2, labeling, "svm.txt");
     experiment.doExperiment(sampling, classifier3, labeling, "logistic.txt");
