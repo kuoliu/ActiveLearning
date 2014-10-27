@@ -2,8 +2,6 @@ package edu.cmu.al.experiment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import edu.cmu.al.main.Preprocess;
@@ -24,15 +22,12 @@ public class TableExperiment implements Experiment {
 
   Evaluator evaluator;
 
-  List<String> allProductIds;
-
   public TableExperiment(int round, double ratio) {
     clearPredictTable();
     clearResultTable();
     this.round = round;
     this.ratio = ratio;
     this.evaluator = new Evaluator();
-    this.allProductIds = new ArrayList<String>();
     this.result_id = 0;
   }
 
@@ -50,7 +45,7 @@ public class TableExperiment implements Experiment {
             + "Unlabeled: " + labeling.getUnlabeledNumber());
 
     Set<String> productIds = sampling.sampling(numberOfInstanceToLabel);
-    allProductIds.addAll(productIds);
+
     labeling.labelProductId(productIds);
 
     classifier.train();
@@ -109,7 +104,8 @@ public class TableExperiment implements Experiment {
 
   private void WriteInFile(int result_id, String outputFileName) {
     Printer print = new Printer("output/" + outputFileName);
-    String sql = "select * from " + Configuration.getResultTable() + " where result_id=? order by round asc";
+    String sql = "select * from " + Configuration.getResultTable()
+            + " where result_id=? order by round asc";
 
     ResultSet rs = SqlManipulation.query(sql, result_id);
 

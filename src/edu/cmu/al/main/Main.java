@@ -17,13 +17,14 @@ import edu.cmu.al.simulation.LabelingSimulation;
  *
  */
 public class Main {
-  public static int round = 30;
+  public static int round = 10;
 
   public static void main(String[] args) {
-    /*
-     * System.out.println("DB initializing..."); Preprocess.run(); System.out.println("Finished");
-     * FeaturePipeline.produceFeatures();
-     */
+
+//    System.out.println("DB initializing...");
+//    Preprocess.run();
+//    System.out.println("Finished");
+//    FeaturePipeline.produceFeatures();
 
     System.out.println("Experiment");
 
@@ -37,14 +38,13 @@ public class Main {
 
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
-    
     Experiment experiment = new TableExperiment(round, 0.5);
     experiment.doExperiment(sampling, classifier1, labeling, "regression.txt");
     experiment.doExperiment(sampling, classifier2, labeling, "svm.txt");
     experiment.doExperiment(sampling, classifier3, labeling, "logistic.txt");
 
-    experiment.plotResult("ThreeClassifiers", "ThreeClassifiers", "regression.txt",
-            "LiR", "svm.txt", "SVM", "logistic.txt", "LR");
+    experiment.plotResult("ThreeClassifiersUpdate", "ThreeClassifiers", "regression.txt", "LiR",
+            "svm.txt", "SVM", "logistic.txt", "LR");
 
     // experiment.doExperiment("Round_10_Rate_0.5");
 
