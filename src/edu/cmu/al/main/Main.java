@@ -1,6 +1,7 @@
 package edu.cmu.al.main;
 
 import edu.cmu.al.experiment.Experiment;
+import edu.cmu.al.experiment.TableExperiment;
 import edu.cmu.al.feature.FeaturePipeline;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.ml.Regression;
@@ -11,11 +12,10 @@ import edu.cmu.al.simulation.LabelingSimulation;
 
 /**
  * The main class to run main function
- * 
+ *
  */
 public class Main {
-
-  public static int round = 20;
+  public static int round = 10;
 
   public static void main(String[] args) {
     /*System.out.println("DB initializing...");
@@ -27,11 +27,16 @@ public class Main {
 
     // train 0.5 * total number of instances in the predict table...
     // too many ---> too slow
-    
-    BasicSampling randomsample = new RandomStrategy();
-    Classifier lr = new Regression();
+
+    BasicSampling sampling = new RandomStrategy();
+    Classifier classifier = new Regression();
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
+//    experiment.doExperiment(sampling, classifier, labeling, "basic.txt");
+//
+//    experiment.plotResult("basic", "Basic", "basic.txt", "basic");
+
+    // experiment.doExperiment("Round_10_Rate_0.5");
 
     // experiment.doExperimentWithAllData("all_data");
 
