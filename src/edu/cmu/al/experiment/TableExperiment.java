@@ -62,14 +62,8 @@ public class TableExperiment implements Experiment {
   }
 
   private void clearPredictTable() {
-    String sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
-    SqlManipulation.dropTable(sql);
-
-    sql = "CREATE TABLE IF NOT EXISTS "
-            + Configuration.getPredictTable()
-            + " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, confidence REAL, predict_result REAL)";
-    SqlManipulation.createTable(sql);
-
+    String sql = "DELETE FROM " + Configuration.getPredictTable();
+    SqlManipulation.delete(sql);
     Preprocess.initPredictTable();
   }
 
