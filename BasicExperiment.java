@@ -15,7 +15,7 @@ import edu.cmu.al.util.Printer;
 import edu.cmu.al.util.SqlManipulation;
 import edu.cmu.al.util.Util;
 
-public class BasicExperiment implements Experiment {
+public class BasicExperiment {
 
   int round;
 
@@ -57,7 +57,6 @@ public class BasicExperiment implements Experiment {
     this.evaluator = new Evaluator();
   }
 
-  @Override
   public void doExperiment(int i, BasicSampling sampling, Classifier classifier,
           LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
@@ -90,7 +89,6 @@ public class BasicExperiment implements Experiment {
     }
   }
 
-  @Override
   public void testSampling(int i, Classifier classifier, LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
@@ -119,7 +117,6 @@ public class BasicExperiment implements Experiment {
     }
   }
 
-  @Override
   public void testModel(Classifier classifier, LabelingSimulation labeling) {
     // print
     // System.out.println("ToLabel: " + labeling.getUnlabeledNumber() + "\t" + "Unlabeled: "
@@ -174,19 +171,16 @@ public class BasicExperiment implements Experiment {
     }
   }
 
-  @Override
   public void plotResult() {
     return;
   }
 
   // python python/PylabPlotTool.py test OnlyTest accuracy.txt accuracy precision.txt precision
-  @Override
   public void plotResult(String outputFileName, String title, String... files) {
     Plot p = new PyPlot();
     p.linePlot(outputFileName, title, files);
   }
 
-  @Override
   public void storeInFile(String outputFileName, double[] cost, double[] accuracy) {
     Printer printer = new Printer(outputFileName);
     for (int i = 0; i < round; i++) {
@@ -219,7 +213,6 @@ public class BasicExperiment implements Experiment {
     return accuraciesCost;
   }
 
-  @Override
   public void storeInFile() {
     storeInFile(DIR + accuracy, getAccuraciesCost(), getAccuracies());
     storeInFile(DIR + testModelAccuracy, getTestModelAccuraciesCost(), getTestModelAccuracies());
@@ -228,7 +221,6 @@ public class BasicExperiment implements Experiment {
 
   }
 
-  @Override
   public void doExperimentWithAllData(String outputFileName) {
 
     Classifier lr = new Regression();
@@ -249,7 +241,6 @@ public class BasicExperiment implements Experiment {
      */
   }
 
-  @Override
   public void doExperiment(BasicSampling sampling, Classifier classifier,
           LabelingSimulation labeling, String outputFileName) {
 
@@ -281,6 +272,11 @@ public class BasicExperiment implements Experiment {
     SqlManipulation.createTable(sql);
 
     Preprocess.initPredictTable();
+  }
+
+  public void doExperiment(String outputFileName) {
+    // TODO Auto-generated method stub
+    
   }
 
 }

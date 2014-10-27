@@ -1,39 +1,42 @@
 package edu.cmu.al.experiment;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import edu.cmu.al.main.Preprocess;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.simulation.LabelingSimulation;
 import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.Printer;
 import edu.cmu.al.util.SqlManipulation;
 
 public class TableExperiment implements Experiment {
 
   int round;
 
-  Evaluator evaluator;
-
   double ratio;
-
-  List<String> allProductIds;
 
   int result_id;
 
-  public TableExperiment(int round, double ratio, int result_id) {
+  Evaluator evaluator;
+
+  List<String> allProductIds;
+
+  public TableExperiment(int round, double ratio) {
     clearPredictTable();
+    clearResultTable();
     this.round = round;
     this.ratio = ratio;
     this.evaluator = new Evaluator();
     this.allProductIds = new ArrayList<String>();
-    this.result_id = result_id;
+    this.result_id = 0;
   }
 
-  @Override
-  public void doExperiment(int i, BasicSampling sampling, Classifier classifier,
+  private void doExperiment(int i, BasicSampling sampling, Classifier classifier,
           LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
@@ -46,7 +49,7 @@ public class TableExperiment implements Experiment {
     System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
             + "Unlabeled: " + labeling.getUnlabeledNumber());
 
-    HashSet<String> productIds = sampling.sampling(numberOfInstanceToLabel);
+    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel);
     allProductIds.addAll(productIds);
     labeling.labelProductId(productIds);
 
@@ -57,78 +60,6 @@ public class TableExperiment implements Experiment {
     evaluator.evaluateClassification();
     insertResultTable(result_id, i, evaluator.computePrecision(), evaluator.computeAccuracy(),
             evaluator.computeRecall(), numberOfInstanceToLabel);
-  }
-
-  @Override
-  public void testSampling(int i, Classifier classifier, LabelingSimulation labeling) {
-    if (i < 0 || i >= round) {
-      System.out.println("Experiment error...");
-      return;
-    }
-
-    int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
-
-    // print
-    System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
-            + "Unlabeled: " + labeling.getUnlabeledNumber());
-
-    labeling.randomLabelByNum(numberOfInstanceToLabel);
-
-    classifier.train();
-    classifier.test();
-
-    evaluator.clear();
-    evaluator.evaluateClassification();
-    insertResultTable(result_id, i, evaluator.computePrecision(), evaluator.computeAccuracy(),
-            evaluator.computeRecall(), numberOfInstanceToLabel);
-  }
-
-  @Override
-  public void testModel(Classifier classifier, LabelingSimulation labeling) {
-    // print
-    // System.out.println("ToLabel: " + labeling.getUnlabeledNumber() + "\t" + "Unlabeled: "
-    // + labeling.getUnlabeledNumber());
-
-    // labeling.labelAll();
-
-    // /////////////////////////////////////////////////////////
-    int numberOfInstanceToLabel = allProductIds.size();
-
-    // print
-    System.out.println("ToLabel: " + numberOfInstanceToLabel + "\t" + "Unlabeled: "
-            + labeling.getUnlabeledNumber());
-
-    labeling.labelProductId(allProductIds);
-    // //////////////////////////////////////////////////////////////
-
-    classifier.train();
-    classifier.test();
-
-    evaluator.clear();
-    evaluator.evaluateClassification();
-    insertResultTable(result_id, 0, evaluator.computePrecision(), evaluator.computeAccuracy(),
-            evaluator.computeRecall(), numberOfInstanceToLabel);
-  }
-
-  @Override
-  public void doExperiment(BasicSampling sampling, Classifier classifier,
-          LabelingSimulation labeling, String outputFileName) {
-
-    for (int i = 0; i < round; i++) {
-      doExperiment(i, sampling, classifier, labeling);
-    }
-    clearPredictTable();
-    result_id++;
-
-    for (int i = 0; i < round; i++) {
-      testSampling(i, classifier, labeling);
-    }
-    clearPredictTable();
-    result_id++;
-
-    testModel(classifier, labeling);
-    clearPredictTable();
-    result_id++;
   }
 
   private void insertResultTable(int rid, int round, double precision, double accuracy,
@@ -155,54 +86,46 @@ public class TableExperiment implements Experiment {
 
   private void clearResultTable() {
     String sql = "DELETE FROM " + Configuration.getResultTable();
-    SqlManipulation.query(sql);
-  }
-
-  @Override
-  public void doExperimentWithAllData(String outputFileName) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void storeInFile() {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public double[] getTestSamplingAccuracies() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public double[] getTestModelAccuracies() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public double[] getAccuracies() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public void plotResult() {
-    // TODO Auto-generated method stub
-    
+    SqlManipulation.delete(sql);
   }
 
   @Override
   public void plotResult(String outputFileName, String title, String... files) {
-    // TODO Auto-generated method stub
-    
+    Plot p = new PyPlot();
+    p.linePlot(outputFileName, title, files);
   }
 
   @Override
-  public void storeInFile(String outputFileName, double[] cost, double[] accuracy) {
-    // TODO Auto-generated method stub
-    
+  public void doExperiment(BasicSampling sampling, Classifier classifier,
+          LabelingSimulation labeling, String outputFileName) {
+
+    for (int i = 0; i < round; i++) {
+      doExperiment(i, sampling, classifier, labeling);
+    }
+    clearPredictTable();
+    WriteInFile(result_id, outputFileName);
+    result_id++;
   }
+
+  private void WriteInFile(int result_id, String outputFileName) {
+    Printer print = new Printer("output/" + outputFileName);
+    String sql = "select * from " + Configuration.getResultTable() + " where result_id=? order by round asc";
+
+    ResultSet rs = SqlManipulation.query(sql, result_id);
+
+    double totalCost = 0;
+
+    try {
+      while (rs.next()) {
+        totalCost += rs.getDouble(6);
+        print.println(totalCost + " " + rs.getDouble(3) + " " + rs.getDouble(4) + " "
+                + rs.getDouble(5));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    print.close();
+  }
+
 }

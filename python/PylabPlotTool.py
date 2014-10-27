@@ -82,14 +82,14 @@ class PlotTool :
         X = []
         Y = []
         for line in ins :
-            first, second = line.strip().split(' ')
+            data = line.strip().split(' ')
             try :
-                first = float(first)
-                second = float(second)
+                first  = float(data[0])
+                second = float(data[1])
+                X.append(first)
+                Y.append(second)
             except ValueError :
                 continue
-            X.append(first)
-            Y.append(second)
         ins.close()
         return [X, Y]
 
