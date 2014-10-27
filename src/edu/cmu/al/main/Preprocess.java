@@ -114,7 +114,7 @@ public class Preprocess {
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
-				+ " (product_id VARCHAR(256) primary key, f1 REAL, f2 REAL, f3 REAL, f4 REAL, f5 REAL, f6 REAL, f7 REAL, f8 REAL)";
+				+ " (product_id VARCHAR(256) primary key, f1 REAL, f2 REAL, f3 REAL, f4 REAL, f5 REAL, f6 REAL, f7 REAL, f8 REAL, f9 REAL, f10 REAL, f11 REAL)";
 		SqlManipulation.createTable(sql);
 
 
@@ -123,4 +123,16 @@ public class Preprocess {
 				+ " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, confidence REAL, predict_result REAL)";
 		SqlManipulation.createTable(sql);
 	}
+	
+	public static void clearPredictTable() {
+    String sql = "DROP TABLE IF EXISTS " + Configuration.getPredictTable();
+    SqlManipulation.dropTable(sql);
+    
+    sql = "CREATE TABLE IF NOT EXISTS "
+            + Configuration.getPredictTable()
+            + " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, confidence REAL, predict_result REAL)";
+    SqlManipulation.createTable(sql);
+    
+    initPredictTable();
+  }
 }

@@ -95,9 +95,27 @@ public class BasicLabelingSimulation implements LabelingSimulation {
    * return productIds; }
    */
 
+  public int getUnlabeledNumber() {
+    String sql = "select COUNT(product_id) from " + Configuration.getPredictTable()
+            + " where islabeled=0";
+    ResultSet rs = SqlManipulation.query(sql);
+
+    int result = 0;
+
+    try {
+      if (rs.next()) {
+        result = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return result;
+  }
+
   // get all instances in the database
   private List<String> getProductList() {
-    String sql = "select product_id from " + Configuration.getPredictTable();
+    String sql = "select product_id from " + Configuration.getPredictTable() + " where islabeled=0";
     ResultSet rs = SqlManipulation.query(sql);
 
     List<String> productIds = new ArrayList<String>();
@@ -133,5 +151,23 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     String temp = productIds.get(source);
     productIds.set(source, productIds.get(target));
     productIds.set(target, temp);
+  }
+
+  @Override
+  public int getAllNumber() {
+    String sql = "select COUNT(product_id) from " + Configuration.getPredictTable();
+    ResultSet rs = SqlManipulation.query(sql);
+
+    int result = 0;
+
+    try {
+      if (rs.next()) {
+        result = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return result;
   }
 }

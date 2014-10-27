@@ -19,4 +19,8 @@ public interface LabelingSimulation {
   public List<String> randomLabelByNum(int n);
 
   public List<String> randomLabelByRatio(double ratio);
+
+  public int getUnlabeledNumber();
+
+  public int getAllNumber();
 }

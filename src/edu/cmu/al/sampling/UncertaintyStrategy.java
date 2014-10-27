@@ -26,14 +26,14 @@ public class UncertaintyStrategy extends BasicSampling {
 		HashMap<Integer, String> positive = new HashMap<Integer, String>();
 		HashMap<Integer, String> boundary = new HashMap<Integer, String>();
 
-		String sql = "select * from " + Configuration.getReviewTable();
+		String sql = "select * from " + Configuration.getPredictTable();
 		ResultSet rs = SqlManipulation.query(sql);
 
 		int positiveID = 0;
 		int boundaryID = 0;
 		try {
 			while (rs.next()) {
-				String prod_id = rs.getString(2);
+				String prod_id = rs.getString(1);
 				if (!isLabled(prod_id)) {
 					if (get_predict_result(prod_id) >= 0.7) {
 						positive.put(positiveID++, prod_id);
@@ -65,7 +65,7 @@ public class UncertaintyStrategy extends BasicSampling {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		updatePredictTable(selected);
 		return selected;
 	}
 }

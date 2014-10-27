@@ -55,7 +55,7 @@ public class RandomStrategy extends BasicSampling {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setPredictTable(selected);
+		updatePredictTable(selected);
 		return selected;
 	}
 }

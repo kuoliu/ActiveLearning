@@ -1,0 +1,12 @@
+Feature Explanation:
+f1:Number of Reviews for a Product
+f2:Average Review Score for a Product
+f3:positive word ratio for summary
+f4:negative word ratio for summary
+f5:positive word ratio for text
+f6:negative word ratio for text
+f7:positive/negative for summary
+f8:positive/negative for text
+f9:variance in review score
+f10:user bias in review score
+f11:user variance in review score
