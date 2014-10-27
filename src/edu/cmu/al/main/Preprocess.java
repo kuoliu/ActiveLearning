@@ -114,7 +114,7 @@ public class Preprocess {
 
 		sql = "CREATE TABLE IF NOT EXISTS "
 				+ Configuration.getFeatureTable()
-				+ " (product_id VARCHAR(256) primary key, f1 REAL, f2 REAL, f3 REAL, f4 REAL, f5 REAL, f6 REAL, f7 REAL, f8 REAL, f9 REAL, f10 REAL, f11 REAL)";
+				+ " (product_id VARCHAR(256) primary key, f1 REAL, f2 REAL, f3 REAL, f4 REAL, f5 REAL, f6 REAL, f7 REAL, f8 REAL, f9 REAL, f10 REAL, f11 REAL, )";
 		SqlManipulation.createTable(sql);
 
 

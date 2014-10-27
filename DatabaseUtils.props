@@ -73,7 +73,8 @@ LONG=6
 REAL=7
 DATE=8
 TIME=10
-TIMESTAMP=8 
+TIMESTAMP=8
+bool=1
 
 #mappings for table creation
 CREATE_STRING=TEXT

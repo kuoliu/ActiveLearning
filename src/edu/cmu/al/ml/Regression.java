@@ -8,6 +8,7 @@ import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
 import edu.cmu.al.util.Configuration;
+import edu.cmu.al.util.ScoreDefine;
 import edu.cmu.al.util.Util;
 
 /**
@@ -26,7 +27,7 @@ public class Regression extends Classifier {
 
 			//String sql = "select classifier_predict.product_id, f3, f2 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 1";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f1, f3, f4, f5, f6, f7, f8, f2 from "
+					+ ".product_id, f4, f7, f10, f2 from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
@@ -60,7 +61,7 @@ public class Regression extends Classifier {
 		try {
 			//String sql = "select f1 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 0";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f1, f3, f4, f5, f6, f7, f8, f2 from "
+					+ ".product_id, f4, f7, f10, f2 from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
@@ -81,7 +82,7 @@ public class Regression extends Classifier {
 			List<PredictResult> result = new ArrayList<PredictResult>();
 			for (int i = 0; i < newData.numInstances(); i++) {
 				double pred = this.lr.classifyInstance(newData.instance(i));
-				double predClass = pred >= 4.0 ? 1.0 : 0.0;
+				double predClass = pred >= ScoreDefine.posSocre ? 1.0 : 0.0;
 				PredictResult pp = new PredictResult(data
 						.instance(i).stringValue(0), pred, predClass);
 				result.add(pp);

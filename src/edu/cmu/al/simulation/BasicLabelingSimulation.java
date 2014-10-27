@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
@@ -64,7 +64,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
       return null;
     }
 
-    shuffle(productIds);
+    Collections.shuffle(productIds);
     List<String> newPIds = productIds.subList(0, n);
     labelProductId(newPIds);
     return newPIds;
@@ -78,7 +78,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     }
 
     List<String> productIds = getProductList();
-    shuffle(productIds);
+    Collections.shuffle(productIds);
     List<String> newPIds = productIds.subList(0, (int) Math.round(ratio * productIds.size()));
     labelProductId(newPIds);
     return newPIds;
@@ -99,7 +99,6 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     String sql = "select COUNT(product_id) from " + Configuration.getPredictTable()
             + " where islabeled=0";
     ResultSet rs = SqlManipulation.query(sql);
-
     int result = 0;
 
     try {
@@ -131,33 +130,10 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     return productIds;
   }
 
-  // shuffle the product Id in the list
-  private void shuffle(List<String> productIds) {
-    if (productIds == null || productIds.size() == 0) {
-      return;
-    }
-
-    int size = productIds.size();
-    Random randomGenerator = new Random();
-
-    for (int i = 0; i < size; i++) {
-      int randomInt = randomGenerator.nextInt(size);
-      swap(productIds, i, randomInt);
-    }
-  }
-
-  // swap two productIds in the list
-  private void swap(List<String> productIds, int source, int target) {
-    String temp = productIds.get(source);
-    productIds.set(source, productIds.get(target));
-    productIds.set(target, temp);
-  }
-
   @Override
   public int getAllNumber() {
     String sql = "select COUNT(product_id) from " + Configuration.getPredictTable();
     ResultSet rs = SqlManipulation.query(sql);
-
     int result = 0;
 
     try {
