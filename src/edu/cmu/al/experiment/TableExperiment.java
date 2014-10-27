@@ -25,14 +25,14 @@ public class TableExperiment implements Experiment {
     this.result_id = 0;
   }
 
-  private void doExperiment(int i, int round, double ratio, BasicSampling sampling, Classifier classifier,
-          LabelingSimulation labeling) {
+  private void doExperiment(int i, int round, int numberOfInstanceToLabel, BasicSampling sampling,
+          Classifier classifier, LabelingSimulation labeling) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
       return;
     }
 
-    int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
+    // int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
 
     // print
     System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
@@ -85,11 +85,11 @@ public class TableExperiment implements Experiment {
   }
 
   @Override
-  public void doExperiment(int round, double ratio, BasicSampling sampling, Classifier classifier,
-          LabelingSimulation labeling, String outputFileName) {
+  public void doExperiment(int round, int numberOfInstanceToLabel, BasicSampling sampling,
+          Classifier classifier, LabelingSimulation labeling, String outputFileName) {
 
     for (int i = 0; i < round; i++) {
-      doExperiment(i, round, ratio, sampling, classifier, labeling);
+      doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling);
     }
     clearPredictTable();
     WriteInFile(result_id, outputFileName);

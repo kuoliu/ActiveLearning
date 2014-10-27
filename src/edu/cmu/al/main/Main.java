@@ -37,13 +37,14 @@ public class Main {
     Classifier classifier1 = new Regression();
     Classifier classifier2 = new SVMClassifier();
     Classifier classifier3 = new LogisticClassifier();
-
     LabelingSimulation labeling = new BasicLabelingSimulation();
 
+    int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
+    
     Experiment experiment = new TableExperiment();
-    experiment.doExperiment(round, ratio, sampling, classifier1, labeling, "regression.txt");
-    experiment.doExperiment(round, ratio, sampling, classifier2, labeling, "svm.txt");
-    experiment.doExperiment(round, ratio, sampling, classifier3, labeling, "logistic.txt");
+    experiment.doExperiment(round, numberOfInstanceToLabel, sampling, classifier1, labeling, "regression.txt");
+    experiment.doExperiment(round, numberOfInstanceToLabel, sampling, classifier2, labeling, "svm.txt");
+    experiment.doExperiment(round, numberOfInstanceToLabel, sampling, classifier3, labeling, "logistic.txt");
 
     experiment.plotResult("ThreeClassifiersUpdate", "ThreeClassifiers", "regression.txt", "LiR",
             "svm.txt", "SVM", "logistic.txt", "LR");
