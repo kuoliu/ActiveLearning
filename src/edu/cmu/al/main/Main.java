@@ -18,10 +18,10 @@ public class Main {
   public static int round = 20;
 
   public static void main(String[] args) {
-    System.out.println("DB initializing...");
+    /*System.out.println("DB initializing...");
     Preprocess.run();
     System.out.println("Finished");
-    FeaturePipeline.produceFeatures();
+    FeaturePipeline.produceFeatures();*/
 
     System.out.println("Experiment");
 
