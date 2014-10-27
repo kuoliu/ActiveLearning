@@ -50,8 +50,7 @@ public class Evaluator implements EvaluatorInterface {
     String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
             + Configuration.getPredictTable() + " P "
             + "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score >= "
-            + ScoreDefine.posSocre
-            + " and P.islabeled = 0";
+            + ScoreDefine.posSocre + " and P.islabeled = 0";
     TRUE_POS = SqlManipulation.queryInt(sql);
   }
 
@@ -59,8 +58,7 @@ public class Evaluator implements EvaluatorInterface {
     String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
             + Configuration.getPredictTable() + " P "
             + "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score < "
-            + ScoreDefine.posSocre
-            + " and P.islabeled = 0";
+            + ScoreDefine.posSocre + " and P.islabeled = 0";
     TRUE_NEG = SqlManipulation.queryInt(sql);
   }
 
@@ -68,8 +66,7 @@ public class Evaluator implements EvaluatorInterface {
     String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
             + Configuration.getPredictTable() + " P "
             + "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score < "
-            + ScoreDefine.posSocre
-            + " and P.islabeled = 0";
+            + ScoreDefine.posSocre + " and P.islabeled = 0";
     FALSE_POS = SqlManipulation.queryInt(sql);
   }
 
@@ -77,8 +74,7 @@ public class Evaluator implements EvaluatorInterface {
     String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
             + Configuration.getPredictTable() + " P "
             + "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score >= "
-            + ScoreDefine.posSocre
-            + " and P.islabeled = 0";
+            + ScoreDefine.posSocre + " and P.islabeled = 0";
     FALSE_NEG = SqlManipulation.queryInt(sql);
   }
 
