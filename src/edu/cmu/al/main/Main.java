@@ -42,11 +42,11 @@ public class Main {
     int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
 
     Experiment experiment = new TableExperiment();
-    experiment.doExperiment(round, numberOfInstanceToLabel, sampling, classifier1, labeling, "regression.txt");
-    experiment.doExperiment(round, numberOfInstanceToLabel, sampling, classifier2, labeling, "svm.txt");
-    experiment.doExperiment(round, numberOfInstanceToLabel, sampling, classifier3, labeling, "logistic.txt");
+    experiment.doExperiment(30, 5, sampling, classifier1, labeling, "regression.txt");
+    experiment.doExperiment(30, 5, sampling, classifier2, labeling, "svm.txt");
+    experiment.doExperiment(30, 5, sampling, classifier3, labeling, "logistic.txt");
 
-    experiment.plotResult("ThreeClassifiersUpdate", "ThreeClassifiers", 
+    experiment.plotResult("ThreeClassifiers", "ThreeClassifiers", 
             "regression.txt", "LiR", "svm.txt", "SVM", "logistic.txt", "LR");
 
     // experiment.doExperiment("Round_10_Rate_0.5");

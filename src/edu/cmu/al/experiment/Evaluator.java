@@ -20,8 +20,9 @@ public class Evaluator implements EvaluatorInterface {
     getTrueNeg();
     getFalsePos();
     getFalseNeg();
-    // System.out.println(TRUE_POS + "\t" + TRUE_NEG + "\t" + FALSE_POS + "\t" + FALSE_NEG);
-
+    
+    System.out.println(TRUE_POS + "\t" + TRUE_NEG + "\t" + FALSE_POS + "\t" + FALSE_NEG + "\t"
+            + (TRUE_POS + TRUE_NEG + FALSE_POS + FALSE_NEG));
   }
 
   @Override
@@ -47,35 +48,50 @@ public class Evaluator implements EvaluatorInterface {
 
   public void getTruePos() {
 
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
-            + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score >= "
-            + ScoreDefine.posSocre + " and P.islabeled = 0";
+    String sql = "select count(P.product_id) from "
+            + Configuration.getFeatureTable()
+            + " F,"
+            + Configuration.getPredictTable()
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 1 and F.f2 >= 3";
+
     TRUE_POS = SqlManipulation.queryInt(sql);
+    // System.out.println(sql);
   }
 
   public void getTrueNeg() {
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
-            + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score < "
-            + ScoreDefine.posSocre + " and P.islabeled = 0";
+
+    String sql = "select count(P.product_id) from "
+            + Configuration.getFeatureTable()
+            + " F,"
+            + Configuration.getPredictTable()
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 0 and F.f2 < 3";
+
     TRUE_NEG = SqlManipulation.queryInt(sql);
+    // System.out.println(sql);
   }
 
   public void getFalsePos() {
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
-            + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 1 and R.review_score < "
-            + ScoreDefine.posSocre + " and P.islabeled = 0";
+
+    String sql = "select count(P.product_id) from "
+            + Configuration.getFeatureTable()
+            + " F,"
+            + Configuration.getPredictTable()
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 1 and F.f2 < 3";
+
     FALSE_POS = SqlManipulation.queryInt(sql);
+    // System.out.println(sql);
   }
 
   public void getFalseNeg() {
-    String sql = "select count(*) from " + Configuration.getReviewTable() + " R,"
-            + Configuration.getPredictTable() + " P "
-            + "where R.product_id = P.product_id and P.predict_result = 0 and R.review_score >= "
-            + ScoreDefine.posSocre + " and P.islabeled = 0";
+
+    String sql = "select count(P.product_id) from "
+            + Configuration.getFeatureTable()
+            + " F,"
+            + Configuration.getPredictTable()
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 0 and F.f2 >= 3";
+
     FALSE_NEG = SqlManipulation.queryInt(sql);
+    // System.out.println(sql);
   }
 
   public void clear() {
