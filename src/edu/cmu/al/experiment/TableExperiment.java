@@ -45,7 +45,6 @@ public class TableExperiment implements Experiment {
     classifier.train();
     classifier.test();
 
-    evaluator.clear();
     evaluator.evaluateClassification();
     insertResultTable(result_id, i, evaluator.computePrecision(), evaluator.computeAccuracy(),
             evaluator.computeRecall(), numberOfInstanceToLabel);
@@ -58,7 +57,7 @@ public class TableExperiment implements Experiment {
             + " (result_id, round, accuracy, precision, recall, annotation_cost) values (?, ?, ?, ?, ?, ?)";
 
     // System.out.println(sql);
-    SqlManipulation.insert(sql, rid, round, precision, accuracy, recall, annotation_cost);
+    SqlManipulation.insert(sql, rid, round, accuracy, precision, recall, annotation_cost);
   }
 
   private void clearPredictTable() {
@@ -91,6 +90,10 @@ public class TableExperiment implements Experiment {
   }
 
   private void WriteInFile(int result_id, String outputFileName) {
+    if (outputFileName == null || outputFileName.length() == 0) {
+      return;
+    }
+
     Printer print = new Printer("output/" + outputFileName);
     String sql = "select * from " + Configuration.getResultTable()
             + " where result_id=? order by round asc";
