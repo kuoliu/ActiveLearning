@@ -12,6 +12,7 @@ import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.sampling.UncertaintyStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.simulation.LabelingSimulation;
+import edu.cmu.al.util.Constant;
 
 /**
  * The main class to run main function
@@ -24,16 +25,17 @@ public class Main {
 
   public static void main(String[] args) {
 
-    // System.out.println("DB initializing...");
-    // Preprocess.run();
-    // System.out.println("Finished");
-    // FeaturePipeline.produceFeatures();
-
-    System.out.println("Experiment");
+//     System.out.println("DB initializing...");
+//     Preprocess.run();
+//     System.out.println("Finished");
+//     FeaturePipeline.produceFeatures();
+//
+//    System.out.println("Experiment");
 
     // train 0.5 * total number of instances in the predict table...
     // too many ---> too slow
 
+	 
     BasicSampling sampling = new RandomStrategy();
     Classifier classifier1 = new Regression();
     Classifier classifier2 = new SVMClassifier();
@@ -43,12 +45,12 @@ public class Main {
     int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
 
     Experiment experiment = new TableExperiment();
-//    experiment.doExperiment(5, 10, sampling, classifier1, labeling, "regression.txt");
-//    experiment.doExperiment(5, 10, sampling, classifier2, labeling, "svm.txt");
-    experiment.doExperiment(5, 10, sampling, classifier3, labeling, "logistic.txt");
-
-    experiment.plotResult("ThreeClassifiers", "ThreeClassifiers", 
-            "regression.txt", "LiR", "svm.txt", "SVM", "logistic.txt", "LR");
+    experiment.doExperiment(5, 10, sampling, classifier1, labeling, Constant.REG_COL.getName(),Constant.REG_FILE.getName());
+    experiment.doExperiment(5, 10, sampling, classifier2, labeling, Constant.SVM_COL.getName(),Constant.SVM_FILE.getName());
+    experiment.doExperiment(5, 10, sampling, classifier3, labeling, Constant.LR_COL.getName(),Constant.LR_FILE.getName());
+//
+//    experiment.plotResult("ThreeClassifiers", "ThreeClassifiers", 
+//            "regression.txt", "LiR", "svm.txt", "SVM", "logistic.txt", "LR");
 
     // experiment.doExperiment("Round_10_Rate_0.5");
 

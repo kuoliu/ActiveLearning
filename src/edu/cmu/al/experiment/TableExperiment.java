@@ -27,7 +27,7 @@ public class TableExperiment implements Experiment {
   }
 
   private void doExperiment(int i, int round, int numberOfInstanceToLabel, BasicSampling sampling,
-          Classifier classifier, LabelingSimulation labeling) {
+          Classifier classifier, LabelingSimulation labeling, String column) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
       return;
@@ -41,7 +41,7 @@ public class TableExperiment implements Experiment {
     if (i == 0){
     	sampling = new RandomStrategy();
     }
-    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel);
+    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel ,column);
 
     labeling.labelProductId(productIds);
 
@@ -82,10 +82,10 @@ public class TableExperiment implements Experiment {
 
   @Override
   public void doExperiment(int round, int numberOfInstanceToLabel, BasicSampling sampling,
-          Classifier classifier, LabelingSimulation labeling, String outputFileName) {
+          Classifier classifier, LabelingSimulation labeling, String column,  String outputFileName) {
 
     for (int i = 0; i < round; i++) {
-      doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling);
+      doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling, column);
     }
     clearPredictTable();
     WriteInFile(result_id, outputFileName);
