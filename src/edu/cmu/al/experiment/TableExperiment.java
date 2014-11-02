@@ -7,6 +7,7 @@ import java.util.Set;
 import edu.cmu.al.main.Preprocess;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.sampling.BasicSampling;
+import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.simulation.LabelingSimulation;
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.Printer;
@@ -37,7 +38,9 @@ public class TableExperiment implements Experiment {
     // print
     System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
             + "Unlabeled: " + labeling.getUnlabeledNumber());
-
+    if (i == 0){
+    	sampling = new RandomStrategy();
+    }
     Set<String> productIds = sampling.sampling(numberOfInstanceToLabel);
 
     labeling.labelProductId(productIds);

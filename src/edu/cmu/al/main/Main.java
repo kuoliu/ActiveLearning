@@ -9,6 +9,7 @@ import edu.cmu.al.ml.Regression;
 import edu.cmu.al.ml.SVMClassifier;
 import edu.cmu.al.sampling.BasicSampling;
 import edu.cmu.al.sampling.RandomStrategy;
+import edu.cmu.al.sampling.UncertaintyStrategy;
 import edu.cmu.al.simulation.BasicLabelingSimulation;
 import edu.cmu.al.simulation.LabelingSimulation;
 
@@ -42,9 +43,9 @@ public class Main {
     int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
 
     Experiment experiment = new TableExperiment();
-    experiment.doExperiment(30, 5, sampling, classifier1, labeling, "regression.txt");
-    experiment.doExperiment(30, 5, sampling, classifier2, labeling, "svm.txt");
-    experiment.doExperiment(30, 5, sampling, classifier3, labeling, "logistic.txt");
+//    experiment.doExperiment(5, 10, sampling, classifier1, labeling, "regression.txt");
+//    experiment.doExperiment(5, 10, sampling, classifier2, labeling, "svm.txt");
+    experiment.doExperiment(5, 10, sampling, classifier3, labeling, "logistic.txt");
 
     experiment.plotResult("ThreeClassifiers", "ThreeClassifiers", 
             "regression.txt", "LiR", "svm.txt", "SVM", "logistic.txt", "LR");

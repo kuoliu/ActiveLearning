@@ -52,7 +52,7 @@ public class Evaluator implements EvaluatorInterface {
             + Configuration.getFeatureTable()
             + " F,"
             + Configuration.getPredictTable()
-            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 1 and F.f2 >= 3";
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 1 and F.f2 >= " + ScoreDefine.posSocre;
 
     TRUE_POS = SqlManipulation.queryInt(sql);
     // System.out.println(sql);
@@ -64,7 +64,7 @@ public class Evaluator implements EvaluatorInterface {
             + Configuration.getFeatureTable()
             + " F,"
             + Configuration.getPredictTable()
-            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 0 and F.f2 < 3";
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 0 and F.f2 < " + ScoreDefine.posSocre;
 
     TRUE_NEG = SqlManipulation.queryInt(sql);
     // System.out.println(sql);
@@ -76,7 +76,7 @@ public class Evaluator implements EvaluatorInterface {
             + Configuration.getFeatureTable()
             + " F,"
             + Configuration.getPredictTable()
-            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 1 and F.f2 < 3";
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 1 and F.f2 < " + ScoreDefine.posSocre;
 
     FALSE_POS = SqlManipulation.queryInt(sql);
     // System.out.println(sql);
@@ -88,7 +88,7 @@ public class Evaluator implements EvaluatorInterface {
             + Configuration.getFeatureTable()
             + " F,"
             + Configuration.getPredictTable()
-            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 0 and F.f2 >= 3";
+            + " P where F.product_id = P.product_id and P.islabeled = 0 and P.predict_result = 0 and F.f2 >= "+ ScoreDefine.posSocre;
 
     FALSE_NEG = SqlManipulation.queryInt(sql);
     // System.out.println(sql);

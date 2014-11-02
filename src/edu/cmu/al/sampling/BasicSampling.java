@@ -57,7 +57,7 @@ public abstract class BasicSampling {
 		double confidence = 0.0;
 		try {
 			if (rs.next()) {
-				confidence = rs.getDouble(4);
+				confidence = rs.getDouble(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
