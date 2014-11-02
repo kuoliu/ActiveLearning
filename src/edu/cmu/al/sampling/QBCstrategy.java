@@ -52,7 +52,7 @@ public class QBCstrategy extends BasicSampling{
 	
 	
 	public static double utilityScore(String prod_id) {
-		String sql = "select reg, lr, svm from " + Configuration.getPredictTable()
+		String sql = "select reg_confidence, lr_confidence, svm_confidence from " + Configuration.getPredictTable()
 				+ " where product_id = " + prod_id;
 		
 		ResultSet rs = SqlManipulation.query(sql);
@@ -76,6 +76,12 @@ public class QBCstrategy extends BasicSampling{
 			prod_id = p_id;
 			utility_score = u_s;
 		}
+	}
+
+	@Override
+	public HashSet<String> sampling(int k, String classifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
