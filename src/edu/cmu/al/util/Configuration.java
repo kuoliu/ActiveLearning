@@ -7,130 +7,143 @@ package edu.cmu.al.util;
  */
 public class Configuration {
 
-	/** Configuration for Sql **/
-	private static String sqlDriver = "org.postgresql.Driver";
-	private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
-	private static String sqlUserName = "houcy";
-	private static String sqlPassword = "123456";
+  /** Configuration for Sql **/
+  private static String sqlDriver = "org.postgresql.Driver";
 
-	/** Configuration of database tables **/
-	private static String reviewTable = "product_review";
-	private static String featureTable = "product_feature";
-	private static String predictTable = "classifier_predict";
+  private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
 
-	/** Configuration about file **/
-	private static String fileFormat = "utf-8";
-	private static String logPath = "";
-	private static String tmpPath = "";
+  private static String sqlUserName = "houcy";
 
-	/** Configuration about useful paths **/
-	private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
-	private static String sentimentPositiveDicPath = "./files/positive-words.txt";
-	private static String sentimentNegativeDicPath = "./files/negative-words.txt";
+  private static String sqlPassword = "123456";
 
-	public static String getSqlDriver() {
-		return sqlDriver;
-	}
+  /** Configuration of database tables **/
+  private static String reviewTable = "product_review";
 
-	public static void setSqlDriver(String sqlDriver) {
-		Configuration.sqlDriver = sqlDriver;
-	}
+  private static String featureTable = "product_feature";
 
-	public static String getSqlUrl() {
-		return sqlUrl;
-	}
+  private static String predictTable = "classifier_predict";
 
-	public static void setSqlUrl(String sqlUrl) {
-		Configuration.sqlUrl = sqlUrl;
-	}
+  private static String resultTable = "classifier_result";
 
-	public static String getSqlUserName() {
-		return sqlUserName;
-	}
+  /** Configuration about file **/
+  private static String fileFormat = "utf-8";
 
-	public static void setSqlUserName(String sqlUserName) {
-		Configuration.sqlUserName = sqlUserName;
-	}
+  private static String logPath = "";
 
-	public static String getSqlPassword() {
-		return sqlPassword;
-	}
+  private static String tmpPath = "";
 
-	public static void setSqlPassword(String sqlPassword) {
-		Configuration.sqlPassword = sqlPassword;
-	}
+  /** Configuration about useful paths **/
+  private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
 
-	public static String getFileFormat() {
-		return fileFormat;
-	}
+  private static String sentimentPositiveDicPath = "./files/positive-words.txt";
 
-	public static void setFileFormat(String fileFormat) {
-		Configuration.fileFormat = fileFormat;
-	}
+  private static String sentimentNegativeDicPath = "./files/negative-words.txt";
 
-	public static String getLogPath() {
-		return logPath;
-	}
+  public static String getSqlDriver() {
+    return sqlDriver;
+  }
 
-	public static void setLogPath(String logPath) {
-		Configuration.logPath = logPath;
-	}
+  public static void setSqlDriver(String sqlDriver) {
+    Configuration.sqlDriver = sqlDriver;
+  }
 
-	public static String getTmpPath() {
-		return tmpPath;
-	}
+  public static String getSqlUrl() {
+    return sqlUrl;
+  }
 
-	public static void setTmpPath(String tmpPath) {
-		Configuration.tmpPath = tmpPath;
-	}
+  public static void setSqlUrl(String sqlUrl) {
+    Configuration.sqlUrl = sqlUrl;
+  }
 
-	public static String getTrainDataPath() {
-		return trainDataPath;
-	}
+  public static String getSqlUserName() {
+    return sqlUserName;
+  }
 
-	public static void setTrainDataPath(String trainDataPath) {
-		Configuration.trainDataPath = trainDataPath;
-	}
+  public static void setSqlUserName(String sqlUserName) {
+    Configuration.sqlUserName = sqlUserName;
+  }
 
-	public static String getReviewTable() {
-		return reviewTable;
-	}
+  public static String getSqlPassword() {
+    return sqlPassword;
+  }
 
-	public static void setReviewTable(String reviewTable) {
-		Configuration.reviewTable = reviewTable;
-	}
+  public static void setSqlPassword(String sqlPassword) {
+    Configuration.sqlPassword = sqlPassword;
+  }
 
-	public static String getFeatureTable() {
-		return featureTable;
-	}
+  public static String getFileFormat() {
+    return fileFormat;
+  }
 
-	public static void setFeatureTable(String featureTable) {
-		Configuration.featureTable = featureTable;
-	}
+  public static void setFileFormat(String fileFormat) {
+    Configuration.fileFormat = fileFormat;
+  }
 
-	public static String getPredictTable() {
-		return predictTable;
-	}
+  public static String getLogPath() {
+    return logPath;
+  }
 
-	public static void setPredictTable(String predictTable) {
-		Configuration.predictTable = predictTable;
-	}
+  public static void setLogPath(String logPath) {
+    Configuration.logPath = logPath;
+  }
 
-	public static String getSentimentPositiveDicPath() {
-		return sentimentPositiveDicPath;
-	}
+  public static String getTmpPath() {
+    return tmpPath;
+  }
 
-	public static void setSentimentPositiveDicPath(
-			String sentimentPositiveDicPath) {
-		Configuration.sentimentPositiveDicPath = sentimentPositiveDicPath;
-	}
+  public static void setTmpPath(String tmpPath) {
+    Configuration.tmpPath = tmpPath;
+  }
 
-	public static String getSentimentNegativeDicPath() {
-		return sentimentNegativeDicPath;
-	}
+  public static String getTrainDataPath() {
+    return trainDataPath;
+  }
 
-	public static void setSentimentNegativeDicPath(
-			String sentimentNegativeDicPath) {
-		Configuration.sentimentNegativeDicPath = sentimentNegativeDicPath;
-	}
+  public static void setTrainDataPath(String trainDataPath) {
+    Configuration.trainDataPath = trainDataPath;
+  }
+
+  public static String getReviewTable() {
+    return reviewTable;
+  }
+
+  public static void setReviewTable(String reviewTable) {
+    Configuration.reviewTable = reviewTable;
+  }
+
+  public static String getFeatureTable() {
+    return featureTable;
+  }
+
+  public static void setFeatureTable(String featureTable) {
+    Configuration.featureTable = featureTable;
+  }
+
+  public static String getPredictTable() {
+    return predictTable;
+  }
+
+  public static String getResultTable() {
+    return resultTable;
+  }
+
+  public static void setPredictTable(String predictTable) {
+    Configuration.predictTable = predictTable;
+  }
+
+  public static String getSentimentPositiveDicPath() {
+    return sentimentPositiveDicPath;
+  }
+
+  public static void setSentimentPositiveDicPath(String sentimentPositiveDicPath) {
+    Configuration.sentimentPositiveDicPath = sentimentPositiveDicPath;
+  }
+
+  public static String getSentimentNegativeDicPath() {
+    return sentimentNegativeDicPath;
+  }
+
+  public static void setSentimentNegativeDicPath(String sentimentNegativeDicPath) {
+    Configuration.sentimentNegativeDicPath = sentimentNegativeDicPath;
+  }
 }

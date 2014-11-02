@@ -67,7 +67,7 @@ public class ExperimentResult {
       
       // BasicSampling uncsample = new UncertaintyStrategy();
 
-      HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel);
+      HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel, null);
 
       // label all the instances in productIds
       simulation.labelProductId(productIds);

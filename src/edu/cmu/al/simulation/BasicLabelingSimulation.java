@@ -1,11 +1,7 @@
 package edu.cmu.al.simulation;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.SqlManipulation;
@@ -48,7 +44,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     } // end for
   }
 
-  // label all the instances
+/*  // label all the instances
   @Override
   public void labelAll() {
     List<String> productIds = getProductList();
@@ -82,7 +78,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
     List<String> newPIds = productIds.subList(0, (int) Math.round(ratio * productIds.size()));
     labelProductId(newPIds);
     return newPIds;
-  }
+  }*/
 
   // get all instances in the database
   /*
@@ -96,23 +92,13 @@ public class BasicLabelingSimulation implements LabelingSimulation {
    */
 
   public int getUnlabeledNumber() {
+    
     String sql = "select COUNT(product_id) from " + Configuration.getPredictTable()
             + " where islabeled=0";
-    ResultSet rs = SqlManipulation.query(sql);
-    int result = 0;
-
-    try {
-      if (rs.next()) {
-        result = rs.getInt(1);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return result;
+    return SqlManipulation.queryInt(sql);
   }
 
-  // get all instances in the database
+/*  // get all instances in the database
   private List<String> getProductList() {
     String sql = "select product_id from " + Configuration.getPredictTable() + " where islabeled=0";
     ResultSet rs = SqlManipulation.query(sql);
@@ -121,29 +107,19 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 
     try {
       while (rs.next()) {
-        productIds.add(rs.getString(1));
+        productIds.add(rs.getString(1).trim());
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
     return productIds;
-  }
+  }*/
 
   @Override
   public int getAllNumber() {
+    
     String sql = "select COUNT(product_id) from " + Configuration.getPredictTable();
-    ResultSet rs = SqlManipulation.query(sql);
-    int result = 0;
-
-    try {
-      if (rs.next()) {
-        result = rs.getInt(1);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return result;
+    return SqlManipulation.queryInt(sql);
   }
 }

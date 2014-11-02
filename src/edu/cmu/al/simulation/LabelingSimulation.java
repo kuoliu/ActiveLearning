@@ -14,11 +14,11 @@ public interface LabelingSimulation {
 
   public void labelProductId(Collection<String> productIds);
 
-  public void labelAll();
+  // public void labelAll();
 
-  public List<String> randomLabelByNum(int n);
+  // public List<String> randomLabelByNum(int n);
 
-  public List<String> randomLabelByRatio(double ratio);
+  // public List<String> randomLabelByRatio(double ratio);
 
   public int getUnlabeledNumber();
 

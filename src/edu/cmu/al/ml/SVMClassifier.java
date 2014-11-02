@@ -114,7 +114,7 @@ public class SVMClassifier extends Classifier {
 						.stringValue(0), confidence, pred);
 				result.add(pp);
 			}
-			Util.updatePredictTable(result);
+			Util.updatePredictTable(result, "svm_confidence");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

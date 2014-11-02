@@ -11,7 +11,7 @@ import edu.cmu.al.util.SqlManipulation;
 public class QBCstrategy extends BasicSampling{
 
 	@Override
-	public HashSet<String> sampling(int k) {
+	public HashSet<String> sampling(int k, String classifier) {
 		HashSet<String> selected = new HashSet<String>();
 
 		String sql = "select * from " + Configuration.getPredictTable();
@@ -52,7 +52,7 @@ public class QBCstrategy extends BasicSampling{
 	
 	
 	public static double utilityScore(String prod_id) {
-		String sql = "select reg, lr, svm from " + Configuration.getPredictTable()
+		String sql = "select reg_confidence, lr_confidence, svm_confidence from " + Configuration.getPredictTable()
 				+ " where product_id = " + prod_id;
 		
 		ResultSet rs = SqlManipulation.query(sql);

@@ -82,12 +82,13 @@ public class Regression extends Classifier {
 			List<PredictResult> result = new ArrayList<PredictResult>();
 			for (int i = 0; i < newData.numInstances(); i++) {
 				double pred = this.lr.classifyInstance(newData.instance(i));
+				pred = pred > 5.0 ? 5.0 : pred;
 				double predClass = pred >= ScoreDefine.posSocre ? 1.0 : 0.0;
 				PredictResult pp = new PredictResult(data
-						.instance(i).stringValue(0), pred, predClass);
+						.instance(i).stringValue(0), pred/5.0, predClass);
 				result.add(pp);
 			}
-			Util.updatePredictTable(result);
+			Util.updatePredictTable(result, "reg_confidence");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

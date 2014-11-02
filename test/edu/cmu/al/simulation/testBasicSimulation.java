@@ -10,9 +10,7 @@ public class testBasicSimulation {
 
 	@Test
 	public void test() {
-		LabelingSimulation simulation = new BasicLabelingSimulation();
 
-		simulation.labelAll();
 		/*
 		 * // System.out.println("DB initializing..."); Preprocess.run(); //
 		 * System.out.println("Finished"); // int featureId = 1; //
