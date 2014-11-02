@@ -108,10 +108,10 @@ public class LogisticClassifier extends Classifier {
 						.distributionForInstance(newData.instance(i))[1]; 
 				confidence = Math.floor(confidence * 100000000) / 100000000.0;
 				
-				System.out.println("Confidence: " + confidence+
+				/*System.out.println("Confidence: " + confidence+
 				 " Distribution: " +
 				 this.logistic.distributionForInstance(newData.instance(i))[1]
-				 + " " + at.value((int)pred));
+				 + " " + at.value((int)pred));*/
 
 				PredictResult pp = new PredictResult(data.instance(i)
 						.stringValue(0), confidence, pred);
