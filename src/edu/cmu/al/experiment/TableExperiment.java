@@ -7,6 +7,7 @@ import java.util.Set;
 import edu.cmu.al.main.Preprocess;
 import edu.cmu.al.ml.Classifier;
 import edu.cmu.al.sampling.BasicSampling;
+import edu.cmu.al.sampling.RandomStrategy;
 import edu.cmu.al.simulation.LabelingSimulation;
 import edu.cmu.al.util.Configuration;
 import edu.cmu.al.util.Printer;
@@ -26,7 +27,7 @@ public class TableExperiment implements Experiment {
   }
 
   private void doExperiment(int i, int round, int numberOfInstanceToLabel, BasicSampling sampling,
-          Classifier classifier, LabelingSimulation labeling) {
+          Classifier classifier, LabelingSimulation labeling, String column) {
     if (i < 0 || i >= round) {
       System.out.println("Experiment error...");
       return;
@@ -38,7 +39,13 @@ public class TableExperiment implements Experiment {
     System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
             + "Unlabeled: " + labeling.getUnlabeledNumber());
 
-    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel, "svm_confidence");
+    if (i == 0){
+    	sampling = new RandomStrategy();
+    }
+    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel ,column);
+
+
+
 
     labeling.labelProductId(productIds);
 
@@ -79,10 +86,10 @@ public class TableExperiment implements Experiment {
 
   @Override
   public void doExperiment(int round, int numberOfInstanceToLabel, BasicSampling sampling,
-          Classifier classifier, LabelingSimulation labeling, String outputFileName) {
+          Classifier classifier, LabelingSimulation labeling, String column,  String outputFileName) {
 
     for (int i = 0; i < round; i++) {
-      doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling);
+      doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling, column);
     }
     clearPredictTable();
     WriteInFile(result_id, outputFileName);
