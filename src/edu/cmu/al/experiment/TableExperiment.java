@@ -38,7 +38,7 @@ public class TableExperiment implements Experiment {
     System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
             + "Unlabeled: " + labeling.getUnlabeledNumber());
 
-    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel);
+    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel, "svm_confidence");
 
     labeling.labelProductId(productIds);
 
