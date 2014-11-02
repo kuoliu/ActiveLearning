@@ -21,7 +21,7 @@ public class UncertaintyStrategy extends BasicSampling {
 	 * with high positive confidence and at boundary
 	 */
 	@Override
-	public HashSet<String> sampling(int k) {
+	public HashSet<String> sampling(int k, String column) {
 		HashSet<String> selected = new HashSet<String>();
 		HashMap<Integer, String> positive = new HashMap<Integer, String>();
 		HashMap<Integer, String> boundary = new HashMap<Integer, String>();
@@ -35,10 +35,10 @@ public class UncertaintyStrategy extends BasicSampling {
 			while (rs.next()) {
 				String prod_id = rs.getString(1);
 				if (!isLabled(prod_id)) {
-					if (get_predict_result(prod_id) >= 0.7) {
+					if (get_predict_result(prod_id, column) >= 0.7) {
 						positive.put(positiveID++, prod_id);
-					} else if (get_predict_result(prod_id) >= 0.4
-							&& get_predict_result(prod_id) <= 0.6) {
+					} else if (get_predict_result(prod_id, column) >= 0.4
+							&& get_predict_result(prod_id, column) <= 0.6) {
 						boundary.put(boundaryID++, prod_id);
 					}
 				}
@@ -68,4 +68,5 @@ public class UncertaintyStrategy extends BasicSampling {
 		updatePredictTable(selected);
 		return selected;
 	}
+
 }

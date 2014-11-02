@@ -20,12 +20,16 @@ public abstract class BasicSampling {
 	public BasicSampling() {
 
 	}
-
+	
+	
 	/**
-	 * Select k instances to mark in next round.
-	 * @param k instances
+	 * Select k instances to mark in next round and select one classifier.
+	 * @param k
+	 * @param classifier is the column name
+	 * @return
 	 */
-	public abstract HashSet<String> sampling(int k);
+	public abstract HashSet<String> sampling(int k, String classifier);
+	
 	
 	
 	/**
@@ -47,10 +51,11 @@ public abstract class BasicSampling {
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.
 	 * @param product_id
+	 * @param colum
 	 * @return the posterior for a specific instance
 	 */
-	public Double get_predict_result(String product_id) {
-		String sql = "select confidence from "
+	public Double get_predict_result(String product_id, String column) {
+		String sql = "select " + column + " from "
 				+ Configuration.getPredictTable() 
 				+ " where product_id = '" + product_id + "'";
 		ResultSet rs = SqlManipulation.query(sql);

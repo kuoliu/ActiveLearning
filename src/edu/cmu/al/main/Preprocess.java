@@ -113,7 +113,7 @@ public class Preprocess {
 
     sql = "CREATE TABLE IF NOT EXISTS "
             + Configuration.getPredictTable()
-            + " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, confidence REAL, predict_result REAL)";
+            + " (product_id VARCHAR(256) primary key, islabeled INTEGER, user_label REAL, reg_confidence REAL, lr_confidence REAL, svm_confidence REAL, predict_result REAL)";
     SqlManipulation.createTable(sql);
 
     sql = "CREATE TABLE IF NOT EXISTS "
