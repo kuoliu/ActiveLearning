@@ -101,18 +101,24 @@ public class LogisticClassifier extends Classifier {
 			for (int i = 0; i < newData.numInstances(); i++) {
 				double pred = this.logistic.classifyInstance(newData
 						.instance(i));
+				
+				pred = Math.floor(pred * 100000000) / 100000000.0;
 				//the probability of being true
 				double confidence = this.logistic 
 						.distributionForInstance(newData.instance(i))[1]; 
-				// System.out.println("Confidence: " + confidence+
-				// " Distribution: " +
-				// this.logistic.distributionForInstance(newData.instance(i))[1]
-				// + " " + at.value((int)pred));
+				confidence = Math.floor(confidence * 100000000) / 100000000.0;
+				
+				System.out.println("Confidence: " + confidence+
+				 " Distribution: " +
+				 this.logistic.distributionForInstance(newData.instance(i))[1]
+				 + " " + at.value((int)pred));
 
 				PredictResult pp = new PredictResult(data.instance(i)
 						.stringValue(0), confidence, pred);
 				result.add(pp);
+				System.out.println("confidence " + confidence + " pred " + pred);
 			}
+			
 			Util.updatePredictTable(result, "lr_confidence");
 		} catch (Exception e) {
 			e.printStackTrace();

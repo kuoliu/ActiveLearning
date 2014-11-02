@@ -26,6 +26,7 @@ public class Util {
 		String updateSql = "update "
 				+ Configuration.getPredictTable()
 				+ " set " + confidenceCol + " = ?, predict_result= ?  where product_id= ? ";
+		System.out.println(updateSql);
 		try {
 			for (int i = 0; i < predictionValue.size(); i++) {
 				SqlManipulation.update(updateSql, 

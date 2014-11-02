@@ -73,6 +73,7 @@ public class SVMClassifier extends Classifier {
 	@Override
 	public void test() {
 		try {
+			System.out.println("xixi");
 			// String sql =
 			// "select f1 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 0";
 			String sql = "select " + Configuration.getPredictTable()
