@@ -14,6 +14,7 @@ public class Configuration {
 
   private static String sqlUserName = "lk";
 
+
   private static String sqlPassword = "123";
 
   /** Configuration of database tables **/

@@ -69,6 +69,7 @@ public class ExperimentResult {
 
 //      HashSet<String> productIds = randomsample.sampling(numberOfInstanceToLabel);
       HashSet<String> productIds = new HashSet<String>();
+
       // label all the instances in productIds
       simulation.labelProductId(productIds);
 

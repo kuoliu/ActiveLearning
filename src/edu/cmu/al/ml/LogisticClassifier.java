@@ -113,7 +113,7 @@ public class LogisticClassifier extends Classifier {
 						.stringValue(0), confidence, pred);
 				result.add(pp);
 			}
-			Util.updatePredictTable(result);
+			Util.updatePredictTable(result, "lr_confidence");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

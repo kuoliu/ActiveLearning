@@ -38,10 +38,14 @@ public class TableExperiment implements Experiment {
     // print
     System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
             + "Unlabeled: " + labeling.getUnlabeledNumber());
+
     if (i == 0){
     	sampling = new RandomStrategy();
     }
     Set<String> productIds = sampling.sampling(numberOfInstanceToLabel ,column);
+
+
+
 
     labeling.labelProductId(productIds);
 

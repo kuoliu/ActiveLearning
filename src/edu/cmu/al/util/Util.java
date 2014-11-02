@@ -22,10 +22,10 @@ public class Util {
 
   public static final String testModelAccuracy = "testModelAccuracy.txt";
 
-	public static void updatePredictTable(List<PredictResult> predictionValue) {
+	public static void updatePredictTable(List<PredictResult> predictionValue, String confidenceCol) {
 		String updateSql = "update "
 				+ Configuration.getPredictTable()
-				+ " set confidence = ?, predict_result= ?  where product_id= ? ";
+				+ " set " + confidenceCol + " = ?, predict_result= ?  where product_id= ? ";
 		try {
 			for (int i = 0; i < predictionValue.size(); i++) {
 				SqlManipulation.update(updateSql, 
