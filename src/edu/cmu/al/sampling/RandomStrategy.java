@@ -19,7 +19,7 @@ public class RandomStrategy extends BasicSampling {
 	 * Randomly sampling k instances
 	 */
 	@Override
-	public HashSet<String> sampling(int k) {
+	public HashSet<String> sampling(int k, String classifier) {
 
 		String sql1 = "select count(*) from " + Configuration.getReviewTable();
 

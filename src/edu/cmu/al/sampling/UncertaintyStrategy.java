@@ -69,9 +69,4 @@ public class UncertaintyStrategy extends BasicSampling {
 		return selected;
 	}
 
-	@Override
-	public HashSet<String> sampling(int k) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

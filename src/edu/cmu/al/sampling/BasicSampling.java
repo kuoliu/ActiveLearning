@@ -20,16 +20,10 @@ public abstract class BasicSampling {
 	public BasicSampling() {
 
 	}
-
-	/**
-	 * Select k instances to mark in next round.
-	 * @param k instances
-	 */
-	public abstract HashSet<String> sampling(int k);
 	
 	
 	/**
-	 * Select k instances to mark in next round and select one classifier. Only used for uncertainty Sampling.
+	 * Select k instances to mark in next round and select one classifier.
 	 * @param k
 	 * @param classifier is the column name
 	 * @return
