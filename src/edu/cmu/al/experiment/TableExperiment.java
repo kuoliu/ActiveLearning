@@ -42,10 +42,8 @@ public class TableExperiment implements Experiment {
     if (i == 0){
     	sampling = new RandomStrategy();
     }
+    
     Set<String> productIds = sampling.sampling(numberOfInstanceToLabel ,column);
-
-
-
 
     labeling.labelProductId(productIds);
 
@@ -89,6 +87,9 @@ public class TableExperiment implements Experiment {
           Classifier classifier, LabelingSimulation labeling, String column,  String outputFileName) {
 
     for (int i = 0; i < round; i++) {
+      if (i == round - 1){
+    	  numberOfInstanceToLabel = 100;
+      }
       doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling, column);
     }
     clearPredictTable();
