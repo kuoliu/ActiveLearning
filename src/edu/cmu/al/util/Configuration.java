@@ -40,6 +40,9 @@ public class Configuration {
 
   private static String sentimentNegativeDicPath = "./files/negative-words.txt";
 
+  /** Configuration for tools **/
+  private static String stanfordnlpComponent = "tokenize, ssplit, pos, parse";
+  
   public static String getSqlDriver() {
     return sqlDriver;
   }
@@ -147,4 +150,12 @@ public class Configuration {
   public static void setSentimentNegativeDicPath(String sentimentNegativeDicPath) {
     Configuration.sentimentNegativeDicPath = sentimentNegativeDicPath;
   }
+
+public static String getStanfordnlpComponent() {
+	return stanfordnlpComponent;
+}
+
+public static void setStanfordnlpComponent(String stanfordnlpComponent) {
+	Configuration.stanfordnlpComponent = stanfordnlpComponent;
+}
 }
