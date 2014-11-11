@@ -116,7 +116,7 @@ public class LogisticClassifier extends Classifier {
 				PredictResult pp = new PredictResult(data.instance(i)
 						.stringValue(0), confidence, pred);
 				result.add(pp);
-				System.out.println("confidence " + confidence + " pred " + pred);
+//				System.out.println("confidence " + confidence + " pred " + pred);
 			}
 			
 			Util.updatePredictTable(result, "lr_confidence");
