@@ -25,15 +25,15 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		 System.out.println("DB initializing...");
-//		 Preprocess.run();
-//		 System.out.println("Finished");
-//		 FeaturePipeline.produceFeatures();
+		 System.out.println("DB initializing...");
+		 Preprocess.run();
+		 System.out.println("Finished");
+		 FeaturePipeline.produceFeatures();
 		
 		 System.out.println("Experiment");
 
 		// random
-		BasicSampling sampling = new RandomStrategy();
+		BasicSampling sampling = new UncertaintyStrategy();
 		Classifier classifier1 = new Regression();
 		Classifier classifier2 = new SVMClassifier();
 		Classifier classifier3 = new LogisticClassifier();
