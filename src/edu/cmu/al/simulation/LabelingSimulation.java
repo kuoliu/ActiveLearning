@@ -13,6 +13,8 @@ import java.util.List;
 public interface LabelingSimulation {
 
   public void labelProductId(Collection<String> productIds);
+  
+  public void firstLabel(int k);
 
   // public void labelAll();
 
