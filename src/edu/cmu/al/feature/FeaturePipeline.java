@@ -19,6 +19,6 @@ public class FeaturePipeline {
 		featureId = featureExtractor.extractFeature(featureId);
 		
 		featureExtractor = new LanguageFeatureExtractor();
-		featureId = featureExtractor.extractFeature(featureId);
+//		featureId = featureExtractor.extractFeature(featureId);
 	}
 }

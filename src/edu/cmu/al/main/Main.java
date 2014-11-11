@@ -21,15 +21,15 @@ import edu.cmu.al.util.Constant;
  */
 public class Main {
 	public static int round = 50;
-	public static int instance = 2;
+	public static int instance = 15;
 	public static double ratio = 0.5;
 
 	public static void main(String[] args) {
 
-		// System.out.println("DB initializing...");
-		// Preprocess.run();
-		// System.out.println("Finished");
-		// FeaturePipeline.produceFeatures();
+//		 System.out.println("DB initializing...");
+//		 Preprocess.run();
+//		 System.out.println("Finished");
+//		 FeaturePipeline.produceFeatures();
 
 		System.out.println("Experiment");
 
