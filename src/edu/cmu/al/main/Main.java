@@ -34,7 +34,7 @@ public class Main {
 		System.out.println("Experiment");
 
 		// random
-		BasicSampling sampling = new RandomStrategy();
+		BasicSampling sampling = new UncertaintyStrategy();
 		Classifier classifier1 = new Regression();
 		Classifier classifier2 = new SVMClassifier();
 		Classifier classifier3 = new LogisticClassifier();

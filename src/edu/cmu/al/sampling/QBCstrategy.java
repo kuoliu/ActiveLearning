@@ -55,7 +55,6 @@ public class QBCstrategy extends BasicSampling{
 		String sql = "select reg_confidence, lr_confidence, svm_confidence from " + Configuration.getPredictTable()
 				+ " where product_id =  '"  + prod_id + "'";
 
-		System.out.println(prod_id);
 		ResultSet rs = SqlManipulation.query(sql);
 		double utilityScore = 0.0;
 		try {
