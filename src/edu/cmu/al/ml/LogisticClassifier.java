@@ -33,7 +33,7 @@ public class LogisticClassifier extends Classifier {
 			// String sql =
 			// "select classifier_predict.product_id, f3, f2 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 1";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f4, f7, f10, CASE WHEN f2 < "
+					+ ".product_id, f1, f3, f8, CASE WHEN f2 < "
 					+ ScoreDefine.posSocre
 					+ " THEN false ELSE true END as class from "
 					+ Configuration.getFeatureTable() + " , "
@@ -71,7 +71,7 @@ public class LogisticClassifier extends Classifier {
 			// String sql =
 			// "select f1 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 0";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f4, f7, f10, CASE WHEN f2 < "
+					+ ".product_id, f1, f3, f8, CASE WHEN f2 < "
 					+ ScoreDefine.posSocre
 					+ " THEN false ELSE true END as class from "
 					+ Configuration.getFeatureTable() + " , "
