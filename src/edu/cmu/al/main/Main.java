@@ -20,16 +20,16 @@ import edu.cmu.al.util.Constant;
  * 
  */
 public class Main {
-	public static int round = 30;
-	public static int instance = 15;
+	public static int round = 50;
+	public static int instance = 2;
 	public static double ratio = 0.5;
 
 	public static void main(String[] args) {
 
-		// System.out.println("DB initializing...");
-		// Preprocess.run();
-		// System.out.println("Finished");
-		// FeaturePipeline.produceFeatures();
+//		 System.out.println("DB initializing...");
+//		 Preprocess.run();
+//		 System.out.println("Finished");
+//		 FeaturePipeline.produceFeatures();
 
 		System.out.println("Experiment");
 
@@ -41,14 +41,16 @@ public class Main {
 		LabelingSimulation labeling = new BasicLabelingSimulation();
 		//
 		Experiment experiment = new TableExperiment();
-		experiment.doExperiment(round, instance, sampling, classifier1, labeling, null, Constant.REG_FILE.getName());
-		experiment.doExperiment(round, instance, sampling, classifier2, labeling, null, Constant.SVM_FILE.getName());
-		experiment.doExperiment(round, instance, sampling, classifier3, labeling, null, Constant.LR_FILE.getName());
-		experiment.plotResult("Random", "RandomSampling",  "svm.txt", "SVM", "logistic.txt", "LR");
+		// experiment.doExperiment(round, instance, sampling, classifier1,
+		// labeling, null, Constant.REG_FILE.getName());
+//		experiment.doExperiment(round, instance, sampling, classifier2, labeling, null, Constant.SVM_FILE.getName());
+//		experiment.doExperiment(round, instance, sampling, classifier3, labeling, null, Constant.LR_FILE.getName());
+//		experiment.plotResult("Random", "RandomSampling", "svm.txt", "SVM", "logistic.txt", "LR");
 
 		sampling = new UncertaintyStrategy();
 
-//		experiment.doExperiment(round, instance, sampling, classifier1, labeling, Constant.REG_COL.getName(), Constant.REG_FILE.getName());
+		// experiment.doExperiment(round, instance, sampling, classifier1,
+		// labeling, Constant.REG_COL.getName(), Constant.REG_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier2, labeling, Constant.SVM_COL.getName(), Constant.SVM_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_FILE.getName());
 
@@ -56,11 +58,12 @@ public class Main {
 
 		sampling = new QBCstrategy();
 
-//		experiment.doExperiment(round, instance, sampling, classifier1, labeling, Constant.REG_COL.getName(), Constant.REG_FILE.getName());
+		// experiment.doExperiment(round, instance, sampling, classifier1,
+		// labeling, Constant.REG_COL.getName(), Constant.REG_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier2, labeling, Constant.SVM_COL.getName(), Constant.SVM_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_FILE.getName());
 
-		experiment.plotResult("QBC", "QBCSampling",  "svm.txt", "SVM", "logistic.txt", "LR");
+		experiment.plotResult("QBC", "QBCSampling", "svm.txt", "SVM", "logistic.txt", "LR");
 
 		// experiment.doExperimentWithAllData("all_data");
 

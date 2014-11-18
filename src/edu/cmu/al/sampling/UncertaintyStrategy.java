@@ -35,10 +35,10 @@ public class UncertaintyStrategy extends BasicSampling {
 			while (rs.next()) {
 				String prod_id = rs.getString(1);
 				if (!isLabled(prod_id)) {
-					if (get_predict_result(prod_id, column) >= 0.7) {
+					if (get_predict_result(prod_id, column) >= 0.4) {
 						positive.put(positiveID++, prod_id);
-					} else if (get_predict_result(prod_id, column) >= 0.4
-							&& get_predict_result(prod_id, column) <= 0.6) {
+					} else if (get_predict_result(prod_id, column) >= 0.1
+							&& get_predict_result(prod_id, column) < 0.4) {
 						boundary.put(boundaryID++, prod_id);
 					}
 				}

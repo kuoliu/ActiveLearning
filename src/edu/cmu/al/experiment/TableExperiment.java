@@ -15,112 +15,108 @@ import edu.cmu.al.util.SqlManipulation;
 
 public class TableExperiment implements Experiment {
 
-  int result_id;
+	int result_id;
 
-  Evaluator evaluator;
+	Evaluator evaluator;
 
-  public TableExperiment() {
-    clearPredictTable();
-    clearResultTable();
-    this.evaluator = new Evaluator();
-    this.result_id = 0;
-  }
+	public TableExperiment() {
+		clearPredictTable();
+		clearResultTable();
+		this.evaluator = new Evaluator();
+		this.result_id = 0;
+	}
 
-  private void doExperiment(int i, int round, int numberOfInstanceToLabel, BasicSampling sampling,
-          Classifier classifier, LabelingSimulation labeling, String column) {
-    if (i < 0 || i >= round) {
-      System.out.println("Experiment error...");
-      return;
-    }
+	private void doExperiment(int i, int round, int numberOfInstanceToLabel, BasicSampling sampling, Classifier classifier, LabelingSimulation labeling, String column) {
+		if (i < 0 || i >= round) {
+			System.out.println("Experiment error...");
+			return;
+		}
 
-    // int numberOfInstanceToLabel = (int) Math.floor((labeling.getAllNumber() / round) * ratio);
+		// int numberOfInstanceToLabel = (int)
+		// Math.floor((labeling.getAllNumber() / round) * ratio);
 
-    // print
-    System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t"
-            + "Unlabeled: " + labeling.getUnlabeledNumber());
+		// print
+		System.out.println("Round: " + i + '\t' + "ToLabel: " + numberOfInstanceToLabel + "\t" + "Unlabeled: " + labeling.getUnlabeledNumber());
 
-    if (i == 0){
-    	sampling = new RandomStrategy();
-    }
-    
-    Set<String> productIds = sampling.sampling(numberOfInstanceToLabel ,column);
+		if (i == 0) {
+			if (numberOfInstanceToLabel < 2) {
+				numberOfInstanceToLabel = 2;
+			}
+			labeling.firstLabel(2);
+		} else {
+			Set<String> productIds = sampling.sampling(numberOfInstanceToLabel, column);
+			labeling.labelProductId(productIds);
+		}
+		classifier.train();
+		classifier.test();
 
-    labeling.labelProductId(productIds);
+		evaluator.evaluateClassification();
+		System.out.println(evaluator.computeAccuracy() + "\t" + evaluator.computePrecision() + "\t" + evaluator.computeRecall());
+		insertResultTable(result_id, i, evaluator.computePrecision(), evaluator.computeAccuracy(), evaluator.computeRecall(), numberOfInstanceToLabel);
+	}
 
-    classifier.train();
-    classifier.test();
+	private void insertResultTable(int rid, int round, double precision, double accuracy, double recall, double annotation_cost) {
+		String sql = "insert into " + Configuration.getResultTable() + " (result_id, round, accuracy, precision, recall, annotation_cost) values (?, ?, ?, ?, ?, ?)";
 
-    evaluator.evaluateClassification();
-    insertResultTable(result_id, i, evaluator.computePrecision(), evaluator.computeAccuracy(),
-            evaluator.computeRecall(), numberOfInstanceToLabel);
-  }
+		// System.out.println(sql);
+		SqlManipulation.insert(sql, rid, round, accuracy, precision, recall, annotation_cost);
+	}
 
-  private void insertResultTable(int rid, int round, double precision, double accuracy,
-          double recall, double annotation_cost) {
-    String sql = "insert into "
-            + Configuration.getResultTable()
-            + " (result_id, round, accuracy, precision, recall, annotation_cost) values (?, ?, ?, ?, ?, ?)";
+	private void clearPredictTable() {
+		String sql = "DELETE FROM " + Configuration.getPredictTable();
+		SqlManipulation.delete(sql);
+		Preprocess.initPredictTable();
+	}
 
-    // System.out.println(sql);
-    SqlManipulation.insert(sql, rid, round, accuracy, precision, recall, annotation_cost);
-  }
+	private void clearResultTable() {
+		String sql = "DELETE FROM " + Configuration.getResultTable();
+		SqlManipulation.delete(sql);
+	}
 
-  private void clearPredictTable() {
-    String sql = "DELETE FROM " + Configuration.getPredictTable();
-    SqlManipulation.delete(sql);
-    Preprocess.initPredictTable();
-  }
+	@Override
+	public void plotResult(String outputFileName, String title, String... files) {
+		Plot p = new PyPlot();
+		p.linePlot(outputFileName, title, files);
+	}
 
-  private void clearResultTable() {
-    String sql = "DELETE FROM " + Configuration.getResultTable();
-    SqlManipulation.delete(sql);
-  }
+	@Override
+	public void doExperiment(int round, int numberOfInstanceToLabel, BasicSampling sampling, Classifier classifier, LabelingSimulation labeling, String column, String outputFileName) {
 
-  @Override
-  public void plotResult(String outputFileName, String title, String... files) {
-    Plot p = new PyPlot();
-    p.linePlot(outputFileName, title, files);
-  }
+		for (int i = 0; i < round; i++) {
+			if (i == round - 1){
+				numberOfInstanceToLabel = 50;
+			}else if (i >= 40) {
+				numberOfInstanceToLabel = 5;
+			}
+			doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling, column);
+		}
+		clearPredictTable();
+		WriteInFile(result_id, outputFileName);
+		result_id++;
+	}
 
-  @Override
-  public void doExperiment(int round, int numberOfInstanceToLabel, BasicSampling sampling,
-          Classifier classifier, LabelingSimulation labeling, String column,  String outputFileName) {
+	private void WriteInFile(int result_id, String outputFileName) {
+		if (outputFileName == null || outputFileName.length() == 0) {
+			return;
+		}
 
-    for (int i = 0; i < round; i++) {
-      if (i == round - 1){
-    	  numberOfInstanceToLabel = 100;
-      }
-      doExperiment(i, round, numberOfInstanceToLabel, sampling, classifier, labeling, column);
-    }
-    clearPredictTable();
-    WriteInFile(result_id, outputFileName);
-    result_id++;
-  }
+		Printer print = new Printer("output/" + outputFileName);
+		String sql = "select * from " + Configuration.getResultTable() + " where result_id=? order by round asc";
 
-  private void WriteInFile(int result_id, String outputFileName) {
-    if (outputFileName == null || outputFileName.length() == 0) {
-      return;
-    }
+		ResultSet rs = SqlManipulation.query(sql, result_id);
 
-    Printer print = new Printer("output/" + outputFileName);
-    String sql = "select * from " + Configuration.getResultTable()
-            + " where result_id=? order by round asc";
+		double totalCost = 0;
 
-    ResultSet rs = SqlManipulation.query(sql, result_id);
+		try {
+			while (rs.next()) {
+				totalCost += rs.getDouble(6);
+				print.println(totalCost + " " + rs.getDouble(3) + " " + rs.getDouble(4) + " " + rs.getDouble(5));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-    double totalCost = 0;
-
-    try {
-      while (rs.next()) {
-        totalCost += rs.getDouble(6);
-        print.println(totalCost + " " + rs.getDouble(3) + " " + rs.getDouble(4) + " "
-                + rs.getDouble(5));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    print.close();
-  }
+		print.close();
+	}
 
 }
