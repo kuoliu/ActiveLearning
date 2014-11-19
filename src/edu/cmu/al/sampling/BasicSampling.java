@@ -25,7 +25,7 @@ public abstract class BasicSampling {
 	/**
 	 * Select k instances to mark in next round and select one classifier.
 	 * @param k
-	 * @param classifier is the column name
+	 * @param classifier
 	 * @return
 	 */
 	public abstract HashSet<String> sampling(int k, String classifier);
@@ -51,7 +51,7 @@ public abstract class BasicSampling {
 	/**
 	 * Extract the class posterior probabilities for the unlabeled observations.
 	 * @param product_id
-	 * @param colum
+	 * @param column
 	 * @return the posterior for a specific instance
 	 */
 	public Double get_predict_result(String product_id, String column) {

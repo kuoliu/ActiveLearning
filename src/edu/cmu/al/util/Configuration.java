@@ -12,7 +12,7 @@ public class Configuration {
 
   private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
 
-  private static String sqlUserName = "yyy";
+  private static String sqlUserName = "mabodx";
 
 
   private static String sqlPassword = "123";
@@ -34,7 +34,7 @@ public class Configuration {
   private static String tmpPath = "";
 
   /** Configuration about useful paths **/
-  private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
+  private static String trainDataPath = "./files/Clothing_&_Accessories.txt";
 
   private static String sentimentPositiveDicPath = "./files/positive-words.txt";
 

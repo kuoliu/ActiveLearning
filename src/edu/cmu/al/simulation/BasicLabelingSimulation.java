@@ -47,7 +47,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 	}
 
 	public void firstLabel(int k) {
-		String sql = "select product_id from " + Configuration.getFeatureTable() + " where f2 >= " + ScoreDefine.posSocre + " limit " + k / 2;
+		String sql = "select product_id from " + Configuration.getFeatureTable() + " where f2 >= " + ScoreDefine.posSocre + " limit " + k / 2 + " offset 5";
 		ResultSet rs = SqlManipulation.query(sql);
 		try {
 			while (rs.next()) {
@@ -58,7 +58,7 @@ public class BasicLabelingSimulation implements LabelingSimulation {
 			e.printStackTrace();
 		}
 		
-		sql = "select product_id from " + Configuration.getFeatureTable() + " where f2 < " + ScoreDefine.posSocre + " limit " + (k - k / 2);
+		sql = "select product_id from " + Configuration.getFeatureTable() + " where f2 < " + ScoreDefine.posSocre + " limit " + (k - k / 2) + " offset 10";
 		rs = SqlManipulation.query(sql);
 		try {
 			while (rs.next()) {

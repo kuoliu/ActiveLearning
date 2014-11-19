@@ -18,7 +18,7 @@ public class FeaturePipeline {
 		featureExtractor = new BiasVarianceFeatureExtractor();
 		featureId = featureExtractor.extractFeature(featureId);
 		
-		featureExtractor = new LanguageFeatureExtractor();
-		featureId = featureExtractor.extractFeature(featureId);
+//		featureExtractor = new LanguageFeatureExtractor();
+//		featureId = featureExtractor.extractFeature(featureId);
 	}
 }
