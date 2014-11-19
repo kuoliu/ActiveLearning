@@ -52,15 +52,18 @@ public class QBCstrategy extends BasicSampling{
 	
 	
 	public static double utilityScore(String prod_id) {
-		String sql = "select reg_confidence, lr_confidence, svm_confidence from " + Configuration.getPredictTable()
-				+ " where product_id =  '"  + prod_id + "'";
+	//	String sql = "select reg_confidence, lr_confidence, svm_confidence from " + Configuration.getPredictTable()
+	//			+ " where product_id = '"  + prod_id + "'";
+		
+		String sql = "select lr_confidence, svm_confidence from " + Configuration.getPredictTable()
+				+ " where product_id = '"  + prod_id + "'";
 		
 		ResultSet rs = SqlManipulation.query(sql);
 		double utilityScore = 0.0;
 		try {
 			if (rs.next()) {
-				double max = Math.max(Math.max(rs.getDouble(1), rs.getDouble(2)), rs.getDouble(3));
-				double min = Math.min(Math.min(rs.getDouble(1), rs.getDouble(2)), rs.getDouble(3));
+				double max = Math.max(rs.getDouble(1), rs.getDouble(2));
+				double min = Math.min(rs.getDouble(1), rs.getDouble(2));
 				utilityScore = max - min;
 			}
 		} catch (Exception e) {
