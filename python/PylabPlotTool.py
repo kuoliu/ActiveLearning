@@ -107,7 +107,7 @@ if __name__ == '__main__' :
         # 'axis': [0,10,0,10],
         # 'xaxis_locator' : 0.5,
         # 'yaxis_locator' : 1,
-        'legend_loc' : 'upper right'
+        'legend_loc' : 'lower right'
     }
     
     tool = PlotTool(baseConfig)
