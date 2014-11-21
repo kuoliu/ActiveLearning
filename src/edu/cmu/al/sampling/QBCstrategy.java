@@ -27,9 +27,9 @@ public class QBCstrategy extends BasicSampling{
 		try {
 			while (rs.next()) {
 				String prod_id = rs.getString(1);
-				if (queue.size() < k) {
+				if (queue.size() < k && !isLabled(prod_id)) {
 					queue.add(new Elem(prod_id, utilityScore(prod_id)));
-				} else {
+				} else if (!isLabled(prod_id)){
 					if (queue.peek().utility_score < utilityScore(prod_id)) {
 						queue.poll();
 						queue.add(new Elem(prod_id, utilityScore(prod_id)));
