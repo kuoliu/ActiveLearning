@@ -43,18 +43,18 @@ public class Main {
 		Experiment experiment = new TableExperiment();
 		experiment.doExperiment(round, instance, sampling, classifier2, labeling, null, Constant.SVM_RANDOM_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier3, labeling, null, Constant.LR_RANDOM_FILE.getName());
-		experiment.plotResult("Random", "RandomSampling", "svm.txt", "SVM", "logistic.txt", "LR");
+		experiment.plotResult("Random", "RandomSampling", Constant.SVM_RANDOM_FILE.getName(), "SVM", Constant.LR_RANDOM_FILE.getName(), "LR");
 
 		sampling = new UncertaintyStrategy();
 		experiment.doExperiment(round, instance, sampling, classifier2, labeling, Constant.SVM_COL.getName(), Constant.SVM_UNCERTAIN_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_UNCERTAIN_FILE.getName());
-		experiment.plotResult("Uncertain", "UncertainSampling", "svm.txt", "SVM", "logistic.txt", "LR");
+		experiment.plotResult("Uncertain", "UncertainSampling", Constant.SVM_UNCERTAIN_FILE.getName(), "SVM", Constant.LR_UNCERTAIN_FILE.getName(), "LR");
 
 		sampling = new QBCstrategy();
 
 		experiment.doExperiment(round, instance, sampling, classifier2, labeling, Constant.SVM_COL.getName(), Constant.SVM_QBC_FILE.getName());
 		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_QBC_FILE.getName());
-		experiment.plotResult("QBC", "QBCSampling", "svm.txt", "SVM", "logistic.txt", "LR");
+		experiment.plotResult("QBC", "QBCSampling", Constant.SVM_QBC_FILE.getName(), "SVM", Constant.LR_QBC_FILE.getName(), "LR");
 
 		experiment.plotResult("SVM", "SVM", Constant.SVM_RANDOM_FILE.getName(), "RANDOM", Constant.SVM_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.SVM_QBC_FILE.getName(),"QBC");
 		experiment.plotResult("LR", "LR", Constant.LR_RANDOM_FILE.getName(), "RANDOM", Constant.LR_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.LR_QBC_FILE.getName(),"QBC");
