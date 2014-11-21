@@ -26,12 +26,12 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		System.out.println("DB initializing...");
-		Preprocess.run();
-		System.out.println("DB Finished");
-		FeaturePipeline.produceFeatures();
-		System.out.println("Feature Finished");
-		System.out.println("Experiment");
+//		System.out.println("DB initializing...");
+//		Preprocess.run();
+//		System.out.println("DB Finished");
+//		FeaturePipeline.produceFeatures();
+//		System.out.println("Feature Finished");
+//		System.out.println("Experiment");
 
 		// random
 		BasicSampling sampling = new RandomStrategy();
@@ -41,48 +41,22 @@ public class Main {
 		LabelingSimulation labeling = new BasicLabelingSimulation();
 		//
 		Experiment experiment = new TableExperiment();
-		// experiment.doExperiment(round, instance, sampling, classifier1,
-		// labeling, null, Constant.REG_FILE.getName());
-		// experiment.doExperiment(round, instance, sampling, classifier2,
-		// labeling, null, Constant.SVM_FILE.getName());
-		// experiment.doExperiment(round, instance, sampling, classifier3,
-		// labeling, null, Constant.LR_FILE.getName());
-		// experiment.plotResult("Random", "RandomSampling", "svm.txt", "SVM",
-		// "logistic.txt", "LR");
+		experiment.doExperiment(round, instance, sampling, classifier2, labeling, null, Constant.SVM_RANDOM_FILE.getName());
+		experiment.doExperiment(round, instance, sampling, classifier3, labeling, null, Constant.LR_RANDOM_FILE.getName());
+		experiment.plotResult("Random", "RandomSampling", Constant.SVM_RANDOM_FILE.getName(), "SVM", Constant.LR_RANDOM_FILE.getName(), "LR");
 
 		sampling = new UncertaintyStrategy();
-
-		// experiment.doExperiment(round, instance, sampling, classifier1,
-		// labeling, Constant.REG_COL.getName(), Constant.REG_FILE.getName());
-		experiment.doExperiment(round, instance, sampling, classifier2,
-				labeling, Constant.SVM_COL.getName(),
-				Constant.SVM_FILE.getName());
-		experiment
-				.doExperiment(round, instance, sampling, classifier3, labeling,
-						Constant.LR_COL.getName(), Constant.LR_FILE.getName());
-
-		experiment.plotResult("Uncertain", "UncertainSampling", "svm.txt",
-				"SVM", "logistic.txt", "LR");
+		experiment.doExperiment(round, instance, sampling, classifier2, labeling, Constant.SVM_COL.getName(), Constant.SVM_UNCERTAIN_FILE.getName());
+		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_UNCERTAIN_FILE.getName());
+		experiment.plotResult("Uncertain", "UncertainSampling", Constant.SVM_UNCERTAIN_FILE.getName(), "SVM", Constant.LR_UNCERTAIN_FILE.getName(), "LR");
 
 		sampling = new QBCstrategy();
 
-		// experiment.doExperiment(round, instance, sampling, classifier1,
-		// labeling, Constant.REG_COL.getName(), Constant.REG_FILE.getName());
-		experiment.doExperiment(round, instance, sampling, classifier2,
-				labeling, Constant.SVM_COL.getName(),
-				Constant.SVM_FILE.getName());
-		experiment
-				.doExperiment(round, instance, sampling, classifier3, labeling,
-						Constant.LR_COL.getName(), Constant.LR_FILE.getName());
+		experiment.doExperiment(round, instance, sampling, classifier2, labeling, Constant.SVM_COL.getName(), Constant.SVM_QBC_FILE.getName());
+		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_QBC_FILE.getName());
+		experiment.plotResult("QBC", "QBCSampling", Constant.SVM_QBC_FILE.getName(), "SVM", Constant.LR_QBC_FILE.getName(), "LR");
 
-		experiment.plotResult("QBC", "QBCSampling", "svm.txt", "SVM",
-				"logistic.txt", "LR");
-
-		// experiment.doExperimentWithAllData("all_data");
-
-		/*
-		 * System.out.println("Experient"); ExperimentResult experiment = new
-		 * ExperimentResult(round); experiment.doExperiment();
-		 */
+		experiment.plotResult("SVM", "SVM", Constant.SVM_RANDOM_FILE.getName(), "RANDOM", Constant.SVM_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.SVM_QBC_FILE.getName(),"QBC");
+		experiment.plotResult("LR", "LR", Constant.LR_RANDOM_FILE.getName(), "RANDOM", Constant.LR_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.LR_QBC_FILE.getName(),"QBC");
 	}
 }
