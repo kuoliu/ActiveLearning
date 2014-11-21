@@ -10,12 +10,12 @@ public class Configuration {
   /** Configuration for Sql **/
   private static String sqlDriver = "org.postgresql.Driver";
 
-  private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
+  private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/activelearning";
 
-  private static String sqlUserName = "mabodx";
+  private static String sqlUserName = "yyy";
 
 
-  private static String sqlPassword = "123";
+  private static String sqlPassword = "1204";
 
   /** Configuration of database tables **/
   private static String reviewTable = "product_review";
@@ -34,7 +34,7 @@ public class Configuration {
   private static String tmpPath = "";
 
   /** Configuration about useful paths **/
-  private static String trainDataPath = "./files/Clothing_&_Accessories.txt";
+  private static String trainDataPath = "./files/Watches.txt";
 
   private static String sentimentPositiveDicPath = "./files/positive-words.txt";
 

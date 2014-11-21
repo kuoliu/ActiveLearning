@@ -1,3 +1,4 @@
 /bin
 .DS_Store
 /lib/stanford-corenlp-3.4.1-models.jar
+./files/Watches.txt

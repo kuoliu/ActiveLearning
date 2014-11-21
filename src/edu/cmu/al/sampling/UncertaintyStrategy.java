@@ -26,38 +26,50 @@ public class UncertaintyStrategy extends BasicSampling {
 		HashMap<Integer, String> positive = new HashMap<Integer, String>();
 		HashMap<Integer, String> boundary = new HashMap<Integer, String>();
 
-		String sql = "select * from " + Configuration.getPredictTable();
+		String sql = "select * from " + Configuration.getPredictTable() + " order by " + column + " asc";
 		ResultSet rs = SqlManipulation.query(sql);
+		
+		sql = "select * from " + Configuration.getPredictTable() + " order by " + column + " desc";
+		ResultSet rs1 = SqlManipulation.query(sql);
 
 		int positiveID = 0;
 		int boundaryID = 0;
 		try {
 			while (rs.next()) {
 				String prod_id = rs.getString(1);
+				if (boundaryID > 2*k) {
+					break;
+				}
 				if (!isLabled(prod_id)) {
-					if (get_predict_result(prod_id, column) >= 0.4) {
-						positive.put(positiveID++, prod_id);
-					} else if (get_predict_result(prod_id, column) >= 0.1
-							&& get_predict_result(prod_id, column) < 0.4) {
-						boundary.put(boundaryID++, prod_id);
-					}
+					boundary.put(boundaryID++, prod_id);
 				}
 
 			}
 			Random rnd = new Random();
 			int insCnt = k;
-			while (insCnt >= k / 2) {
-				int i = rnd.nextInt(positiveID);
-				if (!selected.contains(positive.get(i))) {
-					selected.add(positive.get(i));
-				}
-				insCnt--;
-			}
-
-			while (insCnt >= 0) {
+			while (insCnt >= k * 2 / 3) {
 				int i = rnd.nextInt(boundaryID);
 				if (!selected.contains(boundary.get(i))) {
 					selected.add(boundary.get(i));
+				}
+				insCnt--;
+			}
+			
+			while (rs1.next()) {
+				String prod_id = rs1.getString(1);
+				if (positiveID > 2*k) {
+					break;
+				}
+				if (!isLabled(prod_id)) {
+					positive.put(positiveID++, prod_id);
+				}
+
+			}
+			
+			while (insCnt >= 0) {
+				int i = rnd.nextInt(positiveID);
+				if (!selected.contains(positive.get(i))) {
+					selected.add(positive.get(i));
 				}
 				insCnt--;
 			}
