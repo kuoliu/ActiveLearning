@@ -27,7 +27,7 @@ public class Regression extends Classifier {
 
 			//String sql = "select classifier_predict.product_id, f3, f2 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 1";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f4, f7, f10, f2 from "
+					+ ".product_id, " + Configuration.getSelectedFeatures() + " from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "
@@ -61,7 +61,7 @@ public class Regression extends Classifier {
 		try {
 			//String sql = "select f1 from product_feature, classifier_predict where product_feature.product_id=classifier_predict.product_id and classifier_predict.islabeled = 0";
 			String sql = "select " + Configuration.getPredictTable()
-					+ ".product_id, f4, f7, f10, f2 from "
+					+ ".product_id, " + Configuration.getSelectedFeatures() + " from "
 					+ Configuration.getFeatureTable() + " , "
 					+ Configuration.getPredictTable() + " where "
 					+ Configuration.getFeatureTable() + ".product_id = "

@@ -26,12 +26,12 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		System.out.println("DB initializing...");
-//		Preprocess.run();
-//		System.out.println("DB Finished");
-//		FeaturePipeline.produceFeatures();
-//		System.out.println("Feature Finished");
-//		System.out.println("Experiment");
+		System.out.println("DB initializing...");
+		Preprocess.run();
+		System.out.println("DB Finished");
+		FeaturePipeline.produceFeatures();
+		System.out.println("Feature Finished");
+		System.out.println("Experiment");
 
 		// random
 		BasicSampling sampling = new RandomStrategy();
