@@ -56,7 +56,7 @@ public class Main {
 		experiment.doExperiment(round, instance, sampling, classifier3, labeling, Constant.LR_COL.getName(), Constant.LR_QBC_FILE.getName());
 		experiment.plotResult("QBC", "QBCSampling", Constant.SVM_QBC_FILE.getName(), "SVM", Constant.LR_QBC_FILE.getName(), "LR");
 
-//		experiment.plotResult("SVM", "SVM", Constant.SVM_RANDOM_FILE.getName(), "RANDOM", Constant.SVM_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.SVM_QBC_FILE.getName(),"QBC");
-//		experiment.plotResult("LR", "LR", Constant.LR_RANDOM_FILE.getName(), "RANDOM", Constant.LR_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.LR_QBC_FILE.getName(),"QBC");
+		experiment.plotResult("SVM", "SVM", Constant.SVM_RANDOM_FILE.getName(), "RANDOM", Constant.SVM_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.SVM_QBC_FILE.getName(),"QBC");
+		experiment.plotResult("LR", "LR", Constant.LR_RANDOM_FILE.getName(), "RANDOM", Constant.LR_UNCERTAIN_FILE.getName(), "UNCERTAIN",Constant.LR_QBC_FILE.getName(),"QBC");
 	}
 }

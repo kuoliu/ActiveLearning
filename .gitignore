@@ -2,3 +2,6 @@
 .DS_Store
 /lib/stanford-corenlp-3.4.1-models.jar
 ./files/Watches.txt
+/files/Cell_Phones_&_Accessories
+/files/Watches.txt
+/files/Arts.txt
