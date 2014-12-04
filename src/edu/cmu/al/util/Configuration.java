@@ -44,7 +44,8 @@ public class Configuration {
   private static String stanfordnlpComponent = "tokenize, ssplit, pos, parse";
   
   /** Configuration for ml **/
-  private static String selectedFeatures = "f1, f2, f3, f4, f5, f6, f7, f8, f9, f11";
+  private static String selectedFeatures = "f1"
+  		+ ", f3, f4, f5, f6, f7, f8, f9, f11";
   
   public static String getSqlDriver() {
     return sqlDriver;
