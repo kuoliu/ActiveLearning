@@ -34,7 +34,7 @@ public class Configuration {
   private static String tmpPath = "";
 
   /** Configuration about useful paths **/
-  private static String trainDataPath = "./files/Watches.txt";
+  private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
 
   private static String sentimentPositiveDicPath = "./files/positive-words.txt";
 

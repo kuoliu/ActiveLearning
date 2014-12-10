@@ -21,7 +21,7 @@ public abstract class BasicSampling {
 
 	}
 	
-	
+
 	/**
 	 * Select k instances to mark in next round and select one classifier.
 	 * @param k
