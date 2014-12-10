@@ -15,10 +15,20 @@ import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.sentiment.CollapseUnaryTransformer;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.sentiment.SentimentCostAndGradient;
+import edu.stanford.nlp.sentiment.SentimentModel;
+import edu.stanford.nlp.sentiment.SentimentUtils;
 import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.trees.TreeCoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;
 
+/**
+ * Extract sentiment by the standford nlp tools
+ * 
+ * @author Bo Ma
+ */
 public class StandfordNLPSentimentFeature extends FeatureExtractor {
 	public HashMap<String, Integer> productSentimentSummaryscore = new HashMap<String, Integer>();
 	public HashMap<String, Integer> productSentimentTextscore = new HashMap<String, Integer>();
@@ -66,6 +76,40 @@ public class StandfordNLPSentimentFeature extends FeatureExtractor {
 
 	}
 
+	public void SentimentAnalysis(Annotation annotation) {
+		String modelPath;
+		SentimentModel model = null;
+		CollapseUnaryTransformer transformer = new CollapseUnaryTransformer();
+
+		if (annotation.containsKey(CoreAnnotations.SentencesAnnotation.class)) {
+			// TODO: parallelize
+			List<CoreMap> sentences = annotation
+					.get(CoreAnnotations.SentencesAnnotation.class);
+			for (CoreMap sentence : sentences) {
+				Tree binarized = sentence
+						.get(TreeCoreAnnotations.BinarizedTreeAnnotation.class);
+				if (binarized == null) {
+					throw new AssertionError(
+							"Binarized sentences not built by parser");
+				}
+
+				Tree collapsedUnary = transformer.transformTree(binarized);
+				SentimentCostAndGradient scorer = new SentimentCostAndGradient(
+						model, null);
+				scorer.forwardPropagateTree(collapsedUnary);
+				sentence.set(SentimentCoreAnnotations.AnnotatedTree.class,
+						collapsedUnary);
+				int sentiment = RNNCoreAnnotations
+						.getPredictedClass(collapsedUnary);
+				sentence.set(SentimentCoreAnnotations.ClassName.class,
+						SentimentUtils.sentimentString(model, sentiment));
+			}
+		} else {
+			throw new RuntimeException("unable to find sentences in: "
+					+ annotation);
+		}
+	}
+	
 	public int extractFeature(int featureId) {
 
 		

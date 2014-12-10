@@ -10,12 +10,12 @@ public class Configuration {
   /** Configuration for Sql **/
   private static String sqlDriver = "org.postgresql.Driver";
 
-  private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/activelearning";
+  private static String sqlUrl = "jdbc:postgresql://127.0.0.1:5432/active_learning";
 
-  private static String sqlUserName = "yyy";
+  private static String sqlUserName = "mabodx";
 
 
-  private static String sqlPassword = "1204";
+  private static String sqlPassword = "123";
 
   /** Configuration of database tables **/
   private static String reviewTable = "product_review";
@@ -36,12 +36,17 @@ public class Configuration {
   /** Configuration about useful paths **/
   private static String trainDataPath = "./files/Cell_Phones_&_Accessories.txt";
 
+
   private static String sentimentPositiveDicPath = "./files/positive-words.txt";
 
   private static String sentimentNegativeDicPath = "./files/negative-words.txt";
 
   /** Configuration for tools **/
   private static String stanfordnlpComponent = "tokenize, ssplit, pos, parse";
+  
+  /** Configuration for ml **/
+  private static String selectedFeatures = "f1"
+  		+ ", f3, f4, f5, f6, f7, f8, f9, f11";
   
   public static String getSqlDriver() {
     return sqlDriver;
@@ -157,5 +162,13 @@ public static String getStanfordnlpComponent() {
 
 public static void setStanfordnlpComponent(String stanfordnlpComponent) {
 	Configuration.stanfordnlpComponent = stanfordnlpComponent;
+}
+
+public static String getSelectedFeatures() {
+	return selectedFeatures;
+}
+
+public static void setSelectedFeatures(String selectedFeatures) {
+	Configuration.selectedFeatures = selectedFeatures;
 }
 }
