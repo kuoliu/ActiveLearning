@@ -8,7 +8,7 @@ import edu.cmu.al.util.*;
 /**
  * Extract sentiment dictionary based features including the ratio of positive
  * words and the ratio of negative words
- * 
+ * @author Bo Ma, Kuo Liu
  */
 public class SentimentFeatureExtractor extends FeatureExtractor {
 

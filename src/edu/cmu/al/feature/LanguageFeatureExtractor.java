@@ -12,6 +12,7 @@ import edu.stanford.nlp.util.CoreMap;
 
 /**
  * Check the negation within review summary
+ * @author Kzuo Liu
  */
 public class LanguageFeatureExtractor extends FeatureExtractor {
 
